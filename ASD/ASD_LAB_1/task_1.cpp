@@ -87,9 +87,13 @@ int main()
 	Way[0] = start_sity;
 	Way[count_sity] = start_sity;
 	int n;
-	for (i = 0, n = 1; i < count_sity; i++, n++)
+	for (i = 1, n = 1; i < count_sity; n++)
 		if (n != start_sity)
+		{
 			Way[i] = n;
+			i++;
+		}
+	
 	OutMasPtr(Way, count_sity + 1);
 
 	int MIN_Way_weight = MinWay(Way, Matr_Way_Weight, count_sity - 1);
