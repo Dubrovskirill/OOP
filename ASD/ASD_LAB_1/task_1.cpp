@@ -35,7 +35,8 @@ int MinWay(int *arr, int** matr, int n)
 	int i;
 	for ( i = 0; i < n; i++)
 		min +=matr[arr[i]-1][arr[i + 1]-1];
-	min += matr[arr[i] - 1][0];//что-то не так
+
+	min += matr[arr[i] - 1][arr[0]-1];
 	return min;
 }
 
@@ -82,7 +83,7 @@ int main()
 	OutputMatrD(Matr_Way_Weight, count_sity, count_sity);
 	cout << endl;
 	//задаем начальный путь
-	int start_sity = 1;
+	int start_sity = 3;
 	int Way[count_sity + 1];
 	Way[0] = start_sity;
 	Way[count_sity] = start_sity;
@@ -96,14 +97,14 @@ int main()
 	
 	OutMasPtr(Way, count_sity + 1);
 
-	int MIN_Way_weight = MinWay(Way, Matr_Way_Weight, count_sity - 1);
+	int MIN_Way_weight = MinWay(Way, Matr_Way_Weight, count_sity-1);
 	cout << " " << MIN_Way_weight << endl;
 	//перестановки
 	int Min_Way[count_sity + 1];
 	while (Permutation(count_sity, Way))
 	{
 		OutMasPtr(Way, count_sity + 1);
-		int m_Way_weight = MinWay(Way, Matr_Way_Weight, count_sity - 1);
+		int m_Way_weight = MinWay(Way, Matr_Way_Weight, count_sity-1);
 		cout << " " << m_Way_weight << endl;
 		if (m_Way_weight < MIN_Way_weight)
 		{
