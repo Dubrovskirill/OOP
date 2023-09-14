@@ -116,6 +116,7 @@ int main()
 	cout << " " << MIN_Way_weight << endl;
 	//перестановки
 	int Min_Way[count_sity + 1];
+	CopyMas(Way, Min_Way, count_sity + 1);
 	while (Permutation(count_sity, Way))
 	{
 		OutMasPtr(Way, count_sity + 1);
