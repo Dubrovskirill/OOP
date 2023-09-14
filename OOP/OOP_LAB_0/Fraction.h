@@ -2,6 +2,9 @@
 class Fraction
 {
 public:
+	Fraction();
+	Fraction(int numerator, int denominaor);//список инициализации
+	~Fraction() = default;
 	//Fraction sum(const Fraction a, const Fraction b);
 	Fraction sum(const Fraction b);
 	void print();

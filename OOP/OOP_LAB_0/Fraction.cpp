@@ -7,6 +7,16 @@
 	c.denominator = a.denominator * b.denominator;
 	return c;
 }*/
+Fraction::Fraction()
+{
+	numerator = 1;
+	denominator = 1;
+}
+Fraction::Fraction(int numeratot,int denominator)
+{
+	numerator = numerator;
+	denominator = denominator;
+}
 Fraction Fraction::sum(const Fraction b)
 {
 	Fraction c;

@@ -6,6 +6,7 @@ int main()
 {
 	setlocale(0, "");
 	Fraction a; Fraction b; Fraction c;
+	a.print(); cout << endl;
 	a.numerator = 5;
 	a.denominator = 2;
 	b.numerator = 6;
