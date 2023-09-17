@@ -133,22 +133,27 @@ int Heuristics_1(int const count_sity, int start_sity, int** Matr_Way_Weight, in
 	int n = 0, r, c;
 	for (int i = 0; i < count_sity * 2; i++) way_data[i] = 0;
 	int row = 0, coll = 0;
-	for (int i = 0; i < count_sity - 1; i++)
+	for (int i = 0; i < count_sity; i++)
 	{
 		min_weight = 100;
+		bool flag = true;
 		for (r = 0; r < count_sity; r++)
 			for (c = 0; c < count_sity; c++)
-				if (r != c && Exceptions(way_data, n, r, c) && Ñycle(r, c, way_data, n) && Matr_Way_Weight[r][c] < min_weight)
+				if (r != c && Exceptions(way_data, n, r, c)  && Matr_Way_Weight[r][c] < min_weight)
 				{
-					row = r; coll = c;
-					min_weight = Matr_Way_Weight[r][c];
+					if (i != count_sity-1)  flag = Ñycle(r, c, way_data, n);
+					if (flag)
+					{
+						row = r; coll = c;
+						min_weight = Matr_Way_Weight[r][c];
+					}
 				}
 		way_data[n] = row; way_data[n + 1] = coll;
 		n += 2;
-		/*OutMasPtr(way_data, count_sity*2);
-		std::cout << " " << min_weight << std::endl;*/
+		OutMasPtr(way_data, count_sity*2);
+		std::cout << " " << min_weight << std::endl;
 	}
-	min_weight = 100;
+	/*min_weight = 100;
 	for (r = 0; r < count_sity; r++)
 		for (c = 0; c < count_sity; c++)
 			if (r != c && Exceptions(way_data, n, r, c) && Matr_Way_Weight[r][c] < min_weight)
@@ -157,7 +162,7 @@ int Heuristics_1(int const count_sity, int start_sity, int** Matr_Way_Weight, in
 				min_weight = Matr_Way_Weight[r][c];
 			}
 	way_data[n] = row; way_data[n + 1] = coll;
-	n += 2;
+	n += 2;*/
 	/*OutMasPtr(way_data, count_sity * 2);
 	std::cout << " " << min_weight << std::endl;*/
 	int k = 0,i,j;
