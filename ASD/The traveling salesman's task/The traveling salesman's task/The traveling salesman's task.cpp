@@ -92,30 +92,83 @@ int Dijkstra(int const count_sity,int start_sity, int**Matr_Way_Weight,int *Min_
 	return MIN_Way_weight;
 }
 
+bool Сycle(int r, int c, int* arr, int n)//проверка на цикл
+{
+	int f = 0,i,j;
+	for ( i = 0, j = 1; i < n; i += 2, j += 2)
+	{
+		if (arr[i] == c && arr[j] == r) f = 0;
+		else f = 1;
+	}
+	if (f) return true;
+	for ( i = 0; i < n; i += 2)
+		for ( j = 1; j < n; j += 2)
+			if (arr[i] == c && arr[j] == r) return false;
+	return true;
+}
 
+bool Exceptions(int* arr, int n, int r, int c)//исключение строк и столбцов
+{
+	int i;
+	for (i = 0; i < n; i += 2)
+		if (arr[i] == r || arr[i + 1] == c) return false;
+	return true;
+}
 
-//bool Permutation_A(int n, int* arr)
-//{
-//	int i = 1;
-//	while (i != n - 1 && arr[i] < arr[i + 1]) i++;
-//	if (i == n - 1) return false;
-//	int j = i + 1;
-//	while (j != n && arr[i] < arr[j]) j++;
-//
-//	Swap(arr[i], arr[j]);
-//	int k, l;
-//
-//	for (k = i + 1, l = n - 1; i <= n / 2 && k < l; k++, l--)
-//		Swap(arr[k], arr[l]);
-//	return true;
-//}
+int Heuristics_1(int const count_sity, int start_sity, int** Matr_Way_Weight, int *Min_Way_H)
+{
+	int min_weight;
+	int* way_data = new int[2 * count_sity];
+	int n = 0, r, c;
+	for (int i = 0; i < count_sity * 2; i++) way_data[i] = 0;
+	int row = 0, coll = 0;
+	for (int i = 0; i < count_sity - 1; i++)
+	{
+		min_weight = 100;
+		for (r = 0; r < count_sity; r++)
+			for (c = 0; c < count_sity; c++)
+				if (r != c && Exceptions(way_data, n, r, c) && Сycle(r, c, way_data, n) && Matr_Way_Weight[r][c] < min_weight)
+				{
+					row = r; coll = c;
+					min_weight = Matr_Way_Weight[r][c];
+				}
+		way_data[n] = row; way_data[n + 1] = coll;
+		n += 2;
+		OutMasPtr(way_data, count_sity*2);
+		std::cout << " " << min_weight << std::endl;
+	}
+	min_weight = 100;
+	for (r = 0; r < count_sity; r++)
+		for (c = 0; c < count_sity; c++)
+			if (r != c && Exceptions(way_data, n, r, c) && Matr_Way_Weight[r][c] < min_weight)
+			{
+				row = r; coll = c;
+				min_weight = Matr_Way_Weight[r][c];
+			}
+	way_data[n] = row; way_data[n + 1] = coll;
+	n += 2;
+	OutMasPtr(way_data, count_sity * 2);
+	std::cout << " " << min_weight << std::endl;
+	int k = 0,i,j;
+	
+	for (j = 0; j < count_sity+1; j++)
+	{
+		for (i = 0; way_data[i] != start_sity; i += 2);
 
-using std::cout;
-using std::cin;
-using std::endl;
-
+		Min_Way_H[k++] = way_data[i] + 1; 
+		//std::cout << Min_Way_H[k]; 
+		start_sity = way_data[i + 1];
+	}
+	std::cout << std::endl;
+	int weight = MinWay(Min_Way_H, Matr_Way_Weight, count_sity - 1);
+	delete[]way_data;
+	return weight;
+}
 int main()
 {
+	using std::cout;
+	using std::cin;
+	using std::endl;
 	setlocale(0, "");
 
 	int** Matr_Way_Weight;
@@ -145,6 +198,17 @@ int main()
 	OutMasPtr(Min_Way, count_sity + 1);
 	cout << " " << MIN_way_weight << endl<< seconds<<endl;
 	delete[]Min_Way;
+	//эвристика
+	int* Min_Way_H = new int[count_sity+1];
+	start = clock();
+	int weight=Heuristics_1(count_sity, start_sity-1, Matr_Way_Weight, Min_Way_H);
+	end = clock();
+	seconds = (float)(end - start) / CLOCKS_PER_SEC;
+	cout << "Кратчайший путь и его вес: ";
+	cout << endl;
+	OutMasPtr(Min_Way_H, count_sity + 1);
+	cout << " " << weight << endl << seconds << endl;
+	delete[]Min_Way_H;
 	for (int i = 0; i < count_sity; i++)
 		delete[]Matr_Way_Weight[i];
 	delete[]Matr_Way_Weight;
