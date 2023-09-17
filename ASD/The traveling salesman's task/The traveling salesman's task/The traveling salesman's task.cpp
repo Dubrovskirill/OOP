@@ -92,19 +92,30 @@ int Dijkstra(int const count_sity,int start_sity, int**Matr_Way_Weight,int *Min_
 	return MIN_Way_weight;
 }
 
+int Find_cols(int* a, int n, int D)
+{
+	for (int i = 1; i < n; i+=2)
+		if (a[i] == D) return i;
+	return -1;
+}
+
 bool Сycle(int r, int c, int* arr, int n)//проверка на цикл
 {
-	int f = 0,i,j;
-	for ( i = 0, j = 1; i < n; i += 2, j += 2)
-	{
-		if (arr[i] == c && arr[j] == r) f = 0;
-		else f = 1;
-	}
-	if (f) return true;
-	for ( i = 0; i < n; i += 2)
+	int i,j;
+	/*for ( i = 0; i < n; i += 2)
 		for ( j = 1; j < n; j += 2)
 			if (arr[i] == c && arr[j] == r) return false;
+	return true;*/
+	for (i = 0, j = 0; i < n; i += 2, j += 2)
+		if (arr[i] == c && arr[j] == r) return false;
+	i = Find_cols(arr, n, r);
+	while (i != -1)
+	{
+		if (arr[i - 1] == c) return false;
+		i = Find_cols(arr, n, arr[i - 1]);
+	}
 	return true;
+	
 }
 
 bool Exceptions(int* arr, int n, int r, int c)//исключение строк и столбцов
@@ -134,8 +145,8 @@ int Heuristics_1(int const count_sity, int start_sity, int** Matr_Way_Weight, in
 				}
 		way_data[n] = row; way_data[n + 1] = coll;
 		n += 2;
-		OutMasPtr(way_data, count_sity*2);
-		std::cout << " " << min_weight << std::endl;
+		/*OutMasPtr(way_data, count_sity*2);
+		std::cout << " " << min_weight << std::endl;*/
 	}
 	min_weight = 100;
 	for (r = 0; r < count_sity; r++)
@@ -147,8 +158,8 @@ int Heuristics_1(int const count_sity, int start_sity, int** Matr_Way_Weight, in
 			}
 	way_data[n] = row; way_data[n + 1] = coll;
 	n += 2;
-	OutMasPtr(way_data, count_sity * 2);
-	std::cout << " " << min_weight << std::endl;
+	/*OutMasPtr(way_data, count_sity * 2);
+	std::cout << " " << min_weight << std::endl;*/
 	int k = 0,i,j;
 	
 	for (j = 0; j < count_sity+1; j++)
@@ -156,10 +167,9 @@ int Heuristics_1(int const count_sity, int start_sity, int** Matr_Way_Weight, in
 		for (i = 0; way_data[i] != start_sity; i += 2);
 
 		Min_Way_H[k++] = way_data[i] + 1; 
-		//std::cout << Min_Way_H[k]; 
 		start_sity = way_data[i + 1];
 	}
-	std::cout << std::endl;
+	//std::cout << std::endl;
 	int weight = MinWay(Min_Way_H, Matr_Way_Weight, count_sity - 1);
 	delete[]way_data;
 	return weight;
