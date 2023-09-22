@@ -73,16 +73,16 @@ void Dijkstra(int const count_sity,int start_sity, int**Matr_Way_Weight,int *Min
 			Way[i] = n;
 			i++;
 		}
-	//OutMasPtr(Way, count_sity + 1);//вывод начального пути
+	//OutMasPtr(Way, count_sity + 1);//РІС‹РІРѕРґ РЅР°С‡Р°Р»СЊРЅРѕРіРѕ РїСѓС‚Рё
 	min_way_weight=max_way_weight = MinWay(Way, Matr_Way_Weight, count_sity - 1);
-	//std::cout << " " << min_way_weight << std::endl;//вес
-	//перестановки
+	//std::cout << " " << min_way_weight << std::endl;//РІРµСЃ
+	//РїРµСЂРµСЃС‚Р°РЅРѕРІРєРё
 	CopyMas(Way, Min_Way, count_sity + 1);
 	while (Permutation(count_sity, Way))
 	{
-		//OutMasPtr(Way, count_sity + 1);//вывод перестановки
+		//OutMasPtr(Way, count_sity + 1);//РІС‹РІРѕРґ РїРµСЂРµСЃС‚Р°РЅРѕРІРєРё
 		int way_weight = MinWay(Way, Matr_Way_Weight, count_sity - 1);
-		//std::cout << " " << way_weight << std::endl;//вывод длины пути
+		//std::cout << " " << way_weight << std::endl;//РІС‹РІРѕРґ РґР»РёРЅС‹ РїСѓС‚Рё
 		if (way_weight < min_way_weight)
 		{
 			min_way_weight = way_weight;
@@ -104,7 +104,7 @@ int Find_cols(int* a, int n, int D)
 	return -1;
 }
 
-bool Cycle(int r, int c, int* arr, int n)//проверка на цикл
+bool Cycle(int r, int c, int* arr, int n)//РїСЂРѕРІРµСЂРєР° РЅР° С†РёРєР»
 {
 	int i,j;
 	for (i = 0, j = 1; i < n; i += 2, j += 2)
@@ -119,7 +119,7 @@ bool Cycle(int r, int c, int* arr, int n)//проверка на цикл
 	
 }
 
-bool Exceptions(int* arr, int n, int r, int c)//исключение строк и столбцов
+bool Exceptions(int* arr, int n, int r, int c)//РёСЃРєР»СЋС‡РµРЅРёРµ СЃС‚СЂРѕРє Рё СЃС‚РѕР»Р±С†РѕРІ
 {
 	int i;
 	for (i = 0; i < n; i += 2)
@@ -191,11 +191,11 @@ int main()
 	setlocale(0, "");
 
 	int** Matr_Way_Weight;
-	int count_sity;//задаем количество городов
-	int start_sity;//задаем начальный город
-	cout << "Количество городов: ";
+	int count_sity;//Р·Р°РґР°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ РіРѕСЂРѕРґРѕРІ
+	int start_sity;//Р·Р°РґР°РµРј РЅР°С‡Р°Р»СЊРЅС‹Р№ РіРѕСЂРѕРґ
+	cout << "РљРѕР»РёС‡РµСЃС‚РІРѕ РіРѕСЂРѕРґРѕРІ: ";
 	cin >> count_sity;
-	cout <<endl<< "Начальный город: ";
+	cout <<endl<< "РќР°С‡Р°Р»СЊРЅС‹Р№ РіРѕСЂРѕРґ: ";
 	cin >> start_sity;
 	cout << endl;
 	int i, j;
@@ -205,9 +205,9 @@ int main()
 	RandMatr(Matr_Way_Weight, count_sity, count_sity);
 	for (i = j = 0; i < count_sity; i++, j++)
 		Matr_Way_Weight[i][j] = 0;
-	OutputMatrD(Matr_Way_Weight, count_sity, count_sity);//вывод матрицы
+	OutputMatrD(Matr_Way_Weight, count_sity, count_sity);//РІС‹РІРѕРґ РјР°С‚СЂРёС†С‹
 	cout << endl;
-	//задаем начальный путь
+	//Р·Р°РґР°РµРј РЅР°С‡Р°Р»СЊРЅС‹Р№ РїСѓС‚СЊ
 	int *Min_Way=new int [count_sity + 1];
 	int *Max_Way = new int[count_sity + 1];
 	int min_way_weight;
@@ -217,27 +217,27 @@ int main()
 	Dijkstra(count_sity, start_sity, Matr_Way_Weight,Min_Way,Max_Way,min_way_weight,max_way_weight);
 	auto end = std::chrono::high_resolution_clock::now();
 	float time = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
-	cout << "Наилучший путь и его вес: ";
+	cout << "РќР°РёР»СѓС‡С€РёР№ РїСѓС‚СЊ Рё РµРіРѕ РІРµСЃ: ";
 	OutMasPtr(Min_Way, count_sity + 1);
 	cout << " " << min_way_weight << endl;
-	cout << "Наихудший путь и его вес: ";
+	cout << "РќР°РёС…СѓРґС€РёР№ РїСѓС‚СЊ Рё РµРіРѕ РІРµСЃ: ";
 	OutMasPtr(Max_Way, count_sity + 1);
 
-	cout << " " << max_way_weight << endl << "Время работы: " << time <<" наносекунд"<< endl;
+	cout << " " << max_way_weight << endl << "Р’СЂРµРјСЏ СЂР°Р±РѕС‚С‹: " << time <<" РЅР°РЅРѕСЃРµРєСѓРЅРґ"<< endl;
 	delete[]Min_Way;
-	//эвристика
+	//СЌРІСЂРёСЃС‚РёРєР°
 	int* Min_Way_H = new int[count_sity+1];
 	start = std::chrono::high_resolution_clock::now();
 	int way_weight_h=Heuristics_1(count_sity, start_sity-1, Matr_Way_Weight, Min_Way_H);
 	end = std::chrono::high_resolution_clock::now();
 	float time_h = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
-	cout << "Эвристическое решение; путь и его вес: ";
+	cout << "Р­РІСЂРёСЃС‚РёС‡РµСЃРєРѕРµ СЂРµС€РµРЅРёРµ; РїСѓС‚СЊ Рё РµРіРѕ РІРµСЃ: ";
 	OutMasPtr(Min_Way_H, count_sity + 1);
-	cout << " " << way_weight_h << endl <<"Время работы: " << time_h<<" наносекунд" << endl;
-	// отчет
+	cout << " " << way_weight_h << endl <<"Р’СЂРµРјСЏ СЂР°Р±РѕС‚С‹: " << time_h<<" РЅР°РЅРѕСЃРµРєСѓРЅРґ" << endl;
+	// РѕС‚С‡РµС‚
 	float perc_q = Percentag_Quality(way_weight_h,min_way_weight,max_way_weight);
 	float perc_s = Percentag_Speed(time_h, time);
-	cout << "Процент качества: "<<perc_q<<"%"<<endl<< "Процент скорости: " << perc_s << "%" << endl;
+	cout << "РџСЂРѕС†РµРЅС‚ РєР°С‡РµСЃС‚РІР°: "<<perc_q<<"%"<<endl<< "РџСЂРѕС†РµРЅС‚ СЃРєРѕСЂРѕСЃС‚Рё: " << perc_s << "%" << endl;
 	
 	delete[]Min_Way_H;
 	for (int i = 0; i < count_sity; i++)
