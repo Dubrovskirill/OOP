@@ -190,6 +190,8 @@ int main()
 	using std::endl;
 	setlocale(0, "");
 
+	
+
 	int** Matr_Way_Weight;
 	int count_sity;//задаем количество городов
 	int start_sity;//задаем начальный город
@@ -225,6 +227,7 @@ int main()
 
 	cout << " " << max_way_weight << endl << "Время работы: " << time <<" наносекунд"<< endl;
 	delete[]Min_Way;
+	delete[]Max_Way;
 	//эвристика
 	int* Min_Way_H = new int[count_sity+1];
 	start = std::chrono::high_resolution_clock::now();
