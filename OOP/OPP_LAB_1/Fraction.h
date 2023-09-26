@@ -28,6 +28,11 @@ public:
 	Fraction operator -(const Fraction other)const;
 	Fraction operator *(const Fraction other)const;
 	Fraction operator /(const Fraction other)const;
+
+	//my methods
+	void int_to_frac(const int a);
+	Fraction summation_fracbyint(const int a)const;
+	void exponentiation(const int degree);
 private:
 	int m_numerator=0;
 	int m_denominator=1;

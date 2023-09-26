@@ -157,3 +157,32 @@ Fraction Fraction::operator/(const Fraction other) const
 {
 	return division(other);
 }
+
+//my methods
+void Fraction::int_to_frac(const int a)
+{
+	
+    m_numerator = a; 
+	m_denominator = 1;
+}
+
+Fraction Fraction::summation_fracbyint(const int a)const
+{
+	Fraction c; Fraction f;
+	f.int_to_frac(a);
+	c.m_numerator = m_numerator * f.m_denominator + f.m_numerator * m_denominator;
+	c.m_denominator = m_denominator * f.m_denominator;
+	return c;
+}
+
+void Fraction::exponentiation(const int degree)
+{
+	int num = m_numerator;
+	int den = m_denominator;
+	for (int i = 1; i < degree; i++)
+	{
+		m_numerator *=num;
+		m_denominator *= den;
+	}
+	
+}
