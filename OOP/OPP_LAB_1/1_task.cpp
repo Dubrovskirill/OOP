@@ -100,18 +100,21 @@ int main()
 	//my methods
 	cout << "Method representation of an integer as a fraction:\n";
 	Fraction f_4; int a;
-	cout << "Enter integer: "; cin >> a;
-	f_4.int_to_frac(a);
+	cout << "Enter integer: a= "; cin >> a;
+	f_4.IntToFrac(a);
 	cout << "The number in fractional form: "; f_4.print();
 	cout << endl;
 
 	cout << "Method summation fraction by integer:\n";
-	sum = f_3.summation_fracbyint(a);
+	sum = f_3.summationFracbyInt(a);
 	cout << "f_3 + a= "; sum.print();
-	cout << "Enter degree of number: ";
-	cin >> a;
+	sum = f_3 + a;
+	cout << "Use operator+: f_3 + a= "; sum.print();
 	cout << endl;
 
+	cout << "Enter degree of number: a= ";
+	cin >> a;
+	cout << endl;
 	cout << "Method exponentiation of fractions:\n";
 	f_3.exponentiation(a);
 	cout << "f_3^a= : "; f_3.print();

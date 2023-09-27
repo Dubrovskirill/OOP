@@ -30,8 +30,10 @@ public:
 	Fraction operator /(const Fraction other)const;
 
 	//my methods
-	void int_to_frac(const int a);
-	Fraction summation_fracbyint(const int a)const;
+	void IntToFrac(const int a);
+	Fraction summationFracbyInt(const int a) const;
+	Fraction operator+(const int a) const;
+	//Fraction summation_fracbyint(const int a)const;
 	void exponentiation(const int degree);
 private:
 	int m_numerator=0;

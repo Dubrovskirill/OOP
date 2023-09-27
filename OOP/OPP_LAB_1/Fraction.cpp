@@ -67,37 +67,37 @@ void Fraction::input()
 	}
 }
 
-Fraction Fraction::summation(const Fraction b)const
+Fraction Fraction::summation(const Fraction f)const
 {
 	Fraction c;
-	c.m_numerator = m_numerator * b.m_denominator + b.m_numerator * m_denominator;
-	c.m_denominator = m_denominator * b.m_denominator;
+	c.m_numerator = m_numerator * f.m_denominator + f.m_numerator * m_denominator;
+	c.m_denominator = m_denominator * f.m_denominator;
 	return c;
 }
-Fraction Fraction::subtraction(const Fraction b)const
+Fraction Fraction::subtraction(const Fraction f)const
 {
 	Fraction c;
-	c.m_numerator = m_numerator * b.m_denominator - b.m_numerator * m_denominator;
-	c.m_denominator = m_denominator * b.m_denominator;
+	c.m_numerator = m_numerator * f.m_denominator - f.m_numerator * m_denominator;
+	c.m_denominator = m_denominator * f.m_denominator;
 	return c;
 }
-Fraction Fraction::multiplication(const Fraction b)const
+Fraction Fraction::multiplication(const Fraction f)const
 {
 	Fraction c;
-	if (b.m_numerator == 0)
+	c.m_numerator = m_numerator * f.m_numerator;
+	c.m_denominator = m_denominator * f.m_denominator;
+	return c;
+}
+Fraction Fraction::division(const Fraction f)const
+{
+	Fraction c;
+	if (f.m_numerator == 0)
 	{
 		std::cerr << "the division operation is not possible because the numerator is 0. Result will be second farction" << std::endl;
-		return b;
+		return f;
 	}
-	c.m_numerator = m_numerator * b.m_numerator;
-	c.m_denominator = m_denominator * b.m_denominator;
-	return c;
-}
-Fraction Fraction::division(const Fraction b)const
-{
-	Fraction c;
-	c.m_numerator = m_numerator * b.m_denominator;
-	c.m_denominator = m_denominator * b.m_numerator;
+	c.m_numerator = m_numerator * f.m_denominator;
+	c.m_denominator = m_denominator * f.m_numerator;
 	return c;
 }
 
@@ -159,30 +159,46 @@ Fraction Fraction::operator/(const Fraction other) const
 }
 
 //my methods
-void Fraction::int_to_frac(const int a)
+void Fraction::IntToFrac(const int a)
 {
 	
     m_numerator = a; 
 	m_denominator = 1;
 }
 
-Fraction Fraction::summation_fracbyint(const int a)const
+Fraction Fraction::summationFracbyInt(const int a) const
 {
-	Fraction c; Fraction f;
-	f.int_to_frac(a);
-	c.m_numerator = m_numerator * f.m_denominator + f.m_numerator * m_denominator;
-	c.m_denominator = m_denominator * f.m_denominator;
-	return c;
+	Fraction f;
+	f.IntToFrac(a);
+	return summation(f);
+}
+
+Fraction Fraction::operator+(const int a) const
+{
+	Fraction f;
+	f.IntToFrac(a);
+	return summation(f);
 }
 
 void Fraction::exponentiation(const int degree)
 {
 	int num = m_numerator;
 	int den = m_denominator;
-	for (int i = 1; i < degree; i++)
+	if (degree == 0)
 	{
-		m_numerator *=num;
+		m_numerator = m_denominator = 1;
+		return;
+	}
+
+	for (int i = 1; i < abs(degree); i++)
+	{
+		m_numerator *= num;
 		m_denominator *= den;
 	}
-	
+	if (degree < 0)
+	{
+		int sw = m_numerator;
+		m_numerator = m_denominator;
+		m_denominator = sw;
+	}
 }
