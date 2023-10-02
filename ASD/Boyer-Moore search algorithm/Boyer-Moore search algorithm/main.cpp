@@ -2,24 +2,6 @@
 #include<iostream>
 #include<vector>
 
-void OutputArr(int* a, int n)
-{
-	for (int* p = a; p < a + n; p++) printf("%d ", *p);
-}
-
-std::string ShiftStringLeft(std::string s, int i)
-{
-	int j,k;
-	for (j = 0; j < i; j++)
-	{
-		
-		k = 0;
-		for (; s[k]; k++) s[k] = s[k + 1];
-	}
-	return s;
-}
-
-
 int BMsearch(std::string text, std::string substring, int first=0, int l_text=-1)
 {
 	if(l_text<0)  l_text = text.length();
@@ -61,19 +43,6 @@ std::vector<int> BMsearchAllRange(std::string text, std::string substring,int fi
 
 std::vector<int> BMsearchAll(std::string text, std::string substring)
 {
-	/*std::string t = text;
-	std::vector<int> Occurrence;
-	int i = 0;
-	int occ = BMsearch(t,substring);
-	if (occ == -1) return Occurrence;
-	int sourse_i = 0;
-	while (occ != -1)
-	{
-		Occurrence.push_back(occ+sourse_i);
-		t = ShiftStringLeft(t, occ+1);
-		sourse_i += occ+1;
-		occ = BMsearch(t, substring);
-	}*/
 	return BMsearchAllRange(text, substring, 0, text.length());
 }
 
@@ -84,6 +53,7 @@ int main()
 	using std::endl;
 	using std::string;
 	string text = "std::move_iterator is an iterator adaptor which behaves exactly like the underlying iterator";
+	//text = "orem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo urna at malesuada sagittis. Nulla consequat risus et lacinia sagittis. Aliquam interdum nisl ut purus consectetur tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Phasellus dictum magna a massa tincidunt, in semper sem pharetra. Sed nec quam vitae mi pharetra consequat. Proin auctor turpis ut ipsum condimentum, nec blandit metus ultrices. Maecenas viverra, lectus eu rutrum rhoncus, velit erat dignissim lectus, vitae vulputate nunc odio sed lorem. Donec volutpat, nulla sed facilisis lobortis, arcu justo mattis est, a rutrum mi ex nec elit. Suspendisse molestie massa et feugiat pretium. Fusce eu arcu vel mi lacinia euismod vel eu eros. Maecenas tortor felis, rutrum id diam sed, congue semper eros. Vestibulum congue est sed mauris gravida, ut tincidunt nisl iaculis. Vivamus non lobortis urna, vitae vestibulum orci. Nulla vitae ex risus. Morbi faucibus a lorem et ornare.Vestibulum laoreet justo id velit fringilla, vitae tincidunt dolor tristique.Curabitur facilisis, est a tempus fringilla, mi ipsum imperdiet lectus, id accumsan eros enim a enim.Sed bibendum purus non mattis auctor.Quisque pretium iaculis nulla.Ut blandit leo quis mauris luctus maximus.Proin faucibus dolor vel turpis eleifend maximus.Suspendisse malesuada nunc sapien, eget fringilla sapien interdum interdum.Nam at neque mauris.Nulla facilisi.blandit elementum dolor, a feugiat odio tristique sed.Mauris a aliquam orci.Fusce vulputate nec metus sit amet semper.Nulla facilisi.Aliquam in risus vitae justo malesuada porta.Phasellus bibendum bibendum enim, sed aliquet enim facilisis vel.Fusce sed felis nisl.Nunc fermentum, lectus eu interdum ullamcorper, erat nisl fringilla velit, in accumsan dolor massa sit amet odio.Vestibulum volutpat massa nec elit eleifend, ut ullamcorper lectus pretium.Cras ut facilisis odio.Sed fringilla justo non lectus ullamcorper, non fringilla eros scelerisque.Mauris feugiat semper tellus, ac hendrerit velit pulvinar sit ameto";
 	string substring = "tor";
 	cout <<"STRING: "<< text << endl << "It's length: " <<text.length() << endl << "SUBSTRING: " << substring << endl;
 	int first_occurrence = BMsearch(text, substring);
