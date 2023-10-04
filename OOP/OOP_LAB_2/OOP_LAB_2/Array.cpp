@@ -1,6 +1,7 @@
 #include "Array.h"
 #include<iostream>
 #include"assert.h"
+
 Array::Array(const int size, const int value)
 {
 	if (size < 0)
@@ -14,6 +15,7 @@ Array::Array(const int size, const int value)
 	for (int i = 0; i < m_size; i++)
 		m_array[i] = value;
 }
+
 Array::Array(const Array &other)
 	:m_size(other.m_size)
 {
@@ -21,7 +23,6 @@ Array::Array(const Array &other)
 	for (int i = 0; i < m_size; i++)
 		m_array[i] = other.m_array[i];
 }
-
 
 Array::~Array()
 {
@@ -32,13 +33,16 @@ int Array::size() const
 {
 	return m_size;
 }
+
 void Array::print() const
 {
-	std::cout << "[";
+
+	std::cout << *this;
+	/*std::cout << "[";
 	for (int i = 0; i < m_size - 1; i++)
 		std::cout << m_array[i] << ",";
 
-	std::cout << m_array[m_size - 1] << "]\n";
+	std::cout << m_array[m_size - 1] << "]\n";*/
 
 }
 
@@ -54,22 +58,21 @@ const int& Array::operator[](const int index) const
 	return m_array[index];
 }
 
-//Array& Array::operator= (const Array&& other)
-//{
-//	if (this == &other) return *this;
-//
-//	if (m_size != other.m_size)
-//	{
-//		m_size = other.m_size;
-//		delete[]m_array;
-//		m_array = new int[m_size];
-//	}
-//	for (int i = 0; i < m_size; i++)
-//		m_array[i] = other.m_array[i];
-//
-//	return *this;
-//
-//}
+Array& Array::operator= (Array&& other)
+{
+
+	/*
+	 //альтернатива реализации через copy-and-swap idiom
+	 //медленее работает только если размеры массивов одинаковые( память не нужно удалять)
+	  Array &Array::operator=(Array other)
+	  {
+	    swap(other);
+		return *this;
+	  }
+	*/
+	swap(other);
+	return *this;
+}
 
 Array&Array::operator= (const Array &other)
 {
@@ -134,6 +137,7 @@ void Array::swap(Array& other)
 	std::swap(m_size, other.m_size);
 	std::swap(m_array, other.m_array);
 }
+
 Array Array::operator+(const Array& other) const
 {
    Array res(m_size+other.m_size);
@@ -145,11 +149,30 @@ Array Array::operator+(const Array& other) const
    
 	
 }
+
 Array &Array::operator+=(const Array& other)
 {
 	Array tmp(*this + other);
 	this->swap(tmp);
 	return *this;
+}
+
+std::ostream& operator<<(std::ostream& stream, const Array& arr)
+{
+	stream << "[";
+	for (int i = 0; i < arr.size() - 1; i++)
+		stream << arr[i] << ",";
+
+	stream << arr[arr.size() - 1] << "]\n";
+	return stream;
+}
+
+std::istream& operator >> (std::istream& stream, const Array& arr)
+{
+	for (int i = 0; i < arr.size() - 1; i++)
+		stream >> arr[i];
+
+	return stream;
 }
 
 
