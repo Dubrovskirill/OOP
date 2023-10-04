@@ -19,10 +19,15 @@ int main()
 	using std::endl;
 
 	Array arr(10, 0);
-	cout << arr[3] << ' ' << arr[9] << endl;
+	/*cout << arr[3] << ' ' << arr[9] << endl;
 	arr[3] = 4;
 	arr[5] = arr[3];
-	cout << calculateAvg(arr) << endl;
+	cout << calculateAvg(arr) << endl;*/
+	arr.RandArray(0, 100);
+	arr.print();
+	arr.RandArrayIns(-50, 100);
+	arr.print();
+	arr.RandArrayDes(-50, 100);
 	arr.print();
 	return 0;
 
