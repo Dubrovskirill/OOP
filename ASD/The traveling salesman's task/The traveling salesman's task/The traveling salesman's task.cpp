@@ -44,7 +44,7 @@ int MinWay(int* arr, int** matr, int n)
 bool Permutation(int n, int* arr)
 {
 	int i = n - 2;
-	while (i != 0 && arr[i] >= arr[i + 1]) i--;
+	while (i != 0 && arr[i] >= arr[i + 1]) i--;//12341 12431 13421
 	if (i == 0) return false;
 	int j = n - 1;
 	while (arr[i] >= arr[j]) j--;
@@ -67,7 +67,7 @@ void Dijkstra(int const count_sity,int start_sity, int**Matr_Way_Weight,int *Min
 	Way[0] = start_sity;
 	Way[count_sity] = start_sity;
 	int i, n;
-	for (i = 1, n = 1; i < count_sity; n++)
+	for (i = 1, n = 1; i < count_sity; n++)//12341
 		if (n != start_sity)
 		{
 			Way[i] = n;
@@ -151,11 +151,11 @@ int Heuristics_1(int const count_sity, int start_sity, int** Matr_Way_Weight, in
 				}
 		way_data[n] = row; way_data[n + 1] = coll;
 		n += 2;
-		//OutMasPtr(way_data, count_sity*2);
-		//std::cout << " " << min_weight << std::endl;
+		OutMasPtr(way_data, count_sity*2);
+		std::cout << " " << min_weight << std::endl;
 	}
-	/*OutMasPtr(way_data, count_sity * 2);
-	std::cout << " " << min_weight << std::endl;*/
+	OutMasPtr(way_data, count_sity * 2);
+	//std::cout << " " << min_weight << std::endl;
 	int k = 0,i,j;
 	
 	for (j = 0; j < count_sity+1; j++)
@@ -195,9 +195,9 @@ int main()
 	int** Matr_Way_Weight;
 	int count_sity;//задаем количество городов
 	int start_sity;//задаем начальный город
-	cout << "Количество городов: ";
+	cout << "���������� �������: ";
 	cin >> count_sity;
-	cout <<endl<< "Начальный город: ";
+	cout <<endl<< "��������� �����: ";
 	cin >> start_sity;
 	cout << endl;
 	int i, j;
@@ -228,6 +228,8 @@ int main()
 	cout << " " << max_way_weight << endl << "Время работы: " << time <<" наносекунд"<< endl;
 	delete[]Min_Way;
 	delete[]Max_Way;
+
+
 	//эвристика
 	int* Min_Way_H = new int[count_sity+1];
 	start = std::chrono::high_resolution_clock::now();
