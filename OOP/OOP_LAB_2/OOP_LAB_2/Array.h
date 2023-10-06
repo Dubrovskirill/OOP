@@ -7,10 +7,8 @@ public:
 	Array(const Array &other);
 	~Array();
 
-	int size() const;
-
-	void print() const;
-
+	int Size() const;
+	void Print() const;
 	int &operator[](const int index);
 	const int &operator[](const int index) const;
 	Array& operator= ( Array&& other);
@@ -18,17 +16,17 @@ public:
 	void RandArray(int FirstGap, int LastGap)const;
 	void RandArrayIns(int FirstGap, int LastGap)const;
 	void RandArrayDes(int FirstGap, int LastGap)const;
-	void swap(Array& other);
+	void Swap(Array& other);
 	Array operator+(const Array& other) const;
 	Array &operator+=(const Array& other);
+	void Resize(int size);
+	int ISearch(const int e) const;
 
 
 private:
 	int* m_array = nullptr;
 	int m_size = 0;
 };
-
+//потоковый ввод/вывод
 std::ostream& operator<<(std::ostream& stream, const Array& arr);
-
-
 std::istream& operator >> (std::istream& stream, const Array& arr);

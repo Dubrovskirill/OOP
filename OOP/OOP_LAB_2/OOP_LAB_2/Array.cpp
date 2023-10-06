@@ -29,12 +29,12 @@ Array::~Array()
 	delete[] m_array;
 }
 
-int Array::size() const
+int Array::Size() const
 {
 	return m_size;
 }
 
-void Array::print() const
+void Array::Print() const
 {
 
 	std::cout << *this;
@@ -70,7 +70,7 @@ Array& Array::operator= (Array&& other)
 		return *this;
 	  }
 	*/
-	swap(other);
+	Swap(other);
 	return *this;
 }
 
@@ -132,7 +132,7 @@ void Array::RandArrayDes(int f_gap, int l_gap)const
 		m_array[i] = f_gap;
 }
 
-void Array::swap(Array& other)
+void Array::Swap(Array& other)
 {
 	std::swap(m_size, other.m_size);
 	std::swap(m_array, other.m_array);
@@ -153,26 +153,47 @@ Array Array::operator+(const Array& other) const
 Array &Array::operator+=(const Array& other)
 {
 	Array tmp(*this + other);
-	this->swap(tmp);
+	this->Swap(tmp);
 	return *this;
 }
 
 std::ostream& operator<<(std::ostream& stream, const Array& arr)
 {
 	stream << "[";
-	for (int i = 0; i < arr.size() - 1; i++)
+	for (int i = 0; i < arr.Size() - 1; i++)
 		stream << arr[i] << ",";
 
-	stream << arr[arr.size() - 1] << "]\n";
+	stream << arr[arr.Size() - 1] << "]\n";
 	return stream;
 }
 
 std::istream& operator >> (std::istream& stream, const Array& arr)
 {
-	for (int i = 0; i < arr.size() - 1; i++)
+	for (int i = 0; i < arr.Size() - 1; i++)
 		stream >> arr[i];
 
 	return stream;
+}
+
+void Array::Resize(int size)
+{
+	if (size < 0)
+	{
+		std::cerr << "Array::rersize: size is negative, inveert...\n";
+		size = -size;
+	}
+	Array res(size);
+	int count = std::min(m_size, size);
+	for (int i = 0; i < count; i++)
+		res.m_array[i] = m_array[i];
+}
+
+int Array::ISearch(const int e) const
+{
+	for (int i = 0; i < m_size; i++)
+		if (m_array[i] == e) return i;
+	return -1;
+
 }
 
 
