@@ -21,6 +21,7 @@ public:
 	Array &operator+=(const Array& other);
 	void Resize(int size);
 	int ISearch(const int e) const;
+	void Sort() ;
 
 
 private:
