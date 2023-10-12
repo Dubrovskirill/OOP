@@ -20,8 +20,9 @@ public:
 	Array operator+(const Array& other) const;
 	Array &operator+=(const Array& other);
 	void Resize(int size);
-	int ISearch(const int e) const;
-	void Sort() ;
+	int ISearch(const int &el) const;
+	void Sort();
+	bool Insert(const int &e, int &in);
 
 
 private:

@@ -188,10 +188,10 @@ void Array::Resize(int size)
 		res.m_array[i] = m_array[i];
 }
 
-int Array::ISearch(const int e) const
+int Array::ISearch(const int &el) const
 {
 	for (int i = 0; i < m_size; i++)
-		if (m_array[i] == e) return i;
+		if (m_array[i] == el) return i;
 	return -1;
 }
 
@@ -204,6 +204,19 @@ void Array::Sort()
 		for (j = i - 1; key < m_array[j] && j >= 0; j--) m_array[j + 1] = m_array[j];
 		m_array[j + 1] = key;
 	}
+}
+
+bool Array::Insert(const int& e, int& in)
+{
+	if (in >= m_size) return false;
+	Array arr(1, 0);
+	*this += arr;
+	int i;
+	for (i = m_size-2; i >= in; i--)
+		m_array[i + 1] = m_array[i];
+	m_array[i + 1] = e;
+	return true;
+
 }
 
 

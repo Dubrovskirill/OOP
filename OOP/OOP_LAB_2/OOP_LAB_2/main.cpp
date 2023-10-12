@@ -18,7 +18,7 @@ int main()
 	using std::cin;
 	using std::endl;
 
-	Array arr_1(10, 0);
+	Array arr_1(10,0);
 	Array arr_2(10,0);
 	cout << "Creating an array of random numbers: ";
 	arr_1.RandArray(0, 100);
@@ -46,6 +46,20 @@ int main()
 	cout << "Sort the array arr_1: ";
 	arr_1.Sort();
 	cout << arr_1;
+	cout << endl;
+
+	cout << "Insert an element by index:\nelement - 228, index - 5\n";
+	int el = 228; index = 10;
+	//arr_1.Insert(el, index);
+	if (!arr_1.Insert(el, index)) cout<<"There is no such index\n";
+	else cout << arr_1;
+	cout << endl;
+	cout << "Insert an element by index:\nelement - 333, index - 20\n";
+	el = 333; index = 20;
+	//arr_1.Insert(el, index);
+	if (!arr_1.Insert(el, index)) cout << "There is no such index\n";
+	else cout << arr_1;
+	cout << endl;
 	return 0;
 
 }
