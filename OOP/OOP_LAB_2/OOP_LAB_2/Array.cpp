@@ -206,7 +206,7 @@ void Array::Sort()
 	}
 }
 
-bool Array::Insert(const int& e, int& in)
+bool Array::Insert(const int& e, const int& in)
 {
 	if (in >= m_size) return false;
 	Array arr(1, 0);
@@ -218,5 +218,24 @@ bool Array::Insert(const int& e, int& in)
 	return true;
 
 }
+
+bool Array::DelbyIndex(const int& in)
+{
+	if (in >= m_size) return false;
+	int i;
+	for (i = in; i <= m_size - 2;)
+	{
+		m_array[i] = m_array[i + 1];
+		i++;
+	}
+	m_array[i] = 0;
+	Array arr(m_size - 1);
+	for (i = 0; i < arr.m_size; i++)
+		arr.m_array[i] = m_array[i];
+	*this=arr;
+	return true;
+
+}
+
 
 

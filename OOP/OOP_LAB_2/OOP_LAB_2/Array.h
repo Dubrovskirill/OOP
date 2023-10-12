@@ -19,11 +19,14 @@ public:
 	void Swap(Array& other);
 	Array operator+(const Array& other) const;
 	Array &operator+=(const Array& other);
+	Array operator-(const int num);
+	Array& operator-=(const int num);
 	void Resize(int size);
 	int ISearch(const int &el) const;
 	void Sort();
-	bool Insert(const int &e, int &in);
-
+	bool Insert(const int &e, const int &in);
+	bool DelbyIndex(const int& in);
+	void Copy();
 
 private:
 	int* m_array = nullptr;
