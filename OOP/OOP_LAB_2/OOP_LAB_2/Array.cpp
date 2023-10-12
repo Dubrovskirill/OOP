@@ -66,7 +66,7 @@ Array& Array::operator= (Array&& other)
 	 //медленее работает только если размеры массивов одинаковые( память не нужно удалять)
 	  Array &Array::operator=(Array other)
 	  {
-	    swap(other);
+	    Swap(other);
 		return *this;
 	  }
 	*/
@@ -234,8 +234,16 @@ bool Array::DelbyIndex(const int& in)
 		arr.m_array[i] = m_array[i];
 	*this=arr;
 	return true;
-
 }
+
+bool Array::DelElement(const int& el)
+{
+	int index = ISearch(el);
+	if (index == -1) return false;
+	return DelbyIndex(index);
+	
+}
+
 
 
 
