@@ -80,6 +80,16 @@ int main()
 	arr_3.DelElementAll(el);
 	cout << arr_3;
 	cout << endl;
+	Array arr_4(20, 0);
+	arr_4.RandArray(-50, 100);
+	cout << arr_4 << "Search for the maximum/minimum element: "<<endl;
+	int i_max = arr_4.IMax();
+	if (i_max==-1) cout << "The array is empty" << endl;
+	else cout << "Maximum element: " << arr_4[i_max] << endl;
+	int i_min = arr_4.IMin();
+	if (i_min==-1) cout << "The array is empty" << endl;
+	else cout << "Minimum element: " << arr_4[i_min] << endl;
+	
 	return 0;
 
 }

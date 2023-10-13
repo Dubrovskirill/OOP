@@ -20,12 +20,14 @@ public:
 	Array operator+(const Array& other) const;
 	Array &operator+=(const Array& other);
 	void Resize(int size);
-	int ISearch(const int &el, int i=0);
+	int ISearch(const int &el, int i=0)const;
 	void Sort();
 	bool Insert(const int &e, const int &in);
 	bool DelbyIndex(const int& in);
 	bool DelElement(const int& el);
 	bool DelElementAll(const int& el);
+	int IMax();
+	int IMin();
 
 private:
 	int* m_array = nullptr;
