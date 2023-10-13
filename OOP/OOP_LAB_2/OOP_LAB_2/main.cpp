@@ -72,6 +72,14 @@ int main()
 	else cout << arr_1;
 	cout << endl;
 
+	Array arr_3(8);
+	arr_3[0] = 1; arr_3[1] = 2; arr_3[2] = 3; arr_3[3] = 2; arr_3[4] = 3; arr_3[5] = 1; arr_3[6] = 1; arr_3[7] = 3;
+	cout << arr_3;
+	el = 3;
+	cout << "Deleting all elements with the value: "<<el<<endl;
+	arr_3.DelElementAll(el);
+	cout << arr_3;
+	cout << endl;
 	return 0;
 
 }

@@ -169,7 +169,7 @@ std::ostream& operator<<(std::ostream& stream, const Array& arr)
 
 std::istream& operator >> (std::istream& stream, const Array& arr)
 {
-	for (int i = 0; i < arr.Size() - 1; i++)
+	for (int i = 0; i < arr.Size(); i++)
 		stream >> arr[i];
 
 	return stream;
@@ -188,9 +188,9 @@ void Array::Resize(int size)
 		res.m_array[i] = m_array[i];
 }
 
-int Array::ISearch(const int &el) const
+int Array::ISearch(const int& el, int i)
 {
-	for (int i = 0; i < m_size; i++)
+	for (i; i < m_size; i++)
 		if (m_array[i] == el) return i;
 	return -1;
 }
@@ -241,7 +241,18 @@ bool Array::DelElement(const int& el)
 	int index = ISearch(el);
 	if (index == -1) return false;
 	return DelbyIndex(index);
-	
+}
+
+bool Array::DelElementAll(const int& el)
+{
+	int index = ISearch(el);
+	if (index == -1) return false;
+	while (DelbyIndex(index))
+	{
+		index = ISearch(el,index);
+		if (index == -1) return false;
+	}
+	return true;
 }
 
 
