@@ -157,6 +157,20 @@ Array &Array::operator+=(const Array& other)
 	return *this;
 }
 
+bool Array::operator==(const Array& other) const
+{
+	if (m_size != other.m_size) return false;
+	for (int i = 0; i < m_size; i++)
+		if (m_array[i] != other.m_array[i]) return false;
+	return true;
+}
+
+bool Array::operator!=(const Array& other) const
+{
+	if (*this == other) return false;
+	return true;
+}
+
 std::ostream& operator<<(std::ostream& stream, const Array& arr)
 {
 	stream << "[";
@@ -265,6 +279,7 @@ int Array::IMax()
 	}
 	return i_max;
 }
+
 int Array::IMin()
 {
 	int i_min = -1, i;

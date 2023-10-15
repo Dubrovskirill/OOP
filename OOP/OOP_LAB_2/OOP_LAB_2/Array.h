@@ -19,6 +19,8 @@ public:
 	void Swap(Array& other);
 	Array operator+(const Array& other) const;
 	Array &operator+=(const Array& other);
+	bool operator==(const Array& other) const;
+	bool operator!=(const Array& other) const;
 	void Resize(int size);
 	int ISearch(const int &el, int i=0)const;
 	void Sort();

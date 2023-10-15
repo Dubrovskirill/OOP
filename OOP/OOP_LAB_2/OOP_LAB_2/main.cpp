@@ -89,7 +89,21 @@ int main()
 	int i_min = arr_4.IMin();
 	if (i_min==-1) cout << "The array is empty" << endl;
 	else cout << "Minimum element: " << arr_4[i_min] << endl;
-	
+	cout << endl;
+
+	cout << "Operators == and !=: \n";
+	Array arr_5(10), arr_6(10), arr_7(10);
+	arr_5.RandArray(-50, 100);
+	arr_6 = arr_5;
+	cout << "Array 1: " << arr_5 << "Array 2: " << arr_6 << "Array 3: " << arr_7 << "Array 4: " << arr_4;
+	if (arr_5 == arr_6) cout << "Arry 1 == Array 2\n";
+	else  cout << "Arry 1 != Array 2\n";
+	if (arr_5 != arr_6) cout << "Arry 1 != Array 2\n";
+	else  cout << "Arry 1 == Array 2\n";
+	if (arr_5 == arr_7) cout << "Arry 1 == Array 3\n";
+	else  cout << "Arry 1 != Array 2\n";
+	if (arr_5 == arr_4) cout << "Arry 1 == Array 4\n";
+	else  cout << "Arry 1 != Array 4\n";
 	return 0;
 
 }
