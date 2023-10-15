@@ -146,8 +146,6 @@ Array Array::operator+(const Array& other) const
    for (int i = 0; i < other.m_size; i++)
 	   res.m_array[m_size+i] = other.m_array[i];
    return res;
-   
-	
 }
 
 Array &Array::operator+=(const Array& other)
@@ -169,6 +167,18 @@ bool Array::operator!=(const Array& other) const
 {
 	if (*this == other) return false;
 	return true;
+}
+
+Array Array::operator+(const int& item)
+{
+	Array arr(1, item);
+	return *this + arr;
+}
+
+Array Array::operator+=(const int& item)
+{
+	Array arr(1, item);
+	return *this += arr;;
 }
 
 std::ostream& operator<<(std::ostream& stream, const Array& arr)

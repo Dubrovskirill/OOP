@@ -21,6 +21,8 @@ public:
 	Array &operator+=(const Array& other);
 	bool operator==(const Array& other) const;
 	bool operator!=(const Array& other) const;
+	Array operator+(const int& item);
+	Array operator+=(const int& item);
 	void Resize(int size);
 	int ISearch(const int &el, int i=0)const;
 	void Sort();

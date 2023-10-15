@@ -104,6 +104,12 @@ int main()
 	else  cout << "Arry 1 != Array 2\n";
 	if (arr_5 == arr_4) cout << "Arry 1 == Array 4\n";
 	else  cout << "Arry 1 != Array 4\n";
+	cout << endl;
+	
+	cout << "Operators + è +=: \n";
+	cout<< arr_7<<" + 5 + 10: " << arr_7 + 5 + 10 << endl;
+	arr_7 += 38;
+	cout<<arr_7<<"+= 38: " << arr_7;
 	return 0;
 
 }
