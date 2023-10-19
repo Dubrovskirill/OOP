@@ -1,8 +1,9 @@
 #include<iostream>
 #include "Array.h"
 #include"assert.h"
+template <typename T>
 
-double calculateAvg(Array arr)
+double calculateAvg(Array<T> arr)
 {
 	double avg = 0;
 	if (arr.Size() == 0) return 0;
@@ -12,14 +13,15 @@ double calculateAvg(Array arr)
 	avg /= arr.Size();
 	return avg;
 }
+
 int main()
 {
 	using std::cout;
 	using std::cin;
 	using std::endl;
 
-	Array arr_1(10,0);
-	Array arr_2(10,0);
+	Array<int> arr_1(10,0);
+	Array<int> arr_2(10,0);
 	cout << "Creating an array of random numbers: ";
 	arr_1.RandArray(0, 100);
 	arr_1.Print();
@@ -72,7 +74,7 @@ int main()
 	else cout << arr_1;
 	cout << endl;
 
-	Array arr_3(8);
+	Array<int> arr_3(8);
 	arr_3[0] = 1; arr_3[1] = 2; arr_3[2] = 3; arr_3[3] = 2; arr_3[4] = 3; arr_3[5] = 1; arr_3[6] = 1; arr_3[7] = 3;
 	cout << arr_3;
 	el = 3;
@@ -80,7 +82,7 @@ int main()
 	arr_3.DelElementAll(el);
 	cout << arr_3;
 	cout << endl;
-	Array arr_4(20, 0);
+	Array<int> arr_4(20, 0);
 	arr_4.RandArray(-50, 100);
 	cout << arr_4 << "Search for the maximum/minimum element: "<<endl;
 	int i_max = arr_4.IMax();
@@ -92,7 +94,7 @@ int main()
 	cout << endl;
 
 	cout << "Operators == and !=: \n";
-	Array arr_5(10), arr_6(10), arr_7(10);
+	Array<int> arr_5(10), arr_6(10), arr_7(10);
 	arr_5.RandArray(-50, 100);
 	arr_6 = arr_5;
 	cout << "Array 1: " << arr_5 << "Array 2: " << arr_6 << "Array 3: " << arr_7 << "Array 4: " << arr_4;
@@ -118,7 +120,7 @@ int main()
 	cout << endl;*/
 
 	cout << arr_5;
-	Array::Iterator it = arr_5.begin();
+	Array<int>::Iterator it = arr_5.begin();
 	cout << "Iterator on begin: " << *it<<endl;
 	it = arr_5.end();
 	cout << "Iterator on end: " << *(--it) << endl;
@@ -135,10 +137,10 @@ int main()
 
 	cout << arr_5;
 	index = 2;
-	Array::Iterator gap1 = arr_5.begin();
+	Array<int>::Iterator gap1 = arr_5.begin();
 	for (int c = 0; c != index; gap1++, c++);
 	index = 8;
-	Array::Iterator gap2 = arr_5.begin();
+	Array<int>::Iterator gap2 = arr_5.begin();
 	for (int c = 0; c != index; gap2++, c++);
 	arr_5.Remove(gap1, gap2);
 	cout << arr_5;
