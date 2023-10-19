@@ -1,6 +1,6 @@
-#include "Array.h"
-#include<iostream>
-#include"assert.h"
+//#include "Array.h"
+//#include<iostream>
+//#include"assert.h"
 
 //Array::Array(const int size, const int value)
 //{

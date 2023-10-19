@@ -49,12 +49,12 @@ public:
 	Iterator end();
 	ConstIterator begin() const;
 	ConstIterator end() const;
-	bool Insert(const int& el, Iterator &it);
-	bool Remove(Iterator& gap1, Iterator& gap2);
-	bool Remove(Iterator& it);
+	bool Insert(const ItemType& el, Iterator &it);
+	bool Remove(const Iterator gap1, Iterator &gap2);
+	bool Remove(const Iterator& it);
 
 private:
-	int* m_array = nullptr;
+	ItemType* m_array = nullptr;
 	int m_size = 0;
 };
 
@@ -92,7 +92,7 @@ Array<ItemType>::Array(const int size, const ItemType& value)
 		m_size = -size;
 	}
 	else m_size = size;
-	m_array = new int[m_size];
+	m_array = new ItemType[m_size];
 
 	for (int i = 0; i < m_size; i++)
 		m_array[i] = value;
@@ -102,7 +102,7 @@ template <typename ItemType>
 Array<ItemType>::Array(const Array& other)
 	:m_size(other.m_size)
 {
-	m_array = new int[m_size];
+	m_array = new ItemType[m_size];
 	for (int i = 0; i < m_size; i++)
 		m_array[i] = other.m_array[i];
 }
@@ -178,7 +178,7 @@ Array<ItemType>& Array<ItemType>::operator= (const Array& other)
 	{
 		m_size = other.m_size;
 		delete[]m_array;
-		m_array = new int[m_size];
+		m_array = new ItemType[m_size];
 	}
 	for (int i = 0; i < m_size; i++)
 		m_array[i] = other.m_array[i];
@@ -187,8 +187,8 @@ Array<ItemType>& Array<ItemType>::operator= (const Array& other)
 
 }
 
-template <typename ItemType>
-void Array<ItemType>::RandArray(int f_gap, int l_gap)const
+template <>
+void Array<int>::RandArray(int f_gap, int l_gap)const
 {
 	if (f_gap > l_gap)
 	{
@@ -198,8 +198,8 @@ void Array<ItemType>::RandArray(int f_gap, int l_gap)const
 	for (int i = 0; i < m_size; i++) m_array[i] = rand() % l_gap + f_gap + 1;
 }
 
-template <typename ItemType>
-void Array<ItemType>::RandArrayIns(int f_gap, int l_gap)const
+template <>
+void Array<int>::RandArrayIns(int f_gap, int l_gap)const
 {
 	if (f_gap > l_gap) std::swap(f_gap, l_gap);
 	srand(time(0));
@@ -215,8 +215,8 @@ void Array<ItemType>::RandArrayIns(int f_gap, int l_gap)const
 
 }
 
-template <typename ItemType>
-void Array<ItemType>::RandArrayDes(int f_gap, int l_gap)const
+template <>
+void Array<int>::RandArrayDes(int f_gap, int l_gap)const
 {
 	if (f_gap > l_gap) std::swap(f_gap, l_gap);
 	srand(time(0));
@@ -335,7 +335,7 @@ void Array<ItemType>::Sort()
 {
 	for (int i = 1; i < m_size; i++)
 	{
-		int key = m_array[i];
+		ItemType key = m_array[i];
 		int j;
 		for (j = i - 1; key < m_array[j] && j >= 0; j--) m_array[j + 1] = m_array[j];
 		m_array[j + 1] = key;
@@ -345,7 +345,7 @@ void Array<ItemType>::Sort()
 template <typename ItemType>
 bool Array<ItemType>::Insert(const ItemType& e, const int& in)
 {
-	if (in >= m_size) return false;
+	if (in > m_size) return false;
 	Resize(m_size + 1);
 	int i;
 	for (i = m_size - 2; i >= in; i--)
@@ -365,7 +365,7 @@ bool Array<ItemType>::DelbyIndex(const int& in)
 		m_array[i] = m_array[i + 1];
 		i++;
 	}
-	m_array[i] = 0;
+	m_array[i] = ItemType(0);
 	Array arr(m_size - 1);
 	for (i = 0; i < arr.m_size; i++)
 		arr.m_array[i] = m_array[i];
@@ -526,21 +526,23 @@ Array<ItemType>::ConstIterator Array<ItemType>::end() const
 	return ConstIterator(this, m_size);
 }
 
+
+
+
 template <typename ItemType> typename
-bool Array<ItemType>::Insert(const int& el, Iterator& it)
+bool Array<ItemType>::Insert(const ItemType& el, Iterator& it)
 {
 	Array::Iterator i = end();
-	if (i == it) return false;
-	Resize(m_size + 1);
+	if (it.Pos()<0 || it.Pos()>i.Pos()) assert("false");
+	return Insert(el, it.Pos());
+	/*Resize(m_size + 1);
 	for (; i != it; i--)
 		*++i = *--i;
-	*i = el;
-	it++;
-	return true;
+	*i = el;*/
 }
 
 template <typename ItemType> typename
-bool Array<ItemType>::Remove(Iterator& gap1, Iterator& gap2)
+bool Array<ItemType>::Remove(const Iterator gap1, Iterator& gap2)
 {
 	if (gap1.Pos() > gap2.Pos() || gap1.Pos() < 0 || gap2.Pos() > m_size)
 		return false;
@@ -557,7 +559,7 @@ bool Array<ItemType>::Remove(Iterator& gap1, Iterator& gap2)
 }
 
 template <typename ItemType> typename
-bool Array<ItemType>::Remove(Iterator& it)
+bool Array<ItemType>::Remove(const Iterator& it)
 {
 	Iterator it2(this, it.Pos() + 1);
 	return Remove(it, it2);
