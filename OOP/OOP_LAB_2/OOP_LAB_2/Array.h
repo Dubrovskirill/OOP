@@ -51,7 +51,7 @@ public:
 	ConstIterator end() const;
 	bool Insert(const ItemType& el, Iterator &it);
 	bool Remove(const Iterator gap1, Iterator &gap2);
-	bool Remove(const Iterator& it);
+	bool Remove(const Iterator it);
 
 private:
 	ItemType* m_array = nullptr;
@@ -559,7 +559,7 @@ bool Array<ItemType>::Remove(const Iterator gap1, Iterator& gap2)
 }
 
 template <typename ItemType> typename
-bool Array<ItemType>::Remove(const Iterator& it)
+bool Array<ItemType>::Remove(const Iterator it)
 {
 	Iterator it2(this, it.Pos() + 1);
 	return Remove(it, it2);
