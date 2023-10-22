@@ -3,24 +3,52 @@
 #include<iostream>
 #include <chrono>
 #include <fstream>
-void Insert(int * array,int size, int h, int r)
+#include<vector>
+void CheckSort(std::vector<int>& vec,const int &size)
+{
+	for (int i = 1; i < size; i++)
+	{
+		if (vec[i - 1] > vec[i])
+		{
+			std::cout << ("Error::The array is not sorted");
+			break;
+		}
+	}
+}
+
+void Insert(std::vector<int>& vec, const int& size, int h, int r)
 {
 	for (int i = h+r; i < size; i += h)
 	{
-		int key = array[i];
+		int key = vec[i];
 		int j;
-		for (j = i - h; key < array[j] && j >= 0; j -= h) array[j + h] = array[j];
-		array[j + h] = key;
+		for (j = i - h; j >= 0 && key < vec[j]; j -= h)
+			vec[j + h] = vec[j];
+		vec[j + h] = key;
 	}
 }
-void ShellSort(int *array,const int size)
+
+void StandartStep(std::vector<int>* vec, const int& size)
 {
-	const int s = 3;
-	int h[s] = { 5,2,1 };
-	for (int k = 0; k < 3; k++)
-		for (int r = 0; r < h[k]; r++)
-			Insert(array, size, h[k], r);
+	int s = size;
+	while (s / 2 >= 1)
+	{
+		s /= 2;
+		vec->push_back(s);
+	}
 }
+
+void ShellSort(std::vector<int>& vec, const int& size)
+{
+	std::vector<int> step;
+	StandartStep(&step, size);
+	for (int k = 0; k < step.size(); k++)
+		for (int r = 0; r < step[k]; r++)
+			Insert(vec, size, step[k], r);
+
+}
+
+
 
 
 int main()
@@ -28,15 +56,27 @@ int main()
 	using std::cout;
 	using std::cin;
 	using std::endl;
-	const int size = 20;
-	int array[size] = { 64,34,75,87,64,5,432,467,52,34,7,4,1,5,564,32,56,2,54, 87 };
-	for (int i = 0; i < size; i++)
-		cout << array[i] << " ";
+	std::vector<int>vector;
+	std::ifstream inputFile("example.txt");
+	if (inputFile.is_open()) 
+	{
+		int num;
+		while (inputFile>>num) 
+			vector.push_back(num);
+	}
+	else cout << "File opening error!\n";
+	inputFile.close();
+	for (int i = 0; i < vector.size(); i++)
+		cout << vector[i] << " ";
+	const int size = vector.size();
+	
+	ShellSort(vector, size);
+	CheckSort(vector, size);
+
 	cout << endl;
-	ShellSort(array, size);
-	for (int i = 0; i < size; i++)
-		cout << array[i] << " ";
-	cout << endl;
+	for (int i = 0; i < vector.size(); i++)
+		cout << vector[i] << " ";
+	
 	
 	return 0;
  }
