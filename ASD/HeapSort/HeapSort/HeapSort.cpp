@@ -50,7 +50,8 @@ void HeapSort(std::vector<int>& vec, const int size)
 void Input(int j, int i, std::vector<int>& vector)
 {
 	std::string s = "arr_size_" + std::to_string(i) + "_in_range_" + std::to_string(j) + ".txt";
-	std::ifstream inputFile(s);
+	std::string path = "../../../../";
+	std::ifstream inputFile(path + s);
 	if (inputFile.is_open())
 	{
 		int num;
