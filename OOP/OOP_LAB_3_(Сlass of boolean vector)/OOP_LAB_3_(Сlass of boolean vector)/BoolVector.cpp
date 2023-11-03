@@ -1,6 +1,10 @@
 #include "BoolVector.h"
 #include<stdint.h>
 #include<iostream>
+#include <assert.h>
+
+using UI = unsigned int;
+using UC = unsigned char;
 
 BoolVector::BoolVector()
 {
@@ -92,6 +96,11 @@ int BoolVector::Lenght() const
 	return m_length;
 }
 
+int BoolVector::CellCount() const
+{
+	return m_cellcount;
+}
+
 void  BoolVector::Set1(const int& cell, const int& pos)const
 {
 	uint8_t mask = 1;
@@ -114,3 +123,65 @@ void BoolVector::Swap(BoolVector& other)
 	std::swap(m_data, other.m_data);
 }
 
+UC& BoolVector::operator[](const int index)
+{
+	assert(index >= 0 && index < m_size);
+	return m_data[index];
+}
+
+const UC& BoolVector::operator[](const int index) const
+{
+	assert(index >= 0 && index < m_size);
+	return m_data[index];
+}
+
+std::ostream& operator<<(std::ostream& stream, const BoolVector& bvec)
+{
+	for (int i = 0; i < bvec.CellCount(); i++)
+	{
+		stream << "[ ";
+		for (uint8_t j = 128; j > 0; j >>= 1)
+		{
+			if (bvec[i] & j)
+				std::cout << "1 ";
+			else
+				std::cout << "0 ";
+		}
+		stream << "]";
+	}
+	std::cout << std::endl;
+	return stream;
+}
+
+std::istream& operator >> (std::istream& stream, BoolVector& bvec)
+{
+	char s;
+	for (int i = 0; i < bvec.Lenght(); i++)
+	{
+		stream >> s;
+		if (s == '1')
+			bvec.Set1(i / bvec.m_size, i % bvec.m_size);
+		else
+			bvec.Set0(i / bvec.m_size, i % bvec.m_size);
+	}
+	return stream;
+}
+
+/*std::ostream& operator<<(std::ostream& stream, const Array<ItemType>& arr)
+{
+	stream << "[";
+	for (int i = 0; i < arr.Size() - 1; i++)
+		stream << arr[i] << ",";
+
+	stream << arr[arr.Size() - 1] << "]\n";
+	return stream;
+}
+
+template <typename ItemType>
+std::istream& operator >> (std::istream& stream, Array<ItemType>& arr)
+{
+	for (int i = 0; i < arr.Size(); i++)
+		stream >> arr[i];
+
+	return stream;
+}*/

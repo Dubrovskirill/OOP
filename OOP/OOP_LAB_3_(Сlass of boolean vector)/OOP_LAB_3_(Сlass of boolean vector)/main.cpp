@@ -25,5 +25,11 @@ int main()
 	BoolVector bvec_4(bvec_3);
 	cout << "bvec_4: "; bvec_4.Print();
 	cout << endl;
+
+	BoolVector bvec_5(5);
+	cout << bvec_5;
+	cin >> bvec_5;
+	cout << bvec_5;
+
 	return 0;
 }

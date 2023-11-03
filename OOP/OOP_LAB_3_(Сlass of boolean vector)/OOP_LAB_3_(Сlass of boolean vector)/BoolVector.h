@@ -1,5 +1,6 @@
 #pragma once
 #include<stdint.h>
+#include<iostream>
 class BoolVector
 {
 public:
@@ -15,9 +16,12 @@ public:
 	void PrintCell(const int& number_cell)const;
 	void Print()const;
 	int Lenght()const;
+	int CellCount()const;
 	void Set1(const int& cell, const int& pos)const;
 	void Set0(const int& cell, const int& pos)const;
 	void Swap(BoolVector& other);
+	UC&operator[](const int index);
+	const UC& operator[](const int index)const;
 
 private:
 	UI m_length=0;
@@ -25,4 +29,7 @@ private:
 	uint8_t m_insignificantpart = 0;
 	UC *m_data = nullptr;
 };
-//UI m_cellcount = m_length/8+(m_length%8>0);
+
+std::ostream& operator<<(std::ostream& stream, const BoolVector& bvec);
+
+std::istream& operator>>(std::istream& stream, BoolVector& bvec);
