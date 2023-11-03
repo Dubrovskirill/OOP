@@ -9,9 +9,15 @@ public:
 
 	BoolVector();
 	BoolVector(const UI length, const bool value = 0);
+	BoolVector(const char* data);
+	BoolVector(const BoolVector& other);
 	~BoolVector();
 	void PrintCell(const int& number_cell)const;
 	void Print()const;
+	int Lenght()const;
+	void Set1(const int& cell, const int& pos)const;
+	void Set0(const int& cell, const int& pos)const;
+	void Swap(BoolVector& other);
 
 private:
 	UI m_length=0;
