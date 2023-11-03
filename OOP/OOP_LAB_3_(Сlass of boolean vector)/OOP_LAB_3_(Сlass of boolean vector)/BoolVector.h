@@ -13,6 +13,7 @@ public:
 	BoolVector(const char* data);
 	BoolVector(const BoolVector& other);
 	~BoolVector();
+	void Shift();
 	void PrintCell(const int& number_cell)const;
 	void Print()const;
 	int Lenght()const;
@@ -20,8 +21,11 @@ public:
 	void Set1(const int& cell, const int& pos)const;
 	void Set0(const int& cell, const int& pos)const;
 	void Swap(BoolVector& other);
-	UC&operator[](const int index);
-	const UC& operator[](const int index)const;
+	void Inverse();
+	//исправить
+	bool&operator[](const int index);
+	const bool& operator[](const int index)const;
+	
 
 private:
 	UI m_length=0;
@@ -31,5 +35,4 @@ private:
 };
 
 std::ostream& operator<<(std::ostream& stream, const BoolVector& bvec);
-
 std::istream& operator>>(std::istream& stream, BoolVector& bvec);

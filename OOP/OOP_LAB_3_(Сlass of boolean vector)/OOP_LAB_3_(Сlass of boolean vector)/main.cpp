@@ -24,12 +24,18 @@ int main()
 
 	BoolVector bvec_4(bvec_3);
 	cout << "bvec_4: "; bvec_4.Print();
+	bvec_4.Inverse();
+	cout << "bvec_4: "<<bvec_4; 
 	cout << endl;
 
-	BoolVector bvec_5(5);
-	cout << bvec_5;
-	cin >> bvec_5;
-	cout << bvec_5;
+	cout << "bvec_1: ";
+	for(int i=0;i<24;i++)
+		cout << bvec_1[i];
+	cout <<endl<< bvec_1;
+	bvec_1.Inverse();
+	cout << bvec_1;
+	cout << endl;
 
 	return 0;
 }
+//1011101011111

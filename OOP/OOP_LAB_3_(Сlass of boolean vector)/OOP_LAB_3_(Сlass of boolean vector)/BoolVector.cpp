@@ -35,8 +35,7 @@ BoolVector::BoolVector(const UI length, const bool value)
 			m_data[i] = m_data[i] & mask;
 	}
 
-	m_data[m_cellcount - 1] = m_data[m_cellcount - 1] >> m_insignificantpart;
-	m_data[m_cellcount - 1] = m_data[m_cellcount - 1] << m_insignificantpart;
+	Shift();
 }
 
 BoolVector::BoolVector(const char* data)
@@ -52,8 +51,7 @@ BoolVector::BoolVector(const char* data)
 		else
 			Set0(i / m_size, i % m_size);
 	}
-	m_data[m_cellcount - 1] = m_data[m_cellcount - 1] >> m_insignificantpart;
-	m_data[m_cellcount - 1] = m_data[m_cellcount - 1] << m_insignificantpart;
+	Shift();
 }
 
 BoolVector::BoolVector(const BoolVector& other)
@@ -66,6 +64,12 @@ BoolVector::BoolVector(const BoolVector& other)
 	{
 		m_data[i] = other.m_data[i];
 	}
+}
+
+void BoolVector::Shift()
+{
+	m_data[m_cellcount - 1] = m_data[m_cellcount - 1] >> m_insignificantpart;
+	m_data[m_cellcount - 1] = m_data[m_cellcount - 1] << m_insignificantpart;
 }
 
 void BoolVector::PrintCell(const int& cell)const
@@ -123,30 +127,45 @@ void BoolVector::Swap(BoolVector& other)
 	std::swap(m_data, other.m_data);
 }
 
-UC& BoolVector::operator[](const int index)
+void BoolVector::Inverse()
 {
-	assert(index >= 0 && index < m_size);
-	return m_data[index];
+	for (int i = 0; i < m_length; i++)
+	{
+		BoolVector a(*this);
+		if (a[i])
+			Set0(i / m_size, i % m_size);
+		else
+			Set1(i / m_size, i % m_size);
+	}
+	
 }
 
-const UC& BoolVector::operator[](const int index) const
+bool& BoolVector::operator[](const int index)
 {
-	assert(index >= 0 && index < m_size);
-	return m_data[index];
+	assert(index >= 0 && index < m_size * m_cellcount);
+	uint8_t mask = 1;
+	mask = mask << 7 - index % m_size;
+	bool value = m_data[index/m_size] & mask;
+	return value;
+}
+
+const bool& BoolVector::operator[](const int index) const
+{
+	assert(index >= 0 && index < m_size*m_cellcount);
+	uint8_t mask = 1;
+	mask = mask << 7 - index%m_size;
+	bool value = m_data[index / m_size] & mask;
+	return value;
 }
 
 std::ostream& operator<<(std::ostream& stream, const BoolVector& bvec)
 {
+	int n = 0;
 	for (int i = 0; i < bvec.CellCount(); i++)
 	{
 		stream << "[ ";
-		for (uint8_t j = 128; j > 0; j >>= 1)
-		{
-			if (bvec[i] & j)
-				std::cout << "1 ";
-			else
-				std::cout << "0 ";
-		}
+		for (int j = 0; j < bvec.m_size; j++)
+			stream << bvec[n++]<<" ";
 		stream << "]";
 	}
 	std::cout << std::endl;
@@ -167,21 +186,4 @@ std::istream& operator >> (std::istream& stream, BoolVector& bvec)
 	return stream;
 }
 
-/*std::ostream& operator<<(std::ostream& stream, const Array<ItemType>& arr)
-{
-	stream << "[";
-	for (int i = 0; i < arr.Size() - 1; i++)
-		stream << arr[i] << ",";
 
-	stream << arr[arr.Size() - 1] << "]\n";
-	return stream;
-}
-
-template <typename ItemType>
-std::istream& operator >> (std::istream& stream, Array<ItemType>& arr)
-{
-	for (int i = 0; i < arr.Size(); i++)
-		stream >> arr[i];
-
-	return stream;
-}*/
