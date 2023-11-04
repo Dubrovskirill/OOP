@@ -12,7 +12,8 @@ BoolVector::BoolVector()
     m_cellcount = m_length / 8 + (m_length % 8 > 0);
 	m_data = new UC[m_cellcount];
 	m_data[0] = false;
-	
+	//m_rank=m_data;
+
 }
 
 BoolVector::~BoolVector()
@@ -126,35 +127,63 @@ void BoolVector::Swap(BoolVector& other)
 	std::swap(m_insignificantpart, other.m_insignificantpart);
 	std::swap(m_data, other.m_data);
 }
-
+//void BoolVector::Inverse()
+//{
+//	for (int i = 0; i < m_length; i++)
+//	{
+//		BoolVector a(*this);
+//		if (a[i])
+//			Set0(i / m_size, i % m_size);
+//		else
+//			Set1(i / m_size, i % m_size);
+//	}
+//}
 void BoolVector::Inverse()
 {
+	
+	//BoolVector a(*this);
+	
 	for (int i = 0; i < m_length; i++)
 	{
-		BoolVector a(*this);
-		if (a[i])
-			Set0(i / m_size, i % m_size);
+		//BoolRank r = this->m_rank[i];
+		////a.r[i];
+		if (m_rank(i).m_value)
+			m_rank(i).Set0();
 		else
-			Set1(i / m_size, i % m_size);
+			m_rank(i).Set1();
 	}
 }
 
-bool& BoolVector::operator[](const int index)
+//bool& BoolVector::operator[](const int index)
+//{
+//	assert(index >= 0 && index < m_size * m_cellcount);
+//	uint8_t mask = 1;
+//	mask = mask << 7 - index % m_size;
+//	bool value = m_data[index/m_size] & mask;
+//	return value;
+//}
+//
+//const bool& BoolVector::operator[](const int index) const
+//{
+//	assert(index >= 0 && index < m_size*m_cellcount);
+//	uint8_t mask = 1;
+//	mask = mask << 7 - index%m_size;
+//	bool value = m_data[index / m_size] & mask;
+//	return value;
+//}
+
+BoolRank& BoolVector::operator[](const int index)
 {
 	assert(index >= 0 && index < m_size * m_cellcount);
-	uint8_t mask = 1;
-	mask = mask << 7 - index % m_size;
-	bool value = m_data[index/m_size] & mask;
-	return value;
+	BoolRank rank(m_data,index);
+	return rank;
 }
 
-const bool& BoolVector::operator[](const int index) const
+const BoolRank& BoolVector::operator[](const int index) const
 {
-	assert(index >= 0 && index < m_size*m_cellcount);
-	uint8_t mask = 1;
-	mask = mask << 7 - index%m_size;
-	bool value = m_data[index / m_size] & mask;
-	return value;
+	assert(index >= 0 && index < m_size * m_cellcount);
+	BoolRank rank(m_data, index);
+	return rank;
 }
 
 BoolVector& BoolVector::operator= (BoolVector&& other)
@@ -178,6 +207,7 @@ BoolVector& BoolVector::operator= (const BoolVector& other)
 	for (int i = 0; i < m_cellcount; i++)
 		m_data[i] = other.m_data[i];
 }
+
 BoolVector BoolVector::operator&(const BoolVector& other) const
 {
 	BoolVector bvec = (std::max(m_length, other.m_length));
@@ -314,7 +344,7 @@ BoolVector BoolVector::operator>>(const int& count) const
 	bvec.Shift();
 	return bvec;
 }
-//bvec.m_data[m_cellcount - (count_cu / m_size) - 1] = bvec.m_data[m_cellcount - (count_cu / m_size) - 1] << count_cu;
+
 BoolVector& BoolVector::operator>>=(const int& count)
 {
 	BoolVector tmp(*this >> count);
@@ -329,7 +359,7 @@ std::ostream& operator<<(std::ostream& stream, const BoolVector& bvec)
 	{
 		stream << "[ ";
 		for (int j = 0; j < bvec.m_size; j++)
-			stream << bvec[n++]<<" ";
+			stream << BoolRank(bvec[n++])<<" ";
 		stream << "]";
 	}
 	std::cout << std::endl;
@@ -350,4 +380,64 @@ std::istream& operator >> (std::istream& stream, BoolVector& bvec)
 	return stream;
 }
 
+
+
+BoolRank BoolVector::m_rank(const int& index)
+{
+	BoolRank r(m_data, index);
+	return r;
+}
+
+//BoolRank::
+BoolRank::BoolRank()
+{
+	m_cell = 0;
+	m_mask = 0;
+	m_data = nullptr;
+	m_value =0;
+}
+BoolRank::BoolRank(UC* data, const int& index)
+{
+	m_cell = index / 8;
+	m_mask = 1;
+	m_mask <<= 7 - index % 8;
+	m_data = data;
+	m_value = m_data[m_cell] & m_mask;
+}
+
+void BoolRank::Set1()
+{
+	m_data[m_cell] = m_data[m_cell] | m_mask;
+	m_value = m_data[m_cell] & m_mask;
+}
+
+void BoolRank::Set0()
+{
+	m_data[m_cell] = m_data[m_cell] & ~m_mask;
+	m_value = m_data[m_cell] & m_mask;
+}
+
+BoolRank& BoolRank::operator= (const int& value)
+{
+
+	return *this;
+}
+
+std::ostream& operator<<(std::ostream& stream, const BoolRank& rank)
+{
+	stream << rank.m_value;
+	return stream;
+}
+
+std::istream& operator >> (std::istream& stream, BoolRank& rank)
+{
+	char s;
+	stream >> s;
+	if (s == '1')
+		rank.Set1();
+	else
+		rank.Set0();
+
+	return stream;
+}
 

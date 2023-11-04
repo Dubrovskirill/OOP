@@ -128,8 +128,10 @@ int Array<ItemType>::Size() const
 template <typename ItemType>
 void Array<ItemType>::Print() const
 {
-
+	int i = 0;
+	//int a = *this[i];
 	std::cout << *this;
+	
 	/*std::cout << "[";
 	for (int i = 0; i < m_size - 1; i++)
 		std::cout << m_array[i] << ",";

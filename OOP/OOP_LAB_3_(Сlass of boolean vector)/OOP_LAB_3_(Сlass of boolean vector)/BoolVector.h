@@ -1,6 +1,9 @@
 #pragma once
 #include<stdint.h>
 #include<iostream>
+
+
+class BoolRank;
 class BoolVector
 {
 public:
@@ -23,8 +26,12 @@ public:
 	void Swap(BoolVector& other);
 	void Inverse();
 
-	bool&operator[](const int index);
-	const bool& operator[](const int index)const;
+	/*bool&operator[](const int index);
+	const bool& operator[](const int index)const;*/
+
+	
+	BoolRank& operator[](const int index);
+	const BoolRank& operator[](const int index)const;
 	BoolVector& operator= (BoolVector&& other);
 	BoolVector& operator= (const BoolVector& other);
 	BoolVector operator&(const BoolVector& other) const;
@@ -39,12 +46,38 @@ public:
 	BoolVector operator>>(const int& count) const;
 	BoolVector& operator>>=(const int& count);
 	
+	//BoolRank Rank(const int& index);
 private:
 	UI m_length=0;
 	UI m_cellcount = 0;
 	uint8_t m_insignificantpart = 0;
 	UC *m_data = nullptr;
+	BoolRank m_rank( const int& index=0);
+	//BoolRank m_rank;
+	friend BoolRank;
 };
 
 std::ostream& operator<<(std::ostream& stream, const BoolVector& bvec);
 std::istream& operator>>(std::istream& stream, BoolVector& bvec);
+
+
+
+class BoolRank
+{
+	using UC = unsigned char;
+private:
+	uint8_t m_mask = 0;
+	int m_cell = 0;
+	UC* m_data = nullptr;
+public:
+	bool m_value = 0;
+	BoolRank();
+	BoolRank(UC* data, const int& index=0);
+
+	void Set1();
+	void Set0();
+	BoolRank& operator= (const int& value);
+
+};
+std::ostream& operator<<(std::ostream& stream, const BoolRank& rank);
+std::istream& operator>>(std::istream& stream, BoolRank& rank);

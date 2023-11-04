@@ -86,7 +86,13 @@ int main()
 	cout << (bvec_5 << 35);
 	cout << (bvec_5 << 5);
 	cout << (bvec_5 >> 5);
-	BoolVector bvec_6;
+	cout << endl;
+
+	BoolVector bvec_6 = "1101010";
+
+	cout << bvec_6;
+	cout << (bvec_6[2]);
+	cin >> bvec_6[0];
+    cout << bvec_6;
 	return 0;
 }
-//1011101011111
