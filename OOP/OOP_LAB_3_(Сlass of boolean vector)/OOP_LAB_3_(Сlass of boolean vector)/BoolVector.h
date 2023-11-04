@@ -31,6 +31,9 @@ public:
 	BoolVector& operator&=(const BoolVector& other);
 	BoolVector operator|(const BoolVector& other) const;
 	BoolVector& operator|=(const BoolVector& other);
+	BoolVector operator^(const BoolVector& other) const;
+	BoolVector& operator^=(const BoolVector& other);
+	BoolVector operator~() const;
 
 private:
 	UI m_length=0;

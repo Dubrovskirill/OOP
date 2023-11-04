@@ -214,6 +214,35 @@ BoolVector& BoolVector::operator|=(const BoolVector& other)
 	return *this;
 }
 
+BoolVector BoolVector::operator^(const BoolVector& other) const
+{
+	BoolVector bvec = (std::max(m_length, other.m_length));
+	int min = std::min(m_cellcount, other.m_cellcount);
+	for (int i = 0; i < min; i++)
+		bvec.m_data[i] = m_data[i] ^ other.m_data[i];
+	for (int i = min; i < m_cellcount; i++)
+		bvec.m_data[i] = m_data[i];
+	for (int i = min; i < other.m_cellcount; i++)
+		bvec.m_data[i] = other.m_data[i];
+	return bvec;
+}
+
+BoolVector& BoolVector::operator^=(const BoolVector& other)
+{
+	BoolVector tmp(*this | other);
+	Swap(tmp);
+	return *this;
+}
+
+BoolVector BoolVector::operator~() const
+{
+	BoolVector bvec(m_length);
+	for (int i = 0; i < m_cellcount; i++)
+		bvec.m_data[i] = ~m_data[i];
+	bvec.Shift();
+	return bvec;
+}
+
 std::ostream& operator<<(std::ostream& stream, const BoolVector& bvec)
 {
 	int n = 0;
