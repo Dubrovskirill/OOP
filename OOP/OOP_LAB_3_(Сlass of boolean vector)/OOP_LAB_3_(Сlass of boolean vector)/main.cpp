@@ -65,6 +65,28 @@ int main()
 	cout << endl;
 
 	cout << ~bvec_1;
+	cout << endl;
+
+	BoolVector bvec_5 = "111110111101001111110101010101010100001111010001001010111101";
+	cout << bvec_5;
+	cout << (bvec_5<<35);
+	bvec_5 <<= 35;
+	cout << bvec_5;
+	cout << endl;
+
+	bvec_5 = "111110111101001111110101010101010100001111010001001010111101";
+	cout << bvec_5;
+	cout << (bvec_5 >> 35);
+	bvec_5 >>= 35;
+	cout << bvec_5;
+	cout << endl;
+
+	bvec_5 = "1011101";
+	cout << bvec_5;
+	cout << (bvec_5 << 35);
+	cout << (bvec_5 << 5);
+	cout << (bvec_5 >> 5);
+	BoolVector bvec_6;
 	return 0;
 }
 //1011101011111

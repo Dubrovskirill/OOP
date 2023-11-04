@@ -34,7 +34,11 @@ public:
 	BoolVector operator^(const BoolVector& other) const;
 	BoolVector& operator^=(const BoolVector& other);
 	BoolVector operator~() const;
-
+	BoolVector operator<<(const int& count) const;
+	BoolVector& operator<<=(const int& count);
+	BoolVector operator>>(const int& count) const;
+	BoolVector& operator>>=(const int& count);
+	
 private:
 	UI m_length=0;
 	UI m_cellcount = 0;

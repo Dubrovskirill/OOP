@@ -229,7 +229,7 @@ BoolVector BoolVector::operator^(const BoolVector& other) const
 
 BoolVector& BoolVector::operator^=(const BoolVector& other)
 {
-	BoolVector tmp(*this | other);
+	BoolVector tmp(*this ^ other);
 	Swap(tmp);
 	return *this;
 }
@@ -241,6 +241,85 @@ BoolVector BoolVector::operator~() const
 		bvec.m_data[i] = ~m_data[i];
 	bvec.Shift();
 	return bvec;
+}
+BoolVector BoolVector::operator<<(const int& count) const
+{
+	int count_cu = count;
+	if (count > m_length)
+		count_cu = m_length;
+
+	BoolVector bvec = *this;
+	if (count_cu > m_size)
+	{
+		for (int i = 0; i + (count_cu / m_size) < m_cellcount; i++)
+		{
+			bvec.m_data[i] = m_data[i + (count_cu / m_size)];
+			bvec.m_data[i + (count_cu / m_size)] = false;
+		}
+	}
+
+	uint8_t mask = 1;
+	for (int j = 0; j < (count_cu % m_size); j++)
+		mask |= mask << 1;
+	mask <<= m_size - (count_cu % m_size);
+	for (int i = 0; i < m_cellcount - (count_cu / m_size) - 1; i++)
+	{
+		uint8_t mask_cu = mask;
+		bvec.m_data[i] = bvec.m_data[i] << (count_cu % m_size);
+		mask_cu &= bvec.m_data[i + 1];
+		mask_cu >>= m_size - (count_cu % m_size);
+		bvec.m_data[i] |= mask_cu;
+	}
+	bvec.m_data[m_cellcount - (count_cu / m_size) - 1] = bvec.m_data[m_cellcount - (count_cu / m_size) - 1] << count_cu;
+	return bvec;
+}
+
+BoolVector& BoolVector::operator<<=(const int& count)
+{
+	BoolVector tmp(*this << count);
+	Swap(tmp);
+	return *this;
+}
+
+
+BoolVector BoolVector::operator>>(const int& count) const
+{
+	int count_cu = count;
+	if (count > m_length)
+		count_cu = m_length;
+
+	BoolVector bvec = *this;
+	if (count_cu > m_size)
+	{
+		for (int i = m_cellcount-1; i - (count_cu / m_size) >= 0; i--)
+		{
+			bvec.m_data[i] = m_data[i - (count_cu / m_size)];
+			bvec.m_data[i - (count_cu / m_size)] = false;
+		}
+	}
+	
+	uint8_t mask = 1;
+	for (int j = 0; j < (count_cu % m_size)-1; j++)
+		mask |= mask << 1;
+
+	for (int i = m_cellcount - 1; i >(count_cu / m_size); i--)
+	{
+		uint8_t mask_cu = mask;
+		bvec.m_data[i] = bvec.m_data[i] >> (count_cu % m_size);
+		mask_cu &= bvec.m_data[i - 1];
+		mask_cu <<= m_size - (count_cu % m_size);
+		bvec.m_data[i] |= mask_cu;
+	}
+	bvec.m_data[ count_cu / m_size] = bvec.m_data[count_cu / m_size] >> count_cu;
+	bvec.Shift();
+	return bvec;
+}
+//bvec.m_data[m_cellcount - (count_cu / m_size) - 1] = bvec.m_data[m_cellcount - (count_cu / m_size) - 1] << count_cu;
+BoolVector& BoolVector::operator>>=(const int& count)
+{
+	BoolVector tmp(*this >> count);
+	Swap(tmp);
+	return *this;
 }
 
 std::ostream& operator<<(std::ostream& stream, const BoolVector& bvec)
