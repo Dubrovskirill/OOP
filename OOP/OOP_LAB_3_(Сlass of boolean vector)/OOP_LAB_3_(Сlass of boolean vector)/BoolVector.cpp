@@ -137,7 +137,6 @@ void BoolVector::Inverse()
 		else
 			Set1(i / m_size, i % m_size);
 	}
-	
 }
 
 bool& BoolVector::operator[](const int index)
@@ -156,6 +155,63 @@ const bool& BoolVector::operator[](const int index) const
 	mask = mask << 7 - index%m_size;
 	bool value = m_data[index / m_size] & mask;
 	return value;
+}
+
+BoolVector& BoolVector::operator= (BoolVector&& other)
+{
+	Swap(other);
+	return *this;
+}
+
+BoolVector& BoolVector::operator= (const BoolVector& other)
+{
+	if (this == &other) return *this;
+
+	if (m_length != other.m_length)
+	{
+		m_length = other.m_length;
+		m_cellcount = other.m_cellcount;
+		m_insignificantpart = other.m_insignificantpart;
+		delete[] m_data;
+		m_data = new UC[m_length];
+	}
+	for (int i = 0; i < m_cellcount; i++)
+		m_data[i] = other.m_data[i];
+}
+BoolVector BoolVector::operator&(const BoolVector& other) const
+{
+	BoolVector bvec = (std::max(m_length, other.m_length));
+	int min = std::min(m_cellcount, other.m_cellcount);
+	for (int i = 0; i < min; i++)
+		bvec.m_data[i] = m_data[i] & other.m_data[i];
+	return bvec;
+}
+
+BoolVector& BoolVector::operator&=(const BoolVector& other)
+{
+	BoolVector tmp(*this & other);
+	Swap(tmp);
+	return *this;
+}
+
+BoolVector BoolVector::operator|(const BoolVector& other) const
+{
+	BoolVector bvec = (std::max(m_length, other.m_length));
+	int min = std::min(m_cellcount, other.m_cellcount);
+	for (int i = 0; i < min; i++)
+		bvec.m_data[i] = m_data[i] | other.m_data[i];
+	for (int i = min; i < m_cellcount; i++)
+		bvec.m_data[i] = m_data[i];
+	for (int i = min; i < other.m_cellcount; i++)
+		bvec.m_data[i] = other.m_data[i];
+	return bvec;
+}
+
+BoolVector& BoolVector::operator|=(const BoolVector& other)
+{
+	BoolVector tmp(*this | other);
+	Swap(tmp);
+	return *this;
 }
 
 std::ostream& operator<<(std::ostream& stream, const BoolVector& bvec)

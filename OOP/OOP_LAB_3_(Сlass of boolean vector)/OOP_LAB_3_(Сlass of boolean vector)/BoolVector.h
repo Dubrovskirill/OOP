@@ -22,10 +22,15 @@ public:
 	void Set0(const int& cell, const int& pos)const;
 	void Swap(BoolVector& other);
 	void Inverse();
-	//исправить
+
 	bool&operator[](const int index);
 	const bool& operator[](const int index)const;
-	
+	BoolVector& operator= (BoolVector&& other);
+	BoolVector& operator= (const BoolVector& other);
+	BoolVector operator&(const BoolVector& other) const;
+	BoolVector& operator&=(const BoolVector& other);
+	BoolVector operator|(const BoolVector& other) const;
+	BoolVector& operator|=(const BoolVector& other);
 
 private:
 	UI m_length=0;

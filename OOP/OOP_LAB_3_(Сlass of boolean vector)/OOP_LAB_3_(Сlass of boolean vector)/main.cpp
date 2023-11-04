@@ -36,6 +36,24 @@ int main()
 	cout << bvec_1;
 	cout << endl;
 
+	bvec_1 = "101110011101001111";
+	cout << bvec_1<<"&\n";
+	bvec_2 = "1100101001";
+	cout << bvec_2<<"=\n";
+	bvec_3 = bvec_1 & bvec_2;
+	cout << bvec_3<<endl;
+	bvec_1 &= bvec_2;
+	cout << bvec_1;
+	cout << endl;
+
+	bvec_1 = "101110011101001111";
+	cout << bvec_1 << "|\n";
+	cout << bvec_2 << "=\n";
+	bvec_3 = bvec_1 | bvec_2;
+	cout << bvec_3 << endl;
+	bvec_1 |= bvec_2;
+	cout << bvec_1;
+	cout << endl;
 	return 0;
 }
 //1011101011111
