@@ -201,11 +201,12 @@ BoolVector& BoolVector::operator= (const BoolVector& other)
 		m_length = other.m_length;
 		m_cellcount = other.m_cellcount;
 		m_insignificantpart = other.m_insignificantpart;
-		delete[] m_data;
-		m_data = new UC[m_length];
 	}
+	delete[] m_data;
+	m_data = new UC[m_length];
 	for (int i = 0; i < m_cellcount; i++)
 		m_data[i] = other.m_data[i];
+	return *this;
 }
 
 BoolVector BoolVector::operator&(const BoolVector& other) const
@@ -359,7 +360,7 @@ std::ostream& operator<<(std::ostream& stream, const BoolVector& bvec)
 	{
 		stream << "[ ";
 		for (int j = 0; j < bvec.m_size; j++)
-			stream << BoolRank(bvec[n++])<<" ";
+			stream << bvec[n++]<<" ";
 		stream << "]";
 	}
 	std::cout << std::endl;
@@ -372,15 +373,13 @@ std::istream& operator >> (std::istream& stream, BoolVector& bvec)
 	for (int i = 0; i < bvec.Lenght(); i++)
 	{
 		stream >> s;
-		if (s == '1')
-			bvec.Set1(i / bvec.m_size, i % bvec.m_size);
-		else
+		if (s == '0')
 			bvec.Set0(i / bvec.m_size, i % bvec.m_size);
+		else
+			bvec.Set1(i / bvec.m_size, i % bvec.m_size);
 	}
 	return stream;
 }
-
-
 
 BoolRank BoolVector::m_rank(const int& index)
 {
@@ -396,6 +395,12 @@ BoolRank::BoolRank()
 	m_data = nullptr;
 	m_value =0;
 }
+
+//BoolRank::~BoolRank()
+//{
+//	m_data = nullptr;
+//}
+
 BoolRank::BoolRank(UC* data, const int& index)
 {
 	m_cell = index / 8;
@@ -403,6 +408,14 @@ BoolRank::BoolRank(UC* data, const int& index)
 	m_mask <<= 7 - index % 8;
 	m_data = data;
 	m_value = m_data[m_cell] & m_mask;
+}
+
+BoolRank::BoolRank(const BoolRank& other)
+{
+	m_cell = other.m_cell;
+	m_mask = other.m_mask;
+	m_value = other.m_value;
+	m_data = other.m_data;
 }
 
 void BoolRank::Set1()
@@ -417,11 +430,63 @@ void BoolRank::Set0()
 	m_value = m_data[m_cell] & m_mask;
 }
 
-BoolRank& BoolRank::operator= (const int& value)
+BoolRank& BoolRank::operator= (BoolRank&& other)
 {
-
+	Swap(other);
 	return *this;
 }
+
+BoolRank& BoolRank::operator= (const BoolRank& other)
+{
+	m_cell = other.m_cell;
+	m_mask = other.m_mask;
+	m_value = other.m_value;
+	m_data = other.m_data;
+	return *this;
+}
+
+void BoolRank::Swap(BoolRank& other)
+{
+	std::swap(m_cell, other.m_cell);
+	std::swap(m_mask, other.m_mask);
+	std::swap(m_value, other.m_value);
+	std::swap(m_data, other.m_data);
+}
+
+//void BoolVector::Swap(BoolVector& other)
+//{
+//	std::swap(m_length, other.m_length);
+//	std::swap(m_cellcount, other.m_cellcount);
+//	std::swap(m_insignificantpart, other.m_insignificantpart);
+//	std::swap(m_data, other.m_data);
+//}
+
+BoolRank& BoolRank::operator= (const int& value)
+{
+	if (bool(value))
+		Set1();
+	else
+		Set0();
+	return *this;
+}
+
+//BoolRank& BoolRank::operator= (const bool& value)
+//{
+//	if (value)
+//		Set1();
+//	else
+//		Set0();
+//	return *this;
+//}
+
+//BoolRank& BoolRank::operator= (const char& value)
+//{
+//	if (value=='0')
+//		Set0();
+//	else
+//		Set1();
+//	return *this;
+//}
 
 std::ostream& operator<<(std::ostream& stream, const BoolRank& rank)
 {
@@ -433,10 +498,10 @@ std::istream& operator >> (std::istream& stream, BoolRank& rank)
 {
 	char s;
 	stream >> s;
-	if (s == '1')
-		rank.Set1();
-	else
+	if (s == '0')
 		rank.Set0();
+	else
+		rank.Set1();
 
 	return stream;
 }

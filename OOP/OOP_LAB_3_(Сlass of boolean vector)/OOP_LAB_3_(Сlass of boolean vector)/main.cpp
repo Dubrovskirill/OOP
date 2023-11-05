@@ -88,11 +88,18 @@ int main()
 	cout << (bvec_5 >> 5);
 	cout << endl;
 
-	BoolVector bvec_6 = "1101010";
+	BoolVector bvec_6 = "0000010";
 
 	cout << bvec_6;
-	cout << (bvec_6[2]);
-	cin >> bvec_6[0];
+	//cout << (bvec_6[2]);
+    cin >> bvec_6[0];
+	//int n = 32; bvec_6[0] = n; cout << bvec_6;
+	/*for (int i = 0; i < 7; i++)
+	{
+		bvec_6[i] = 1;
+	}*/
+	bool b = 1; bvec_6[1] = b; cout << bvec_6;
+	char c = '23'; bvec_6[2] = c;
     cout << bvec_6;
 	return 0;
 }

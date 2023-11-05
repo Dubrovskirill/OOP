@@ -46,14 +46,12 @@ public:
 	BoolVector operator>>(const int& count) const;
 	BoolVector& operator>>=(const int& count);
 	
-	//BoolRank Rank(const int& index);
 private:
 	UI m_length=0;
 	UI m_cellcount = 0;
 	uint8_t m_insignificantpart = 0;
 	UC *m_data = nullptr;
 	BoolRank m_rank( const int& index=0);
-	//BoolRank m_rank;
 	friend BoolRank;
 };
 
@@ -72,11 +70,19 @@ private:
 public:
 	bool m_value = 0;
 	BoolRank();
-	BoolRank(UC* data, const int& index=0);
+	BoolRank(UC* data, const int& index=0); 
+	BoolRank(const BoolRank& other);
+	//~BoolRank();
 
 	void Set1();
 	void Set0();
+	BoolRank& operator= (BoolRank&& other);
+	BoolRank& operator= (const BoolRank& other);
 	BoolRank& operator= (const int& value);
+	//BoolRank& operator= (const bool& value);
+	//BoolRank& operator= (const char& value);
+
+	void Swap(BoolRank& other);
 
 };
 std::ostream& operator<<(std::ostream& stream, const BoolRank& rank);
