@@ -21,16 +21,16 @@ public:
 	void Print()const;
 	int Lenght()const;
 	int CellCount()const;
-	void Set1(const int& cell, const int& pos)const;
-	void Set0(const int& cell, const int& pos)const;
+	void Set1(const int& i);
+	void Set0(const int& i);
 	void Swap(BoolVector& other);
 	void Inverse();
-	void InverseCmp();
-
-	/*bool&operator[](const int index);
-	const bool& operator[](const int index)const;*/
-
-	
+	void Inverse(const int& i);
+	int Weight();
+	void Set1(const int& pos, const int& count);
+	void Set0(const int& pos, const int& count);
+	void Set1();
+	void Set0();
 	BoolRank& operator[](const int index);
 	const BoolRank& operator[](const int index)const;
 	BoolVector& operator= (BoolVector&& other);
@@ -52,7 +52,6 @@ private:
 	UI m_cellcount = 0;
 	uint8_t m_insignificantpart = 0;
 	UC *m_data = nullptr;
-	BoolRank m_rank( const int& index=0);
 	friend BoolRank;
 };
 
@@ -79,8 +78,10 @@ public:
 	void Set1();
 	void Set0();
 	void Inverse();
+	//void Inverse(const int& i);
 	bool Value() const;
 	void Swap(BoolRank& other);
+
 	BoolRank& operator= (BoolRank&& other);
 	BoolRank& operator= (const BoolRank& other);
 	BoolRank& operator= (const int& value);

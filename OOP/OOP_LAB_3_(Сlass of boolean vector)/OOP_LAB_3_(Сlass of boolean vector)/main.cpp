@@ -75,7 +75,6 @@ int main()
 	cout << endl;
 
 	bvec_5 = "111110111101001111110101010101010100001111010001001010111101";
-	//bvec_5 = "000000111101001111110101010101010100001111010001001010111101";
 	cout << bvec_5;
 	cout << (bvec_5 >> 35);
 	bvec_5 >>= 35;
@@ -121,6 +120,17 @@ int main()
 	cout << (bvec_6[0] ^ bvec_1[0])<<endl;
 	if(bvec_6[0]>=bvec_6[0])
 		cout << "GG" << endl;
+	cout << bvec_6.Weight();
+	bvec_6.Inverse(1);
+	cout << bvec_6;
+	bvec_6.Set1(3, 55);
+	cout << bvec_6;
+	bvec_6.Set0(0, 55);
+	cout << bvec_6;
 
+	bvec_6.Set1();
+	cout << bvec_6;
+	bvec_6.Set0();
+	cout << bvec_6;
 	return 0;
 }

@@ -48,9 +48,9 @@ BoolVector::BoolVector(const char* data)
 	for (int i = 0; i < m_length; i++)
 	{
 		if (data[i] == '1')
-			Set1(i / m_size, i % m_size);
+			Set1(i);
 		else
-			Set0(i / m_size, i % m_size);
+			Set0(i);
 	}
 	Shift();
 }
@@ -106,15 +106,19 @@ int BoolVector::CellCount() const
 	return m_cellcount;
 }
 
-void  BoolVector::Set1(const int& cell, const int& pos)const
+void  BoolVector::Set1(const int& i)
 {
+	int cell = i / m_size;
+	int pos = i % m_size;
 	uint8_t mask = 1;
 	mask = mask << 7-pos;
 	m_data[cell] = m_data[cell] | mask;
 }
 
-void  BoolVector::Set0(const int& cell, const int& pos)const
+void  BoolVector::Set0(const int& i)
 {
+	int cell = i / m_size;
+	int pos = i % m_size;
 	uint8_t mask = 1;
 	mask = mask<< 7-pos;
 	m_data[cell] = m_data[cell] & ~mask;
@@ -127,58 +131,77 @@ void BoolVector::Swap(BoolVector& other)
 	std::swap(m_insignificantpart, other.m_insignificantpart);
 	std::swap(m_data, other.m_data);
 }
-//void BoolVector::Inverse()
-//{
-//	for (int i = 0; i < m_length; i++)
-//	{
-//		BoolVector a(*this);
-//		if (a[i])
-//			Set0(i / m_size, i % m_size);
-//		else
-//			Set1(i / m_size, i % m_size);
-//	}
-//}
-//void BoolVector::Inverse()
-//{
-//	for (int i = 0; i < m_length; i++)
-//	{
-//		if (m_rank(i))
-//			m_rank(i).Set0();
-//		else
-//			m_rank(i).Set1();
-//	}
-//}
-
 void BoolVector::Inverse()
 {
-	bool b = &this[1];
-	std::cout << b;
 	for (int i = 0; i < m_length; i++)
 	{
-		if (m_rank(i))
-			m_rank(i).Set0();
+		if ((*this)[i])
+			Set0(i);
 		else
-			m_rank(i).Set1();
+			Set1(i);
 	}
 }
-//bool& BoolVector::operator[](const int index)
+
+void BoolVector::Inverse(const int& i)
+{
+		if ((*this)[i])
+			Set0(i);
+		else
+			Set1(i);
+}
+
+//void BoolVector::Inverse()
 //{
-//	assert(index >= 0 && index < m_size * m_cellcount);
-//	uint8_t mask = 1;
-//	mask = mask << 7 - index % m_size;
-//	bool value = m_data[index/m_size] & mask;
-//	return value;
-//}
-//
-//const bool& BoolVector::operator[](const int index) const
-//{
-//	assert(index >= 0 && index < m_size*m_cellcount);
-//	uint8_t mask = 1;
-//	mask = mask << 7 - index%m_size;
-//	bool value = m_data[index / m_size] & mask;
-//	return value;
+//	for (int i = 0; i < m_length; i++)
+//	{
+//		if ((*this)[i])
+//			(*this)[i].Set0();
+//		else
+//			(*this)[i].Set1();
+//		
+//	}
 //}
 
+int BoolVector::Weight()
+{
+	int w = 0;
+	for (int i = 0; i < m_cellcount; i++)
+	{
+		uint8_t mask = 1;
+		mask <<= 7;
+		for (int j = 0; j < m_size; j++) 
+		{
+			if (m_data[i] & mask)
+				w++;
+			mask >>= 1;
+		}
+	}
+	return w;
+}
+
+void BoolVector::Set1(const int& pos, const int& count)
+{
+	for (int i = pos; i < m_length && i < pos + count; i++)
+		(*this)[i] = 1;
+}
+
+void BoolVector::Set0(const int& pos, const int& count)
+{
+	for (int i = pos; i < m_length && i < pos + count; i++)
+		(*this)[i] = 0;
+}
+
+void BoolVector::Set1()
+{
+	for (int i = 0; i < m_length; i++)
+		(*this)[i] = 1;
+}
+
+void BoolVector::Set0()
+{
+	for (int i = 0; i < m_length; i++)
+		(*this)[i] = 0;
+}
 BoolRank& BoolVector::operator[](const int index)
 {
 	assert(index >= 0 && index < m_size * m_cellcount);
@@ -337,11 +360,8 @@ BoolVector BoolVector::operator>>(const int& count) const
 	{
 		for (int i = m_cellcount-1; i - (count_cu / m_size) >= 0; i--)
 		{
-			//std::cout << std::endl << n++ << ". "; bvec.Print();
 			bvec.m_data[i] = m_data[i - (count_cu / m_size)];
-			//bvec.Print();
 			bvec.m_data[i - (count_cu / m_size)] = false;
-			//bvec.Print();
 		}
 	}
 	
@@ -391,36 +411,13 @@ std::istream& operator >> (std::istream& stream, BoolVector& bvec)
 	{
 		stream >> s;
 		if (s == '0')
-			bvec.Set0(i / bvec.m_size, i % bvec.m_size);
+			bvec.Set0(i);
 		else
-			bvec.Set1(i / bvec.m_size, i % bvec.m_size);
+			bvec.Set1(i);
 	}
 	return stream;
 }
-//std::ostream& operator<<(std::ostream& stream, const Array<ItemType>& arr)
-//{
-//	stream << "[";
-//	for (int i = 0; i < arr.Size() - 1; i++)
-//		stream << arr[i] << ",";
-//
-//	stream << arr[arr.Size() - 1] << "]\n";
-//	return stream;
-//}
-//
-//template <typename ItemType>
-//std::istream& operator >> (std::istream& stream, Array<ItemType>& arr)
-//{
-//	for (int i = 0; i < arr.Size(); i++)
-//		stream >> arr[i];
-//
-//	return stream;
-//}
 
-BoolRank BoolVector::m_rank(const int& index)
-{
-	BoolRank r(m_data, index);
-	return r;
-}
 
 //BoolRank::
 BoolRank::BoolRank()
