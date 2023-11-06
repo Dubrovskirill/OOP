@@ -75,6 +75,7 @@ int main()
 	cout << endl;
 
 	bvec_5 = "111110111101001111110101010101010100001111010001001010111101";
+	//bvec_5 = "000000111101001111110101010101010100001111010001001010111101";
 	cout << bvec_5;
 	cout << (bvec_5 >> 35);
 	bvec_5 >>= 35;
@@ -91,15 +92,35 @@ int main()
 	BoolVector bvec_6 = "0000010";
 
 	cout << bvec_6;
-	//cout << (bvec_6[2]);
-    cin >> bvec_6[0];
-	//int n = 32; bvec_6[0] = n; cout << bvec_6;
-	/*for (int i = 0; i < 7; i++)
-	{
-		bvec_6[i] = 1;
-	}*/
+
+	cout << bvec_6[0]<<endl;
+    //cin >> bvec_6[1];
+	//cout << bvec_6;
+	int n = 32; bvec_6[2] = n; cout << bvec_6;
 	bool b = 1; bvec_6[1] = b; cout << bvec_6;
-	char c = '23'; bvec_6[2] = c;
-    cout << bvec_6;
+	if (bvec_6[2] == bvec_6[1])
+		cout << "GG"<<endl;
+
+	bvec_6[1] = 1;
+	if (bvec_6[0] != bvec_6[1])
+		cout << "GG" << endl;
+	bvec_6[0]=bvec_6[1]& bvec_6[2];
+	cout << bvec_6;
+	bvec_6[0] &= 0;
+	cout << bvec_6;
+
+	cout << endl;
+	bvec_6[0] = 0; bvec_6[1] = 0;
+	cout << bvec_6;
+	bvec_6[0] = bvec_6[1] | bvec_6[2];
+	cout << bvec_6;
+	bvec_6[1] |= 1;
+	cout << bvec_6;
+	cout << ~bvec_6[0];
+	cout << endl;
+	cout << (bvec_6[0] ^ bvec_1[0])<<endl;
+	if(bvec_6[0]>=bvec_6[0])
+		cout << "GG" << endl;
+
 	return 0;
 }

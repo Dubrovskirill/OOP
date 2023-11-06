@@ -150,10 +150,13 @@ int main()
 	arr_5.Remove(gap1);
 	cout << arr_5;
 	cout << endl;
-	cin >> arr_5[0];
-	cout << arr_5;
 	Array<char> arrsh(5, 'a');
 	cout << arrsh;
+
+	cout << endl;
+	cout << arr_5;
+	cin >> arr_5[0];
+	cout << arr_5[0];
 
 	return 0;
 }

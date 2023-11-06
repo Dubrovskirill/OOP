@@ -25,6 +25,7 @@ public:
 	void Set0(const int& cell, const int& pos)const;
 	void Swap(BoolVector& other);
 	void Inverse();
+	void InverseCmp();
 
 	/*bool&operator[](const int index);
 	const bool& operator[](const int index)const;*/
@@ -67,22 +68,40 @@ private:
 	uint8_t m_mask = 0;
 	int m_cell = 0;
 	UC* m_data = nullptr;
-public:
 	bool m_value = 0;
+	
+public:
+	
 	BoolRank();
 	BoolRank(UC* data, const int& index=0); 
 	BoolRank(const BoolRank& other);
-	//~BoolRank();
 
 	void Set1();
 	void Set0();
+	void Inverse();
+	bool Value() const;
+	void Swap(BoolRank& other);
 	BoolRank& operator= (BoolRank&& other);
 	BoolRank& operator= (const BoolRank& other);
 	BoolRank& operator= (const int& value);
-	//BoolRank& operator= (const bool& value);
-	//BoolRank& operator= (const char& value);
+	bool operator==(const bool& value)const;
+	bool operator!=(const bool& value)const;
+	bool operator>(const bool& value)const;
+	bool operator<(const bool& value)const;
+	bool operator>=(const bool& value)const;
+	bool operator<=(const bool& value)const;
+	operator int()const;
+	operator bool()const;
+	bool operator&(const int& value)const;
+	BoolRank operator&=(const int& value);
+	bool operator|(const int& value)const;
+	BoolRank operator|=(const int& value);
+	bool operator~() const;
+	bool operator^(const int& value)const;
+	BoolRank operator^=(const int& value);
+	
 
-	void Swap(BoolRank& other);
+	
 
 };
 std::ostream& operator<<(std::ostream& stream, const BoolRank& rank);
