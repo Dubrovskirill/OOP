@@ -31,8 +31,8 @@ public:
 	void Set0(const int& pos, const int& count);
 	void Set1();
 	void Set0();
-	BoolRank& operator[](const int index);
-	const BoolRank& operator[](const int index)const;
+	BoolRank operator[](const int index);
+	const BoolRank operator[](const int index)const;
 	BoolVector& operator= (BoolVector&& other);
 	BoolVector& operator= (const BoolVector& other);
 	BoolVector operator&(const BoolVector& other) const;
@@ -54,11 +54,8 @@ private:
 	UC *m_data = nullptr;
 	friend BoolRank;
 };
-
 std::ostream& operator<<(std::ostream& stream, const BoolVector& bvec);
 std::istream& operator>>(std::istream& stream, BoolVector& bvec);
-
-
 
 class BoolRank
 {
@@ -77,8 +74,6 @@ public:
 
 	void Set1();
 	void Set0();
-	void Inverse();
-	//void Inverse(const int& i);
 	bool Value() const;
 	void Swap(BoolRank& other);
 
@@ -100,10 +95,6 @@ public:
 	bool operator~() const;
 	bool operator^(const int& value)const;
 	BoolRank operator^=(const int& value);
-	
-
-	
-
 };
 std::ostream& operator<<(std::ostream& stream, const BoolRank& rank);
-std::istream& operator>>(std::istream& stream, BoolRank& rank);
+std::istream& operator>>(std::istream& stream, BoolRank rank);

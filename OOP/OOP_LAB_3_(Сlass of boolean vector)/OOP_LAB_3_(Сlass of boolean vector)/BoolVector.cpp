@@ -12,8 +12,6 @@ BoolVector::BoolVector()
     m_cellcount = m_length / 8 + (m_length % 8 > 0);
 	m_data = new UC[m_cellcount];
 	m_data[0] = false;
-	//m_rank=m_data;
-
 }
 
 BoolVector::~BoolVector()
@@ -131,6 +129,7 @@ void BoolVector::Swap(BoolVector& other)
 	std::swap(m_insignificantpart, other.m_insignificantpart);
 	std::swap(m_data, other.m_data);
 }
+
 void BoolVector::Inverse()
 {
 	for (int i = 0; i < m_length; i++)
@@ -149,18 +148,6 @@ void BoolVector::Inverse(const int& i)
 		else
 			Set1(i);
 }
-
-//void BoolVector::Inverse()
-//{
-//	for (int i = 0; i < m_length; i++)
-//	{
-//		if ((*this)[i])
-//			(*this)[i].Set0();
-//		else
-//			(*this)[i].Set1();
-//		
-//	}
-//}
 
 int BoolVector::Weight()
 {
@@ -202,23 +189,18 @@ void BoolVector::Set0()
 	for (int i = 0; i < m_length; i++)
 		(*this)[i] = 0;
 }
-BoolRank& BoolVector::operator[](const int index)
+BoolRank BoolVector::operator[](const int index)
 {
 	assert(index >= 0 && index < m_size * m_cellcount);
-	/*BoolRank rank(m_data,index);
-	return rank;*/
-	BoolRank* rank = new BoolRank(m_data, index);
-	return *rank;
-
+	BoolRank rank(m_data,index);
+	return rank;
 }
 
-const BoolRank& BoolVector::operator[](const int index) const
+const BoolRank BoolVector::operator[](const int index) const
 {
 	assert(index >= 0 && index < m_size * m_cellcount);
-    /*BoolRank rank(m_data, index);
-	return rank;*/
-	BoolRank* rank = new BoolRank(m_data, index);
-	return *rank;
+    BoolRank rank(m_data, index);
+	return rank;
 }
 
 BoolVector& BoolVector::operator= (BoolVector&& other)
@@ -308,6 +290,7 @@ BoolVector BoolVector::operator~() const
 	bvec.Shift();
 	return bvec;
 }
+
 BoolVector BoolVector::operator<<(const int& count) const
 {
 	int count_cu = count;
@@ -346,7 +329,6 @@ BoolVector& BoolVector::operator<<=(const int& count)
 	Swap(tmp);
 	return *this;
 }
-
 
 BoolVector BoolVector::operator>>(const int& count) const
 {
@@ -480,11 +462,6 @@ void BoolRank::Swap(BoolRank& other)
 	std::swap(m_data, other.m_data);
 }
 
-void BoolRank::Inverse()
-{
-	
-}
-
 bool BoolRank::Value() const
 {
 	return m_value;
@@ -502,11 +479,10 @@ BoolRank& BoolRank::operator= (const int& value)
 std::ostream& operator<<(std::ostream& stream, const BoolRank& rank)
 {
 	stream << rank.Value();
-	delete &rank;
 	return stream;
 }
 
-std::istream& operator >> (std::istream& stream, BoolRank& rank)
+std::istream& operator >> (std::istream& stream, BoolRank rank)
 {
 	char s;
 	stream >> s;
@@ -514,76 +490,48 @@ std::istream& operator >> (std::istream& stream, BoolRank& rank)
 		rank.Set0();
 	else
 		rank.Set1();
-
-	delete& rank;
 	return stream;
 }
-
-
 
 bool BoolRank::operator==(const bool& value)const
 {
 	if (m_value == value)
-	{
-		delete this;
 		return true;
-	}
-	delete this;
 	return false;
 }
 
 bool BoolRank::operator!=(const bool& value)const
 {
 	if (m_value != value)
-	{
-		delete this;
 		return true;
-	}
-	delete this;
 	return false;
 }
 
 bool BoolRank::operator>(const bool& value)const
 {
 	if (m_value > value)
-	{
-		delete this;
 		return true;
-	}
-	delete this;
 	return false;
 }
 
 bool BoolRank::operator<(const bool& value)const
 {
 	if (m_value < value)
-	{
-		delete this;
 		return true;
-	}
-	delete this;
 	return false;
 }
 
 bool BoolRank::operator>=(const bool& value)const
 {
 	if (m_value >= value)
-	{
-		delete this;
 		return true;
-	}
-	delete this;
 	return false;
 }
 
 bool BoolRank::operator<=(const bool& value)const
 {
 	if (m_value <= value)
-	{
-		delete this;
 		return true;
-	}
-	delete this;
 	return false;
 }
 
@@ -602,9 +550,7 @@ BoolRank::operator bool()const
 bool BoolRank::operator&(const int& value)const
 {
 	bool ans = m_value && bool(value);
-	delete this;
 	return ans;
-	
 }
 
 BoolRank BoolRank::operator&=(const int& value)
@@ -620,7 +566,6 @@ BoolRank BoolRank::operator&=(const int& value)
 bool BoolRank::operator|(const int& value)const
 {
 	bool ans = m_value || bool(value);
-	delete this;
 	return ans;
 }
 
@@ -637,14 +582,12 @@ BoolRank BoolRank::operator|=(const int& value)
 bool BoolRank::operator~() const
 {
 	bool ans = !m_value;
-	delete this;
 	return ans;
 }
 
 bool BoolRank::operator^(const int& value)const
 {
 	bool ans = m_value ^ bool(value);
-	delete this;
 	return ans;
 }
 

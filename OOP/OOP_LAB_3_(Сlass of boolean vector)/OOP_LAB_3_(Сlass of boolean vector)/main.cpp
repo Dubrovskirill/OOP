@@ -132,5 +132,13 @@ int main()
 	cout << bvec_6;
 	bvec_6.Set0();
 	cout << bvec_6;
+	for (int i = 0; i < 8; i++)
+	{
+		cin >> bvec_6[i];
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		cout<< bvec_6[i]<<" ";
+	}
 	return 0;
 }
