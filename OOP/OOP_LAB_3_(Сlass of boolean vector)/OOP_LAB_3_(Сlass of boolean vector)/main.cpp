@@ -132,13 +132,18 @@ int main()
 	cout << bvec_6;
 	bvec_6.Set0();
 	cout << bvec_6;
-	for (int i = 0; i < 8; i++)
+	/*for (int i = 0; i < 8; i++)
 	{
 		cin >> bvec_6[i];
 	}
 	for (int i = 0; i < 8; i++)
 	{
 		cout<< bvec_6[i]<<" ";
-	}
+	}*/
+	BoolVector bvec_7 = "101011101010101010100010111011";
+	cout<< bvec_7;
+	cout<< "Shift left to 20: "<<endl << (bvec_7 << 8);
+	cout << "Shift right to 20: " << endl << (bvec_7 >> 20);
+
 	return 0;
 }

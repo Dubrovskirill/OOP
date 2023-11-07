@@ -298,7 +298,7 @@ BoolVector BoolVector::operator<<(const int& count) const
 		count_cu = m_length;
 
 	BoolVector bvec = *this;
-	if (count_cu > m_size)
+	if (count_cu >= m_size)
 	{
 		for (int i = 0; i + (count_cu / m_size) < m_cellcount; i++)
 		{
@@ -306,20 +306,22 @@ BoolVector BoolVector::operator<<(const int& count) const
 			bvec.m_data[i + (count_cu / m_size)] = false;
 		}
 	}
-
-	uint8_t mask = 1;
-	for (int j = 0; j < (count_cu % m_size); j++)
-		mask |= mask << 1;
-	mask <<= m_size - (count_cu % m_size);
-	for (int i = 0; i < m_cellcount - (count_cu / m_size) - 1; i++)
+	if (count_cu % m_size)
 	{
-		uint8_t mask_cu = mask;
-		bvec.m_data[i] = bvec.m_data[i] << (count_cu % m_size);
-		mask_cu &= bvec.m_data[i + 1];
-		mask_cu >>= m_size - (count_cu % m_size);
-		bvec.m_data[i] |= mask_cu;
+		uint8_t mask = 1;
+		for (int j = 0; j < (count_cu % m_size); j++)
+			mask |= mask << 1;
+		mask <<= m_size - (count_cu % m_size);
+		for (int i = 0; i < m_cellcount - (count_cu / m_size)-1; i++)
+		{
+			uint8_t mask_cu = mask;
+			bvec.m_data[i] = bvec.m_data[i] << (count_cu % m_size);
+			mask_cu &= bvec.m_data[i + 1];
+			mask_cu >>= m_size - (count_cu % m_size);
+			bvec.m_data[i] |= mask_cu;
+		}
+		bvec.m_data[m_cellcount - (count_cu / m_size)-1]  <<= (count_cu % m_size);
 	}
-	bvec.m_data[m_cellcount - (count_cu / m_size) - 1] = bvec.m_data[m_cellcount - (count_cu / m_size) - 1] << count_cu;
 	return bvec;
 }
 
@@ -338,7 +340,7 @@ BoolVector BoolVector::operator>>(const int& count) const
 
 	BoolVector bvec = *this;
 	int n = 1;
-	if (count_cu > m_size)
+	if (count_cu >= m_size)
 	{
 		for (int i = m_cellcount-1; i - (count_cu / m_size) >= 0; i--)
 		{
@@ -346,21 +348,23 @@ BoolVector BoolVector::operator>>(const int& count) const
 			bvec.m_data[i - (count_cu / m_size)] = false;
 		}
 	}
-	
-	uint8_t mask = 1;
-	for (int j = 0; j < (count_cu % m_size)-1; j++)
-		mask |= mask << 1;
-
-	for (int i = m_cellcount - 1; i >(count_cu / m_size); i--)
+	if (count_cu % m_size)
 	{
-		uint8_t mask_cu = mask;
-		bvec.m_data[i] = bvec.m_data[i] >> (count_cu % m_size);
-		mask_cu &= bvec.m_data[i - 1];
-		mask_cu <<= m_size - (count_cu % m_size);
-		bvec.m_data[i] |= mask_cu;
+		uint8_t mask = 1;
+		for (int j = 0; j < (count_cu % m_size); j++)
+			mask |= mask << 1;
+
+		for (int i = m_cellcount - 1; i > (count_cu / m_size); i--)
+		{
+			uint8_t mask_cu = mask;
+			bvec.m_data[i] = bvec.m_data[i] >> (count_cu % m_size);
+			mask_cu &= bvec.m_data[i - 1];
+			mask_cu <<= m_size - (count_cu % m_size);
+			bvec.m_data[i] |= mask_cu;
+		}
+		bvec.m_data[count_cu / m_size] >>= count_cu;
+		bvec.Shift();
 	}
-	bvec.m_data[ count_cu / m_size] = bvec.m_data[count_cu / m_size] >> count_cu;
-	bvec.Shift();
 	return bvec;
 }
 
