@@ -1,7 +1,11 @@
 #include<iostream>
 #include "BoolVector.h"
 #include"assert.h"
-
+//int Foo(const BoolVector& s)
+//{
+//	BoolRank r  = s[1];
+//	r = 1;
+//}
 int main()
 {
 	using std::cout;
@@ -143,13 +147,6 @@ int main()
 	cout << bvec_6;
 	bvec_6.Set0();
 	cout << bvec_6;
-
-
-	
-	BoolVector bvec_7 = "101110101011111";
-	cout << bvec_7;
-	bvec_7.Set1(3, 6);
-	cout << bvec_7;
 
 	return 0;
 }

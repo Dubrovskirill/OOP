@@ -3,9 +3,10 @@
 #include<iostream>
 
 
-class BoolRank;
 class BoolVector
 {
+private:
+	class BoolRank;
 public:
 	using UI = unsigned int;
 	using UC = unsigned char;
@@ -45,6 +46,9 @@ public:
 	BoolVector& operator<<=(const int count);
 	BoolVector operator>>(int count) const;
 	BoolVector& operator>>=(const int count);
+
+	friend std::ostream& operator<<(std::ostream& stream, const BoolRank& rank);
+	friend std::istream& operator>>(std::istream& stream, BoolRank rank);
 	
 private:
 	UI m_length=0;
@@ -52,12 +56,11 @@ private:
 	uint8_t m_insignificantpart = 0;
 	UC *m_data = nullptr;
 	void Shift();
-	friend BoolRank;
 };
 std::ostream& operator<<(std::ostream& stream, const BoolVector& bvec);
 std::istream& operator>>(std::istream& stream, BoolVector& bvec);
 
-class BoolRank
+class BoolVector::BoolRank
 {
 	using UC = unsigned char;
 private:
@@ -75,7 +78,7 @@ public:
 	void Set1();
 	void Set0();
 	bool Value() const;
-	void Swap(BoolRank& other);
+	//void Swap(BoolRank& other);
 
 	BoolRank& operator= (const BoolRank& other);
 	BoolRank& operator= (const int value);
@@ -95,5 +98,3 @@ public:
 	bool operator^(const int value)const;
 	BoolRank operator^=(const int value);
 };
-std::ostream& operator<<(std::ostream& stream, const BoolRank& rank);
-std::istream& operator>>(std::istream& stream, BoolRank rank);
