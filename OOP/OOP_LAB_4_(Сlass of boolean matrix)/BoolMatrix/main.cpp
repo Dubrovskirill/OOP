@@ -78,12 +78,35 @@ int main()
 	bm1.Print();
 	 cout <<  endl;*/
 
-	 cout << bm1.Weight() << endl;
+	cout << bm1.Weight() << endl;
+	cout << bm1[0].Weight() << endl;
+	cout << bm1.Weight(0) << endl;
 
 	 bm3.Print();
 	 cout << endl;
 	 cout << bm3.LogAnd() << endl;
 	 cout << bm3.LogOr() << endl;
+
+
+
+	 cmatr = RandCharMatr(5, 5);
+	 Print(5, 5, cmatr);
+	 cout << endl;
+	 BoolMatrix bm4(cmatr, 5, 5);
+	 Del(5, 5, cmatr);
+
+	 bm3.Print();
+	 cout << endl;
+	 bm4.Print();
+	 cout << endl;
+	 cout << endl << (bm3 & bm4);
+	 cout << endl << (bm3 | bm4);
+	 cout << endl << (bm3 ^ bm4);
+	 cout << endl<< ~bm4;
+	 cout << endl;
+	 cout <<bm4;
+	 bm4.Inverse(0, 0);
+	 cout<<endl << bm4;
 
 	return 0;
 }

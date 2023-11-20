@@ -225,7 +225,7 @@ BoolVector& BoolVector::operator= (const BoolVector& other)
 
 BoolVector BoolVector::operator&(const BoolVector& other) const
 {
-	BoolVector bvec = (std::max(m_length, other.m_length));
+	BoolVector bvec = (std::min(m_length, other.m_length));
 	int min = std::min(m_cellcount, other.m_cellcount);
 	for (int i = 0; i < min; i++)
 		bvec.m_data[i] = m_data[i] & other.m_data[i];

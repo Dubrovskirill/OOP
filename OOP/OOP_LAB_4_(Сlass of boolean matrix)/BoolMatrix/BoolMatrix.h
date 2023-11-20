@@ -18,12 +18,22 @@ public:
 	int Cols() const;
 	void Swap(BoolMatrix& other);
 	int Weight();
+	int Weight(const UI index);
 	BoolVector LogAnd();
 	BoolVector LogOr();
+	void Inverse(const int i, const int j);
 
 
 	BoolVector& operator[](const int i);
 	const BoolVector& operator[](const int i)const;
+	BoolMatrix operator=(const BoolMatrix& other);
+	BoolMatrix operator&(const BoolMatrix& other) const;
+	BoolMatrix operator&=(const BoolMatrix& other);
+	BoolMatrix operator|(const BoolMatrix& other) const;
+	BoolMatrix operator|=(const BoolMatrix& other);
+	BoolMatrix operator^(const BoolMatrix& other) const;
+	BoolMatrix operator^=(const BoolMatrix& other);
+	BoolMatrix operator~();
 
 private:
 	UI m_rows = 0;
