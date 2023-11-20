@@ -73,6 +73,30 @@ void BoolMatrix::Swap(BoolMatrix& other)
 	std::swap(m_bm, other.m_bm);
 }
 
+int BoolMatrix::Weight()
+{
+	int w = 0; 
+	for (int i = 0; i < m_rows; i++)
+		w += m_bm[i].Weight();
+	return w;
+}
+
+BoolVector BoolMatrix::LogAnd()
+{
+	BoolVector vec=m_bm[0];
+	for (int i = 1; i < m_rows; i++)
+		vec &= m_bm[i];
+	return vec;
+}
+
+BoolVector BoolMatrix::LogOr()
+{
+	BoolVector vec = m_bm[0];
+	for (int i = 1; i < m_rows; i++)
+		vec |= m_bm[i];
+	return vec;
+}
+
 BoolVector& BoolMatrix::operator[](const int i)
 {
 	assert(i >= 0 || i < m_rows);

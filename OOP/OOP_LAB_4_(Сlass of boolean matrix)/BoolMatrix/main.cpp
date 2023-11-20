@@ -5,8 +5,6 @@
 
 char** CharMatr(int rows, int cols)
 {
-	std::mt19937 rng(std::time(nullptr));
-	std::uniform_int_distribution<int> dist(0, 1);
 	char** boolMatrix = new char* [rows];
 	for (int i = 0; i < rows; i++) {
 		boolMatrix[i] = new char[cols + 1];
@@ -21,7 +19,7 @@ char** CharMatr(int rows, int cols)
 
 char** RandCharMatr(int rows,int cols)
 {
-	std::mt19937 rng(std::time(nullptr));
+	std::mt19937 rng( time(nullptr));
 	std::uniform_int_distribution<int> dist(0, 1);
 	char** boolMatrix = new char* [rows];
 	for (int i = 0; i < rows; i++) {
@@ -55,25 +53,38 @@ void Del(int rows, int cols, char**boolMatrix)
 
 int main()
 {
+	using  std::cout;
+	using  std::cin;
+	using  std::endl;
+
 	BoolMatrix bm0;
 	bm0.Print();
-	std::cout << std::endl;
+	 cout <<  endl;
 	BoolMatrix bm1(5,15,1);
 	bm1.Print();
-	std::cout << std::endl;
+	 cout <<  endl;
 	BoolMatrix bm2(bm1);
 	bm2.Print();
-	std::cout << std::endl;
+	 cout <<  endl;
 	char** cmatr = RandCharMatr(10, 10);
 	Print(10, 10, cmatr);
-	std::cout << std::endl;
+	 cout <<  endl;
 	BoolMatrix bm3(cmatr, 10, 10);
 	bm3.Print();
 	Del(10, 10, cmatr);
-	std::cout << std::endl;
+	 cout <<  endl;
 
-	std::cin >> bm1[1];
+	/* cin >> bm1[1];
 	bm1.Print();
+	 cout <<  endl;*/
+
+	 cout << bm1.Weight() << endl;
+
+	 bm3.Print();
+	 cout << endl;
+	 cout << bm3.LogAnd() << endl;
+	 cout << bm3.LogOr() << endl;
+
 	return 0;
 }
 

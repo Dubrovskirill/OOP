@@ -17,6 +17,9 @@ public:
 	int Rows() const;
 	int Cols() const;
 	void Swap(BoolMatrix& other);
+	int Weight();
+	BoolVector LogAnd();
+	BoolVector LogOr();
 
 
 	BoolVector& operator[](const int i);
