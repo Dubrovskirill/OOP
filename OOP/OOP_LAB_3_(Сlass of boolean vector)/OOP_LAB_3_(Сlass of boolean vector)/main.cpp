@@ -1,11 +1,7 @@
 #include<iostream>
 #include "BoolVector.h"
 #include"assert.h"
-//int Foo(const BoolVector& s)
-//{
-//	BoolRank r  = s[1];
-//	r = 1;
-//}
+
 int main()
 {
 	using std::cout;
