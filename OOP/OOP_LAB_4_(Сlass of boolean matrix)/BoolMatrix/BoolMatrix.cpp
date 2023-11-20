@@ -1,5 +1,4 @@
 #include "BoolMatrix.h"
-//#include "..\..\OOP_LAB_3_(Ñlass of boolean vector)\OOP_LAB_3_(Ñlass of boolean vector)\BoolVector.h"
 #include "..\..\OOP_LAB_3_(Ñlass of boolean vector)\OOP_LAB_3_(Ñlass of boolean vector)\BoolVector.cpp"
 #include<stdint.h>
 #include<iostream>
@@ -102,17 +101,30 @@ BoolVector BoolMatrix::LogOr()
 	return vec;
 }
 
-void BoolMatrix::Inverse(const int i, const int j)
+void BoolMatrix::Inverse(const UI i, const UI j, const UI count)
 {
-	m_bm[i][j] = ~m_bm[i][j];
+	for(int u=j;u<j+count && u<m_cols;u++)
+	     m_bm[i][u] = ~m_bm[i][u];
 }
 
-BoolVector& BoolMatrix::operator[](const int i)
+void BoolMatrix::Set1(const UI i, const UI j, const UI count)
+{
+	for (int u = j; u < j + count && u < m_cols; u++)
+		m_bm[i][u]=1;
+}
+
+void BoolMatrix::Set0(const UI i, const UI j, const UI count)
+{
+	for (int u = j; u < j + count && u < m_cols; u++)
+		m_bm[i][u]=0;
+}
+
+BoolVector& BoolMatrix::operator[](const UI i)
 {
 	assert(i >= 0 || i < m_rows);
 	return m_bm[i];
 }
-const BoolVector& BoolMatrix::operator[](const int i) const
+const BoolVector& BoolMatrix::operator[](const UI i) const
 {
 	assert(i >= 0 || i < m_rows);
 	return m_bm[i];

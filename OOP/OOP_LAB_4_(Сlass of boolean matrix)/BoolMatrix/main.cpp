@@ -104,10 +104,16 @@ int main()
 	 cout << endl << (bm3 ^ bm4);
 	 cout << endl<< ~bm4;
 	 cout << endl;
+	 cout << "=========="<<endl;
 	 cout <<bm4;
-	 bm4.Inverse(0, 0);
+	 bm4.Inverse(2, 0);
 	 cout<<endl << bm4;
-
+	 bm4.Inverse(0,2,8);
+	 cout << endl << bm4;
+	 bm4.Set1(0, 0);
+	 cout << endl << bm4;
+	 bm4.Set0(0, 0,8);
+	 cout << endl << bm4;
 	return 0;
 }
 

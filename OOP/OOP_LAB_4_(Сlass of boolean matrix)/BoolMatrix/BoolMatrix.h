@@ -1,6 +1,5 @@
 #pragma once
 #include "..\..\OOP_LAB_3_(Ñlass of boolean vector)\OOP_LAB_3_(Ñlass of boolean vector)\BoolVector.h"
-//#include "..\..\OOP_LAB_3_(Ñlass of boolean vector)\OOP_LAB_3_(Ñlass of boolean vector)\BoolVector.cpp"
 #include<stdint.h>
 #include<iostream>
 using UI = unsigned int;
@@ -21,11 +20,13 @@ public:
 	int Weight(const UI index);
 	BoolVector LogAnd();
 	BoolVector LogOr();
-	void Inverse(const int i, const int j);
+	void Inverse(const UI i, const UI j, const UI count=1);
+	void Set1(const UI i, const UI j, const UI count=1);
+	void Set0(const UI i, const UI j, const UI count=1);
 
 
-	BoolVector& operator[](const int i);
-	const BoolVector& operator[](const int i)const;
+	BoolVector& operator[](const UI i);
+	const BoolVector& operator[](const UI i)const;
 	BoolMatrix operator=(const BoolMatrix& other);
 	BoolMatrix operator&(const BoolMatrix& other) const;
 	BoolMatrix operator&=(const BoolMatrix& other);
