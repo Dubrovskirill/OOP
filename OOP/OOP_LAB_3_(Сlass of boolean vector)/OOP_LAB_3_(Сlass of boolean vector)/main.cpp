@@ -24,7 +24,7 @@ int main()
 	cout << "bvec_2: "; bvec_2.Print();
 	cout << endl;
 
-	BoolVector bvec_3 = "10111";
+	BoolVector bvec_3 = "1011111111111111111111111111111111";
 	cout << "bvec_3: "; bvec_3.Print();
 	cout << endl;
 
