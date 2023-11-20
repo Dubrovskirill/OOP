@@ -14,11 +14,20 @@ public:
 	BoolMatrix(char**matr, UI rows, UI cols);
 	~BoolMatrix();
 	void Print()const;
+	int Rows() const;
+	int Cols() const;
+	void Swap(BoolMatrix& other);
+
+
 	BoolVector& operator[](const int i);
+	const BoolVector& operator[](const int i)const;
 
 private:
 	UI m_rows = 0;
 	UI m_cols = 0;
     BoolVector* m_bm=nullptr;
 };
+
+std::ostream& operator<<(std::ostream& stream, const BoolMatrix& bmatr);
+std::istream& operator>>(std::istream& stream, BoolMatrix& bmatr);
 

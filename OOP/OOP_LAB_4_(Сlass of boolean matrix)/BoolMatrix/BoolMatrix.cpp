@@ -56,9 +56,45 @@ void BoolMatrix::Print()const
 	}
 }
 
+int BoolMatrix::Rows() const
+{
+	return m_rows;
+}
+
+int BoolMatrix::Cols() const
+{
+	return m_cols;
+}
+
+void BoolMatrix::Swap(BoolMatrix& other)
+{
+	std::swap(m_rows, other.m_rows);
+	std::swap(m_cols, other.m_cols);
+	std::swap(m_bm, other.m_bm);
+}
+
 BoolVector& BoolMatrix::operator[](const int i)
 {
 	assert(i >= 0 || i < m_rows);
 	return m_bm[i];
 }
+const BoolVector& BoolMatrix::operator[](const int i) const
+{
+	assert(i >= 0 || i < m_rows);
+	return m_bm[i];
+}
 
+std::ostream& operator<<(std::ostream& stream, const BoolMatrix& bmatr)
+{
+	for (int i = 0; i < bmatr.Rows(); i++)
+		stream << bmatr[i];
+	return stream;
+}
+
+std::istream& operator>>(std::istream& stream, BoolMatrix& bmatr)
+{
+	for (int i = 0; i < bmatr.Rows(); i++)
+		stream >> bmatr[i];
+
+	return stream;
+}

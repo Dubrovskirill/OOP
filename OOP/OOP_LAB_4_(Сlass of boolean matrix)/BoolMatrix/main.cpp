@@ -72,16 +72,9 @@ int main()
 	Del(10, 10, cmatr);
 	std::cout << std::endl;
 
+	std::cin >> bm1[1];
+	bm1.Print();
 	return 0;
 }
 
-//void Rand(char** matrix, int rows, int cols) {
-//	std::mt19937 rng(std::time(nullptr)); // генератор случайных чисел
-//	std::uniform_int_distribution<int> dist(0, 1); // равномерное распределение от 0 до 1
-//
-//	for (int i = 0; i < rows; i++) {
-//		for (int j = 0; j < cols; j++) {
-//			matrix[i][j] = dist(rng) == 0 ? '0' : '1'; // заполняем случайными значениями '0' или '1'
-//		}
-//	}
-//}
+
