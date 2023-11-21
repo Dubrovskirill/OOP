@@ -20,9 +20,9 @@ public:
 	int Weight(const UI index);
 	BoolVector LogAnd();
 	BoolVector LogOr();
-	void Inverse(const UI i, const UI j, const UI count=1);
-	void Set1(const UI i, const UI j, const UI count=1);
-	void Set0(const UI i, const UI j, const UI count=1);
+	void Inverse(const UI i, const UI j, const UI count=0);
+	void Set1(const UI i, const UI j, const UI count=0);
+	void Set0(const UI i, const UI j, const UI count=0);
 
 
 	BoolVector& operator[](const UI i);

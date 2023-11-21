@@ -103,19 +103,19 @@ BoolVector BoolMatrix::LogOr()
 
 void BoolMatrix::Inverse(const UI i, const UI j, const UI count)
 {
-	for(int u=j;u<j+count && u<m_cols;u++)
+	for(int u=j;u<=j+count && u<m_cols;u++)
 	     m_bm[i][u] = ~m_bm[i][u];
 }
 
 void BoolMatrix::Set1(const UI i, const UI j, const UI count)
 {
-	for (int u = j; u < j + count && u < m_cols; u++)
+	for (int u = j; u <= j + count && u < m_cols; u++)
 		m_bm[i][u]=1;
 }
 
 void BoolMatrix::Set0(const UI i, const UI j, const UI count)
 {
-	for (int u = j; u < j + count && u < m_cols; u++)
+	for (int u = j; u <= j + count && u < m_cols; u++)
 		m_bm[i][u]=0;
 }
 
