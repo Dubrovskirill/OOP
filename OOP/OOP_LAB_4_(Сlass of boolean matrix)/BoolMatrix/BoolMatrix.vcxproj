@@ -127,10 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\OOP_LAB_3_(Сlass of boolean vector)\OOP_LAB_3_(Сlass of boolean vector)\BoolVector.cpp" />
     <ClCompile Include="BoolMatrix.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\OOP_LAB_3_(Сlass of boolean vector)\OOP_LAB_3_(Сlass of boolean vector)\BoolVector.h" />
     <ClInclude Include="BoolMatrix.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

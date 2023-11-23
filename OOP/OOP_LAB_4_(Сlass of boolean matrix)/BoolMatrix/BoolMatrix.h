@@ -1,7 +1,8 @@
 #pragma once
-#include "..\..\OOP_LAB_3_(Ñlass of boolean vector)\OOP_LAB_3_(Ñlass of boolean vector)\BoolVector.h"
+//#include"BoolVector.h"
 #include<stdint.h>
 #include<iostream>
+#include "..\..\OOP_LAB_3_(Ñlass of boolean vector)\OOP_LAB_3_(Ñlass of boolean vector)\BoolVector.h"
 using UI = unsigned int;
 class BoolMatrix
 {
@@ -16,10 +17,10 @@ public:
 	int Rows() const;
 	int Cols() const;
 	void Swap(BoolMatrix& other);
-	int Weight();
-	int Weight(const UI index);
-	BoolVector LogAnd();
-	BoolVector LogOr();
+	int Weight()const;
+	int Weight(const UI index) const;
+	BoolVector RowConjunction() const;
+	BoolVector RowÂisjunction() const;
 	void Inverse(const UI i, const UI j, const UI count=0);
 	void Set1(const UI i, const UI j, const UI count=0);
 	void Set0(const UI i, const UI j, const UI count=0);

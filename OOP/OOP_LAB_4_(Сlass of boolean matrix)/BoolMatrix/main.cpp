@@ -84,8 +84,8 @@ int main()
 
 	 bm3.Print();
 	 cout << endl;
-	 cout << bm3.LogAnd() << endl;
-	 cout << bm3.LogOr() << endl;
+	 cout << bm3.RowConjunction() << endl;
+	 cout << bm3.RowÂisjunction() << endl;
 
 
 

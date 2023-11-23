@@ -21,9 +21,15 @@
     <ClCompile Include="BoolMatrix.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\OOP_LAB_3_(Сlass of boolean vector)\OOP_LAB_3_(Сlass of boolean vector)\BoolVector.cpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoolMatrix.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\OOP_LAB_3_(Сlass of boolean vector)\OOP_LAB_3_(Сlass of boolean vector)\BoolVector.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

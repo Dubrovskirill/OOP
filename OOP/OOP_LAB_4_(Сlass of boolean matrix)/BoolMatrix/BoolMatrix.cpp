@@ -1,8 +1,9 @@
-#include "BoolMatrix.h"
-#include "..\..\OOP_LAB_3_(Ñlass of boolean vector)\OOP_LAB_3_(Ñlass of boolean vector)\BoolVector.cpp"
+//#include "..\..\OOP_LAB_3_(Ñlass of boolean vector)\OOP_LAB_3_(Ñlass of boolean vector)\BoolVector.cpp"
+//#include "..\..\OOP_LAB_3_(Ñlass of boolean vector)\OOP_LAB_3_(Ñlass of boolean vector)\BoolVector.h"
 #include<stdint.h>
 #include<iostream>
 #include <assert.h>
+#include "BoolMatrix.h"
 using UI = unsigned int;
 
 BoolMatrix::BoolMatrix()
@@ -72,7 +73,7 @@ void BoolMatrix::Swap(BoolMatrix& other)
 	std::swap(m_bm, other.m_bm);
 }
 
-int BoolMatrix::Weight()
+int BoolMatrix::Weight() const
 {
 	int w = 0; 
 	for (int i = 0; i < m_rows; i++)
@@ -80,12 +81,12 @@ int BoolMatrix::Weight()
 	return w;
 }
 
-int BoolMatrix::Weight(const UI index)
+int BoolMatrix::Weight(const UI index) const
 {
 	return m_bm[index].Weight();
 }
 
-BoolVector BoolMatrix::LogAnd()
+BoolVector BoolMatrix::RowConjunction() const
 {
 	BoolVector vec=m_bm[0];
 	for (int i = 1; i < m_rows; i++)
@@ -93,7 +94,7 @@ BoolVector BoolMatrix::LogAnd()
 	return vec;
 }
 
-BoolVector BoolMatrix::LogOr()
+BoolVector BoolMatrix::RowÂisjunction() const
 {
 	BoolVector vec = m_bm[0];
 	for (int i = 1; i < m_rows; i++)
