@@ -18,28 +18,27 @@ void CheckSort(std::vector<int>& vec)
 	}
 }
 
-int HighBit(std::vector<int>& vec)
+int HighBit( const std::vector<int>& vec, int left, int right) 
 {
-	int max = 0;
-	for (int i = 0; i < vec.size(); i++)
+	int bit = 1;
+	int count = 0;
+	int max = INT_MIN;
+	for (int i = left; i <=right; i++)
+		if (max < vec[i])
+			max = vec[i];
+
+	while (max)
 	{
-		int num = vec[i];
-		int bit = 1;
-		while (num)
-		{
-			num >>= 1;
-			bit <<= 1;
-		}
-		bit >>= 1;
-		if (max < bit)
-			max = bit;
+		max >>= 1;
+		bit <<= 1;
 	}
-	return max;
+	//bit >>= 1;
+	return bit;
 }
 
-void Convert(std::vector<int>& vec)
+void Convert(std::vector<int>& vec, int border)
 {
-	for (int k = 0; k < vec.size(); k++) 
+	for (int k = 0; k <= border; k++) 
 			vec[k] = ~vec[k]+1;
 }
 
@@ -73,9 +72,9 @@ void DecrSort(std::vector<int>& vec, int left,int right, int hb)
 	int i = left, j = right;
 	while (i <= j)
 	{
-		while (i <= j && (hb & vec[i]) != 0)
+		while (i <= j && (hb & vec[i]) == 0)
 			i++;
-		while (i <= j && (hb & vec[j]) == 0)
+		while (i <= j && (hb & vec[j]) != 0)
 			j--;
 		if (i < j)
 		{
@@ -87,44 +86,49 @@ void DecrSort(std::vector<int>& vec, int left,int right, int hb)
 	DecrSort(vec, i, right, hb >> 1);
 }
 
-std::vector<int> Negative(std::vector<int>& vec)
+int Prep(std::vector<int>& vec)
 {
-	std::vector<int> negative;
-	for (int i = 0; i < vec.size(); i++) {
-		if (vec[i] < 0) {
-			negative.push_back(vec[i]);
+	int i = 0, j = vec.size()-1, x = 0;
+	while (i <= j)
+	{
+		while (vec[i] < x)
+			i++;
+		while (vec[j] >= x)
+			j--;
+		if (i <= j)
+		{
+			std::swap(vec[i], vec[j]);
+			i++;
+			j--;
 		}
 	}
-	return  negative;
-}
 
-std::vector<int> Positive(std::vector<int>& vec)
-{
-	std::vector<int> positive;
-	for (int i = 0; i < vec.size(); i++) {
-		if (vec[i] >= 0) {
-			positive.push_back(vec[i]);
-		}
-	}
-	return  positive;
+	return j;
 }
 
 void BitSort(std::vector<int>& vec)
 {
-	std::vector<int> negative = Negative(vec);
-	Convert(negative);
-	int right = negative.size()-1;
-	int hb = HighBit(negative);
-	DecrSort(negative,0,right,hb);
-	Convert(negative);
-	std::vector<int> positive = Positive(vec);
-	right = positive.size()-1;
-	hb = HighBit(positive);
-	IncrSort(positive, 0, right, hb);
+	
+	
+	int border = Prep(vec);
+	/*for (int i = 0; i < vec.size(); i++)
+		std::cout << vec[i] << " ";
+	std::cout << std::endl;*/
 
-	vec = negative;
-	for (int i=0; i<positive.size();i++)
-		vec.push_back(positive[i]);
+	int h = HighBit(vec, 0, vec.size() - 1);
+	IncrSort(vec, 0, border, h);
+	IncrSort(vec, border + 1, vec.size() - 1, h);
+	/*for (int i = 0; i < vec.size(); i++)
+		std::cout << vec[i] << " ";
+		std::cout << std::endl;*/
+	
+
+
+	/*int hb = HighBit(vec, 0, vec.size() - 1);
+	IncrSort(vec, border+1, vec.size()-1, hb);
+	for (int i = 0; i < vec.size(); i++)
+		std::cout << vec[i] << " ";
+	std::cout << std::endl;*/
 }
 
 void Input(int j, int i, std::vector<int>& vector)
@@ -141,6 +145,8 @@ void Input(int j, int i, std::vector<int>& vector)
 	else std::cout << "File opening error!\n";
 	inputFile.close();
 }
+
+
 
 
 int main()
@@ -173,5 +179,20 @@ int main()
 			cout << "Average time: " << avti << " ms" << "\n----------------------\n";
 		}
 	}
+
+	////std::vector<int> vec = { 12, 20, 12, 20,0, 143, 23, 45 };
+	////std::vector<int> vec = { -12, -20, -12,- 20,-0, -143, -23, -45 };
+	//std::vector<int> vec = { 12, 20, -12,-20,0, 143, 23, -45 };
+	////Convert(vec, vec.size() - 1);
+
+	//for (int i = 0; i < vec.size(); i++)
+	//	std::cout << vec[i] << " ";
+	//std::cout << std::endl;
+
+	//BitSort(vec);
+	////int hb = HighBit(vec);
+	////IncrSort(vec,-0,vec.size()-1,hb);
+	//for (int i = 0; i < vec.size(); i++)
+	//	std::cout << vec[i] << " ";
 	return 0;
 }
