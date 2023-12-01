@@ -35,7 +35,7 @@ public:
 	BoolMatrix operator|=(const BoolMatrix& other);
 	BoolMatrix operator^(const BoolMatrix& other) const;
 	BoolMatrix operator^=(const BoolMatrix& other);
-	BoolMatrix operator~();
+	BoolMatrix operator~()const;
 
 private:
 	UI m_rows = 0;

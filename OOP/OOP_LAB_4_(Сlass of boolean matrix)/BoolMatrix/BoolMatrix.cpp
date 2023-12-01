@@ -212,7 +212,7 @@ BoolMatrix BoolMatrix::operator^=(const BoolMatrix& other)
 	return *this;
 }
 
-BoolMatrix BoolMatrix::operator~()
+BoolMatrix BoolMatrix::operator~() const
 {
 	BoolMatrix bmatr(*this);
 	for (int i = 0; i < m_rows; i++)
