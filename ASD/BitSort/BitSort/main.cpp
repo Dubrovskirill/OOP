@@ -108,27 +108,10 @@ int Prep(std::vector<int>& vec)
 
 void BitSort(std::vector<int>& vec)
 {
-	
-	
 	int border = Prep(vec);
-	/*for (int i = 0; i < vec.size(); i++)
-		std::cout << vec[i] << " ";
-	std::cout << std::endl;*/
-
 	int h = HighBit(vec, 0, vec.size() - 1);
 	IncrSort(vec, 0, border, h);
 	IncrSort(vec, border + 1, vec.size() - 1, h);
-	/*for (int i = 0; i < vec.size(); i++)
-		std::cout << vec[i] << " ";
-		std::cout << std::endl;*/
-	
-
-
-	/*int hb = HighBit(vec, 0, vec.size() - 1);
-	IncrSort(vec, border+1, vec.size()-1, hb);
-	for (int i = 0; i < vec.size(); i++)
-		std::cout << vec[i] << " ";
-	std::cout << std::endl;*/
 }
 
 void Input(int j, int i, std::vector<int>& vector)
@@ -145,9 +128,6 @@ void Input(int j, int i, std::vector<int>& vector)
 	else std::cout << "File opening error!\n";
 	inputFile.close();
 }
-
-
-
 
 int main()
 {
@@ -180,19 +160,5 @@ int main()
 		}
 	}
 
-	////std::vector<int> vec = { 12, 20, 12, 20,0, 143, 23, 45 };
-	////std::vector<int> vec = { -12, -20, -12,- 20,-0, -143, -23, -45 };
-	//std::vector<int> vec = { 12, 20, -12,-20,0, 143, 23, -45 };
-	////Convert(vec, vec.size() - 1);
-
-	//for (int i = 0; i < vec.size(); i++)
-	//	std::cout << vec[i] << " ";
-	//std::cout << std::endl;
-
-	//BitSort(vec);
-	////int hb = HighBit(vec);
-	////IncrSort(vec,-0,vec.size()-1,hb);
-	//for (int i = 0; i < vec.size(); i++)
-	//	std::cout << vec[i] << " ";
 	return 0;
 }
