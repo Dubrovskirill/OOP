@@ -2,9 +2,10 @@
 #define IS_TEMPLATE_LIST_DECLARED
 
 #pragma once
-#include<iostream>
+#include <iostream>
 #include <algorithm>
 #include <assert.h>
+#include "..//..//OOP_LAB_2//OOP_LAB_2//Array.h"
 
 
 
@@ -17,8 +18,10 @@ public:
 	class Node;
 
 	void FormHeadTail();
+	void DelHeadTail();
 	List(const List& other);
 	List(UI size=0, const ItemType value = ItemType());
+	//List(const Array<ItemType>& arr);
 	~List();
 
 	void PushBack(const ItemType &value);

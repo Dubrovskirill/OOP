@@ -1,9 +1,9 @@
 #ifndef ARE_TEMPLATE_LIST_METHODS_DEFINED
 #define ARE_TEMPLATE_LIST_METHODS_DEFINED
-#include "List.h"
+
 #include<stdint.h>
 #include<iostream>
-
+#include "List.h"
 using UI = unsigned int;
 
 
@@ -15,21 +15,21 @@ void List<ItemType>::FormHeadTail()
     m_head->next = m_tail;
     m_tail->prev = m_head;
 }
+template <typename ItemType>
+void List<ItemType>::DelHeadTail()
+{
+    delete m_head;
+    delete m_tail;
+}
 
 template <typename ItemType>
 List<ItemType>::List(const List& other)
-    :m_size(other.m_size)
 {
-    m_head = other.m_head;
-    m_tail = other.m_tail;
-    m_size = other.m_size;
-    Node* cur = m_head->next;
-    while (cur != m_tail)
+    FormHeadTail();
+    Node* cur = other.m_head->next;
+    while (cur != other.m_tail)
     {
-        Node* newNode = new Node(cur->data);
-       // newNode->data = cur->data;
-        newNode->next = cur->next;
-        newNode->prev = cur->prev;
+        PushBack(cur->data);
         cur = cur->next;
     }
 }
@@ -39,20 +39,29 @@ template <typename ItemType>
 List<ItemType>::List(UI size, const ItemType value)
 {
     FormHeadTail();
-
     for (int i = 0; i < size; i++)
         PushBack(value);
 }
 
+//template <typename ItemType>
+//List<ItemType>::List(const Array<ItemType>& arr)
+//{
+//    FormHeadTail();
+//    for (int i = 0; i < arr.Size(); i++)
+//        PushBack(arr[i]);
+//}
+
 template <typename ItemType>
 List<ItemType>::~List()
 {
-    Node* cur = m_head;
-    while (cur != nullptr) {
+    Node* cur = m_head->next;
+    while (cur != m_tail) 
+    {
         Node* next = cur->next;
         delete cur;
         cur = next;
     }
+    DelHeadTail();
 }
 
 template <typename ItemType>
@@ -82,3 +91,4 @@ void List<ItemType>::Print()
 }
 #endif
 
+//Создание конструктура по умолчанию, с параметром, копирования. Метод Pushback, Print
