@@ -4,17 +4,12 @@ int main()
 {
 	List<int> list_1;
 	list_1.Print();
-	List<int> list_2(5, 10);
+	List<int> list_2(7, 15);
 	list_2.Print();
-	List<int> list_3(3,7);
-	list_3.Print();
-	list_2.Swap(list_3);
+	List<int> list_3(7,15);
+	list_2 = list_3;
 	list_2.Print();
-	list_3.Print();
-	list_3.PushFront(19);
-	list_3.PopFront();
-	list_3.Print();
-
+	
 
 	return 0;
 }

@@ -1,6 +1,7 @@
 #ifndef ARE_TEMPLATE_LIST_METHODS_DEFINED
 #define ARE_TEMPLATE_LIST_METHODS_DEFINED
 
+
 #include<stdint.h>
 #include<iostream>
 #include "List.h"
@@ -135,5 +136,97 @@ void List<ItemType>::Swap(List& other)
     std::swap(m_size, other.m_size);
     std::swap(m_tail, other.m_tail);
 }
+
+template<typename ItemType>
+bool List<ItemType>::isEmpty() const
+{
+    if (m_head->next == m_tail)
+        return true;
+    return false;
+}
+
+template<typename ItemType>
+void List<ItemType>::Clear()
+{
+    while (!isEmpty())
+        PopBack();
+}
+
+template<typename ItemType>
+ItemType& List<ItemType>::operator[](const UI index)
+{
+    assert(index < m_size);
+    int i = 0;
+    Node* cur = m_head->next;
+    while (i != index)
+    {
+        cur = cur->next;
+        i++;
+    }
+    return cur->data;
+}
+
+template<typename ItemType>
+const ItemType& List<ItemType>::operator[](const UI index) const
+{
+    assert(index < m_size);
+    int i = 0;
+    Node* cur = m_head->next;
+    while (i != index)
+    {
+        cur = cur->next;
+        i++;
+    }
+    return cur->data;
+}
+
+template<typename ItemType>
+bool List<ItemType>::operator==(const List& other) const
+{
+    if (m_size != other.m_size)
+        return false;
+    for (int i = 0; i < m_size; i++)
+        if ((*this)[i] != other[i])
+            return false;
+
+    return true;
+}
+
+template<typename ItemType>
+bool List<ItemType>::operator!=(const List& other) const
+{
+    if (*this == other)
+        return false;
+
+    return true;
+}
+
+template<typename ItemType>
+List<ItemType>& List<ItemType>::operator=(List&& other)
+{
+    Swap(other);
+    return *this;
+}
+
+template<typename ItemType>
+List<ItemType>& List<ItemType>::operator=(const List& other)
+{
+    if (*this == other) return *this;
+    if (m_size != other.m_size)
+    {
+        Clear();
+        for (int i = 0; i < other.m_size; i++)
+            PushBack(other[i]);
+    }
+    Node* cur = m_head->next;
+    for (int i = 0; i < m_size; i++)
+    {
+        cur->data = other[i];
+        cur = cur->next;
+    }
+
+    return *this;
+}
+
 #endif
 

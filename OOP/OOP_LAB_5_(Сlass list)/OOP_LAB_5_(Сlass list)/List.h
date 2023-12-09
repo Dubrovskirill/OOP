@@ -2,6 +2,7 @@
 #define IS_TEMPLATE_LIST_DECLARED
 
 #pragma once
+//#define guards
 #include <iostream>
 #include <algorithm>
 #include <assert.h>
@@ -32,6 +33,16 @@ public:
 	void Print() const;
 	UI Size() const;
 	void Swap(List& other);
+	bool isEmpty() const;
+	void Clear();
+
+	ItemType& operator[](const UI index);
+	const ItemType& operator[](const UI index) const;
+	bool operator==(const List& other) const;
+	bool operator!=(const List& other) const;
+	List& operator=(List&& other);
+	List& operator=(const List& other);
+
 private:
 	
 	UI m_size;
