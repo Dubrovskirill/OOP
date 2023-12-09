@@ -49,7 +49,10 @@ private:
 	Node* m_head;
 	Node* m_tail;
 };
-
+template <typename ItemType>
+std::ostream& operator<<(std::ostream& stream, const List<ItemType>& list);
+template <typename ItemType>
+std::istream& operator >> (std::istream& stream, List<ItemType>& list);
 
 template<typename ItemType>
 class List<ItemType>::Node

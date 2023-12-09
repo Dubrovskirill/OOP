@@ -1,3 +1,4 @@
+
 #pragma once
 //#define guards
 #include<iostream>
@@ -567,4 +568,6 @@ bool Array<ItemType>::Remove(const Iterator it)
 	Iterator it2(this, it.Pos() + 1);
 	return Remove(it, it2);
 }
+//#include "List.cpp"
+
 

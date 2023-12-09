@@ -228,5 +228,24 @@ List<ItemType>& List<ItemType>::operator=(const List& other)
     return *this;
 }
 
+template <typename ItemType>
+std::ostream& operator<<(std::ostream& stream, const List<ItemType>& list)
+{
+    stream << "[";
+    for (int i = 0; i < list.Size()-1; i++)
+        stream << list[i] << ",";
+
+    stream << list[list.Size() - 1] << "]\n";
+    return stream;
+}
+
+template <typename ItemType>
+std::istream& operator >> (std::istream& stream, List<ItemType>& list)
+{
+    for (int i = 0; i < list.Size(); i++)
+        stream >> list[i];
+
+    return stream;
+}
 #endif
 
