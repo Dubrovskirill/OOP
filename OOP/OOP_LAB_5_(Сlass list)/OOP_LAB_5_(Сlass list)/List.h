@@ -26,6 +26,9 @@ public:
 
 	void PushBack(const ItemType &value);
 	void PopBack();
+	void PushFront(const ItemType& value);
+	void PopFront();
+
 	void Print() const;
 	UI Size() const;
 	void Swap(List& other);

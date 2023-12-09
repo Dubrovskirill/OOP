@@ -11,6 +11,9 @@ int main()
 	list_2.Swap(list_3);
 	list_2.Print();
 	list_3.Print();
+	list_3.PushFront(19);
+	list_3.PopFront();
+	list_3.Print();
 
 
 	return 0;

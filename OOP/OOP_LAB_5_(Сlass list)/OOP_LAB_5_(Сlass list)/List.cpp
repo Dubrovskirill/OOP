@@ -83,13 +83,27 @@ void List<ItemType> ::PopBack()
     m_tail->prev = delNode->prev;
     m_size--;
     delete delNode;
+}
 
-    /*Node* newNode = new Node(value);
-    newNode->prev = m_tail->prev;
-    newNode->next = m_tail;
-    m_tail->prev->next = newNode;
-    m_tail->prev = newNode;
-    m_size++;*/
+template <typename ItemType>
+void List<ItemType> ::PushFront(const ItemType& value)
+{
+    Node* newNode = new Node(value);
+    newNode->prev = m_head;
+    newNode->next= m_head->next;
+    m_head->next = newNode;
+    newNode->next->prev = newNode;
+    m_size++;
+}
+
+template <typename ItemType>
+void List<ItemType> ::PopFront()
+{
+    Node* delNode = m_head->next;
+    delNode->next->prev = m_head;
+    m_head->next = delNode->next;
+    m_size--;
+    delete delNode;
 }
 
 template<typename ItemType>
@@ -117,19 +131,8 @@ UI List<ItemType>::Size() const
 template<typename ItemType>
 void List<ItemType>::Swap(List& other)
 {
-    
-    Node* cur = m_head->next;
-    Node* oth_cur = other.m_head->next;
     std::swap(m_head, other.m_head);
     std::swap(m_size, other.m_size);
-    /*while (cur != m_tail)
-    {
-        Node* next = cur->next;
-        Node* oth_next = oth_cur->next;
-        
-        cur = next;
-        oth_next = oth_next;
-    }*/
     std::swap(m_tail, other.m_tail);
 }
 #endif
