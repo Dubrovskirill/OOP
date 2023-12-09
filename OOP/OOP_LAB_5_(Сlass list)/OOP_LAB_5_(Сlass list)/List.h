@@ -5,7 +5,7 @@
 #include <iostream>
 #include <algorithm>
 #include <assert.h>
-#include "..//..//OOP_LAB_2//OOP_LAB_2//Array.h"
+//#include "..//..//OOP_LAB_2//OOP_LAB_2//Array.h"
 
 
 
@@ -25,7 +25,10 @@ public:
 	~List();
 
 	void PushBack(const ItemType &value);
-	void Print();
+	void PopBack();
+	void Print() const;
+	UI Size() const;
+	void Swap(List& other);
 private:
 	
 	UI m_size;

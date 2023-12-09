@@ -65,7 +65,8 @@ List<ItemType>::~List()
 }
 
 template <typename ItemType>
-void List<ItemType> ::PushBack(const ItemType& value) {
+void List<ItemType> ::PushBack(const ItemType& value) 
+{
     Node* newNode = new Node(value);
     newNode->prev = m_tail->prev;
     newNode->next = m_tail;
@@ -74,8 +75,25 @@ void List<ItemType> ::PushBack(const ItemType& value) {
     m_size++;
 }
 
+template <typename ItemType>
+void List<ItemType> ::PopBack() 
+{
+    Node* delNode = m_tail->prev;
+    delNode->prev->next = m_tail;
+    m_tail->prev = delNode->prev;
+    m_size--;
+    delete delNode;
+
+    /*Node* newNode = new Node(value);
+    newNode->prev = m_tail->prev;
+    newNode->next = m_tail;
+    m_tail->prev->next = newNode;
+    m_tail->prev = newNode;
+    m_size++;*/
+}
+
 template<typename ItemType>
-void List<ItemType>::Print()
+void List<ItemType>::Print() const
 {
     if (m_head->next == m_tail)
         return;
@@ -89,6 +107,30 @@ void List<ItemType>::Print()
     std::cout << cur->data << " ]";
     std::cout << std::endl;
 }
+
+template<typename ItemType>
+UI List<ItemType>::Size() const
+{
+    return m_size;
+}
+
+template<typename ItemType>
+void List<ItemType>::Swap(List& other)
+{
+    
+    Node* cur = m_head->next;
+    Node* oth_cur = other.m_head->next;
+    std::swap(m_head, other.m_head);
+    std::swap(m_size, other.m_size);
+    /*while (cur != m_tail)
+    {
+        Node* next = cur->next;
+        Node* oth_next = oth_cur->next;
+        
+        cur = next;
+        oth_next = oth_next;
+    }*/
+    std::swap(m_tail, other.m_tail);
+}
 #endif
 
-//Создание конструктура по умолчанию, с параметром, копирования. Метод Pushback, Print
