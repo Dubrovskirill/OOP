@@ -39,7 +39,7 @@ public:
 	ItemType Max() const;
 	ItemType Min() const;
 
-	Node* Search(const ItemType& key) const;
+	//Node* Search(const ItemType& key) const;
 
 	ItemType& operator[](const UI index);
 	const ItemType& operator[](const UI index) const;
@@ -47,6 +47,8 @@ public:
 	bool operator!=(const List& other) const;
 	List& operator=(List&& other);
 	List& operator=(const List& other);
+	List operator+(const List& other) const;
+	List& operator+=(const List& other);
 
 private:
 	

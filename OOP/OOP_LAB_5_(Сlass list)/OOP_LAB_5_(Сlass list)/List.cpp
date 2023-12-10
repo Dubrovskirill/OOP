@@ -206,20 +206,20 @@ ItemType  List<ItemType>::Min() const
     return min;
 }
 
-template<typename ItemType>
-List<ItemType>::Node *List<ItemType>::Search(const ItemType& key) const
-{
-    Node* cur = m_head->next;
-    while(cur!=m_tail)
-    {
-        if (cur->data == key)
-            return  cur;
-        cur = cur->next;
-    }
-
-    return nullptr;
-
-}
+//template<typename ItemType>
+//List<ItemType>::Node *List<ItemType>::Search(const ItemType& key) const
+//{
+//    Node* cur = m_head->next;
+//    while(cur!=m_tail)
+//    {
+//        if (cur->data == key)
+//            return  cur;
+//        cur = cur->next;
+//    }
+//
+//    return nullptr;
+//
+//}
 
 template<typename ItemType>
 ItemType& List<ItemType>::operator[](const UI index)
@@ -298,6 +298,25 @@ List<ItemType>& List<ItemType>::operator=(const List& other)
 }
 
 template <typename ItemType>
+List<ItemType> List<ItemType>::operator+(const List& other) const
+{
+    List tmp(*this);
+    for (int i = 0; i < other.m_size; i++)
+    {
+        tmp.PushBack(other[i]);
+    }
+    return tmp;
+}
+
+template <typename ItemType>
+List<ItemType>& List<ItemType>::operator+=(const List& other)
+{
+    List tmp(*this + other);
+    this->Swap(tmp);
+    return *this;
+}
+
+template <typename ItemType>
 std::ostream& operator<<(std::ostream& stream, const List<ItemType>& list)
 {
     stream << "[";
@@ -316,5 +335,7 @@ std::istream& operator >> (std::istream& stream, List<ItemType>& list)
 
     return stream;
 }
+
+
 #endif
 
