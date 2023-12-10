@@ -29,12 +29,17 @@ public:
 	void PopBack();
 	void PushFront(const ItemType& value);
 	void PopFront();
-
 	void Print() const;
 	UI Size() const;
 	void Swap(List& other);
 	bool isEmpty() const;
 	void Clear();
+	void Insert(const int pos, const ItemType& value);
+	void Remove(const int pos);
+	ItemType Max() const;
+	ItemType Min() const;
+
+	Node* Search(const ItemType& key) const;
 
 	ItemType& operator[](const UI index);
 	const ItemType& operator[](const UI index) const;
