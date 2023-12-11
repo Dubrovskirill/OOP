@@ -4,7 +4,7 @@
 
 int main()
 {
-	List<int> list_1(5);
+	List<int> list_1;
 	list_1.Print();
 	Array<char> arr(10, 'z');
 	arr.Print();
@@ -80,5 +80,10 @@ int main()
 	std::cout << list_4;
 	list_4.RemoveKey('A');
 	std::cout << list_4;
+	list_3.RemoveRange(10, 16);
+	std::cout << list_3;
+	list_4.Sort();
+	std::cout << list_4;
+	//std::cout << std::endl << list_3.Min() << std::endl;
 	return 0;
 }

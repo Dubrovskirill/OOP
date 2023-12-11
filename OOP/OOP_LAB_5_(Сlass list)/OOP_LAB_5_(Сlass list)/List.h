@@ -45,11 +45,12 @@ public:
 	void Remove(const int pos);
 	void Remove(Iterator& it);
 	void RemoveKey(const ItemType& key);
+	void RemoveRange(const int first, const int last);
 	ItemType Max() const;
 	ItemType Min() const;
-
 	Iterator Search(const ItemType& key);
 	ConstIterator  Search(const ItemType& key) const;
+	void Sort();
 
 	ItemType& operator[](const UI index);
 	const ItemType& operator[](const UI index) const;
@@ -64,6 +65,9 @@ public:
 	Iterator end();
 	ConstIterator begin() const;
 	ConstIterator end() const;
+	Iterator pos(const int index);
+	ConstIterator pos(const int index) const;
+	//Iterator& operator[](const int pos);
 
 private:
 	
@@ -100,11 +104,13 @@ public:
 	friend class List;
 	TemplateIterator(LT* list = nullptr, Node* node = nullptr);
 	IT& operator*();
+	//IT& operator[](const int pos);
 	TemplateIterator& operator++();
 
 	bool operator == (const TemplateIterator& other) const;
 	bool operator != (const TemplateIterator& other) const;
-
+	//bool operator > (const TemplateIterator& other) const;
+	//bool operator < (const TemplateIterator& other) const;
 private:
 	LT* m_list;
 	Node* m_node = nullptr;
