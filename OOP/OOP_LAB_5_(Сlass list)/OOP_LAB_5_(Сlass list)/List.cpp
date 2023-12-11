@@ -169,6 +169,27 @@ void  List<ItemType>::Insert(const int pos, const ItemType& value)
 }
 
 template<typename ItemType>
+void  List<ItemType>::Insert(const Iterator& it, const ItemType& value)
+{
+    assert(it!=nullptr);
+
+    Node* newNode = new Node(value);
+    
+    newNode->prev = it.m_node->prev;
+    newNode->next = it.m_node;
+    it.m_node->prev->next = newNode;
+    it.m_node->prev = newNode;
+    m_size++;
+}
+
+template<typename ItemType>
+void  List<ItemType>::InsertAfter(const ItemType& key, const ItemType& value)
+{
+    Iterator it = Search(key);
+    Insert(++it, value);
+}
+
+template<typename ItemType>
 void  List<ItemType>::Remove(const int pos)
 {
     assert(m_size >= pos && pos >= 0);
@@ -183,6 +204,26 @@ void  List<ItemType>::Remove(const int pos)
     delete delNode;
 
 }
+
+template<typename ItemType>
+void  List<ItemType>::Remove(Iterator& it)
+{
+    assert(it != nullptr);
+    Node* delNode = it.m_node;
+    ++it;
+    delNode->prev->next = it.m_node;
+    it.m_node->prev = delNode->prev;
+    m_size--;
+    delete delNode;
+}
+
+template<typename ItemType>
+void  List<ItemType>::RemoveKey(const ItemType& key)
+{
+    Iterator it = Search(key);
+    Remove(it);
+}
+
 template<typename ItemType>
 ItemType  List<ItemType>::Max() const
 {
@@ -207,19 +248,32 @@ ItemType  List<ItemType>::Min() const
     return min;
 }
 
-//template<typename ItemType>
-//List<ItemType>::Iterator List<ItemType>::Search(const ItemType& key) const
-//{
-//    Iterator cur =begin();
-//    while (cur != end()
-//    {
-//        if (*cur == key)
-//            return  cur;
-//        cur++;    
-//    }
-//    return nullptr;
-//
-//}
+template<typename ItemType>typename
+List<ItemType>::Iterator List<ItemType>::Search(const ItemType& key)
+{
+    Iterator it = begin();
+    while (it != end())
+    {
+        if (*it == key)
+            return  it;
+        ++it;    
+    }
+    return nullptr;
+
+}
+
+template<typename ItemType>typename
+List<ItemType>::ConstIterator  List<ItemType>::Search(const ItemType& key) const
+{
+    ConstIterator  it = begin();
+    while (it != end())
+    {
+        if (*it == key)
+            return  it;
+        ++it;
+    }
+    return nullptr;
+}
 
 template<typename ItemType>
 ItemType& List<ItemType>::operator[](const UI index)
@@ -380,6 +434,20 @@ List<ItemType>::TemplateIterator<IT, LT>& List<ItemType>::TemplateIterator<IT, L
 {
     m_node = m_node->next;
     return *this;
+}
+template <typename ItemType>
+template <typename IT, typename LT>
+bool List<ItemType>::TemplateIterator<IT, LT>::operator == (const TemplateIterator& other) const
+{
+    return (m_node == other.m_node) && (m_list == other.m_list);
+}
+
+
+template <typename ItemType>
+template <typename IT, typename LT>
+bool List<ItemType>::TemplateIterator<IT, LT>::operator != (const TemplateIterator& other) const
+{
+    return !operator==(other);
 }
 #endif
 

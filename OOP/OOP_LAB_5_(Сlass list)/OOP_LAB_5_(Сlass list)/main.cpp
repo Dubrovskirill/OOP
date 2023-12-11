@@ -1,6 +1,7 @@
 #include<iostream>
 #include "List.h"
 //#include "../../OOP_LAB_2/OOP_LAB_2/Array.h"
+
 int main()
 {
 	List<int> list_1(5);
@@ -69,5 +70,15 @@ int main()
 	list_2.Print();
 
 	std::cout << *(list_4.begin());
+
+	List<char>::TemplateIterator<char,List<char>> tr;
+	tr = list_4.Search('A');
+	if(tr!=nullptr)
+		std::cout << *tr;
+	std::cout << std::endl;
+	list_4.InsertAfter('A', 'V');
+	std::cout << list_4;
+	list_4.RemoveKey('A');
+	std::cout << list_4;
 	return 0;
 }

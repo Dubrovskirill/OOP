@@ -40,11 +40,16 @@ public:
 	bool isEmpty() const;
 	void Clear();
 	void Insert(const int pos, const ItemType& value);
+	void Insert(const Iterator& it, const ItemType& value);
+	void InsertAfter(const ItemType& key, const ItemType& value);
 	void Remove(const int pos);
+	void Remove(Iterator& it);
+	void RemoveKey(const ItemType& key);
 	ItemType Max() const;
 	ItemType Min() const;
 
-	//Iterator Search(const ItemType& key) const;
+	Iterator Search(const ItemType& key);
+	ConstIterator  Search(const ItemType& key) const;
 
 	ItemType& operator[](const UI index);
 	const ItemType& operator[](const UI index) const;
@@ -92,9 +97,13 @@ template <typename IT, typename LT>
 class List<ItemType>::TemplateIterator
 {
 public:
+	friend class List;
 	TemplateIterator(LT* list = nullptr, Node* node = nullptr);
 	IT& operator*();
 	TemplateIterator& operator++();
+
+	bool operator == (const TemplateIterator& other) const;
+	bool operator != (const TemplateIterator& other) const;
 
 private:
 	LT* m_list;
