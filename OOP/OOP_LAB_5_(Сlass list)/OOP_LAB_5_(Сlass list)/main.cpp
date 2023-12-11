@@ -1,9 +1,15 @@
 #include<iostream>
 #include "List.h"
+//#include "../../OOP_LAB_2/OOP_LAB_2/Array.h"
 int main()
 {
-	List<int> list_1;
+	List<int> list_1(5);
 	list_1.Print();
+	Array<char> arr(10, 'z');
+	arr.Print();
+	List<char> list_arr(arr);
+	list_arr.Print();
+
 	List<int> list_2(7, 15);
 	list_2.Print();
 	List<int> list_3(7,15);
@@ -62,5 +68,6 @@ int main()
 	list_1.Print();
 	list_2.Print();
 
+	std::cout << *(list_4.begin());
 	return 0;
 }

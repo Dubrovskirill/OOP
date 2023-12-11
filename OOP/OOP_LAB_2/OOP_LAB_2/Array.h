@@ -1,6 +1,7 @@
 
-#pragma once
-//#define guards
+//#pragma once
+#ifndef ARRAY_TEMPLATE
+#define ARRAY_TEMPLATE
 #include<iostream>
 #include <algorithm>
 #include <assert.h>
@@ -191,7 +192,7 @@ Array<ItemType>& Array<ItemType>::operator= (const Array& other)
 
 }
 
-template <>
+template <> inline
 void Array<int>::RandArray(int f_gap, int l_gap)const
 {
 	if (f_gap > l_gap)
@@ -202,7 +203,7 @@ void Array<int>::RandArray(int f_gap, int l_gap)const
 	for (int i = 0; i < m_size; i++) m_array[i] = rand() % l_gap + f_gap + 1;
 }
 
-template <>
+template <> inline
 void Array<int>::RandArrayIns(int f_gap, int l_gap)const
 {
 	if (f_gap > l_gap) std::swap(f_gap, l_gap);
@@ -219,7 +220,7 @@ void Array<int>::RandArrayIns(int f_gap, int l_gap)const
 
 }
 
-template <>
+template <> inline
 void Array<int>::RandArrayDes(int f_gap, int l_gap)const
 {
 	if (f_gap > l_gap) std::swap(f_gap, l_gap);
@@ -568,6 +569,7 @@ bool Array<ItemType>::Remove(const Iterator it)
 	Iterator it2(this, it.Pos() + 1);
 	return Remove(it, it2);
 }
-//#include "List.cpp"
+
+#endif 
 
 

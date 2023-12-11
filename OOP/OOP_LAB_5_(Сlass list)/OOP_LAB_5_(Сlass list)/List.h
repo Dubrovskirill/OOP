@@ -1,12 +1,12 @@
 #ifndef IS_TEMPLATE_LIST_DECLARED
 #define IS_TEMPLATE_LIST_DECLARED
 
-#pragma once
-//#define guards
+//pragma once
+
 #include <iostream>
 #include <algorithm>
 #include <assert.h>
-//#include "..//..//OOP_LAB_2//OOP_LAB_2//Array.h"
+#include "../../OOP_LAB_2/OOP_LAB_2/Array.h"
 
 
 
@@ -18,11 +18,16 @@ class List
 public:
 	class Node;
 
+	template <typename IT, typename LT>
+	class TemplateIterator;
+	using Iterator = TemplateIterator<ItemType, List>;
+	using ConstIterator = TemplateIterator<const ItemType, const List>;
+
 	void FormHeadTail();
 	void DelHeadTail();
 	List(const List& other);
 	List(UI size=0, const ItemType value = ItemType());
-	//List(const Array<ItemType>& arr);
+	List(const Array<ItemType>& arr);
 	~List();
 
 	void PushBack(const ItemType &value);
@@ -39,7 +44,7 @@ public:
 	ItemType Max() const;
 	ItemType Min() const;
 
-	//Node* Search(const ItemType& key) const;
+	//Iterator Search(const ItemType& key) const;
 
 	ItemType& operator[](const UI index);
 	const ItemType& operator[](const UI index) const;
@@ -49,6 +54,11 @@ public:
 	List& operator=(const List& other);
 	List operator+(const List& other) const;
 	List& operator+=(const List& other);
+
+	Iterator begin();
+	Iterator end();
+	ConstIterator begin() const;
+	ConstIterator end() const;
 
 private:
 	
@@ -76,6 +86,20 @@ private:
 	Node* next = nullptr;
 };
 
-#include "List.cpp"
-#endif
 
+template <typename ItemType>
+template <typename IT, typename LT>
+class List<ItemType>::TemplateIterator
+{
+public:
+	TemplateIterator(LT* list = nullptr, Node* node = nullptr);
+	IT& operator*();
+	TemplateIterator& operator++();
+
+private:
+	LT* m_list;
+	Node* m_node = nullptr;
+};
+
+#include "List.cpp"
+#endif 
