@@ -481,13 +481,21 @@ List<ItemType>::TemplateIterator<IT, LT>& List<ItemType>::TemplateIterator<IT, L
     m_node = m_node->next;
     return *this;
 }
+
+template <typename ItemType>
+template <typename IT, typename LT>
+List<ItemType>::TemplateIterator<IT, LT>& List<ItemType>::TemplateIterator<IT, LT>::operator--()
+{
+    m_node = m_node->prev;
+    return *this;
+}
+
 template <typename ItemType>
 template <typename IT, typename LT>
 bool List<ItemType>::TemplateIterator<IT, LT>::operator == (const TemplateIterator& other) const
 {
     return (m_node == other.m_node) && (m_list == other.m_list);
 }
-
 
 template <typename ItemType>
 template <typename IT, typename LT>
@@ -497,26 +505,5 @@ bool List<ItemType>::TemplateIterator<IT, LT>::operator != (const TemplateIterat
 }
 
 
-//template <typename ItemType>
-//template <typename IT, typename LT>
-//bool List<ItemType>::TemplateIterator<IT, LT>::operator < (const TemplateIterator& other) const
-//{
-//    return (m_node->data < other.m_node->data);
-//}
-//
-//template <typename ItemType>
-//template <typename IT, typename LT>
-//bool List<ItemType>::TemplateIterator<IT, LT>::operator > (const TemplateIterator& other) const
-//{
-//    return (m_node->data > other.m_node->data);
-//}
-//template <typename ItemType> typename
-//List<ItemType>::Iterator& List<ItemType>::operator[](const int pos)
-//{
-//    assert(pos < m_size);
-//    Iterator it = begin();
-//    for (int i=0; i < pos;++i, ++it);
-//    return it;
-//}
 #endif
 

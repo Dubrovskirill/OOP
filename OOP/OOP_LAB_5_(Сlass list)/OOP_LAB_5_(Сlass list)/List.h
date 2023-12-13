@@ -67,7 +67,6 @@ public:
 	ConstIterator end() const;
 	Iterator pos(const int index);
 	ConstIterator pos(const int index) const;
-	//Iterator& operator[](const int pos);
 
 private:
 	
@@ -104,13 +103,11 @@ public:
 	friend class List;
 	TemplateIterator(LT* list = nullptr, Node* node = nullptr);
 	IT& operator*();
-	//IT& operator[](const int pos);
 	TemplateIterator& operator++();
+	TemplateIterator& operator--();
 
 	bool operator == (const TemplateIterator& other) const;
 	bool operator != (const TemplateIterator& other) const;
-	//bool operator > (const TemplateIterator& other) const;
-	//bool operator < (const TemplateIterator& other) const;
 private:
 	LT* m_list;
 	Node* m_node = nullptr;
