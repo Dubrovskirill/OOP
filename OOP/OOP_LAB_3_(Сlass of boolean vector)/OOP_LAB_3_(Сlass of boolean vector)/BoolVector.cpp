@@ -281,7 +281,7 @@ BoolVector& BoolVector::operator^=(const BoolVector& other)
 
 BoolVector BoolVector::operator~() const
 {
-	BoolVector bvec(m_length);
+	BoolVector bvec(*this);
 	bvec.Inverse();
 	return bvec;
 }
@@ -488,12 +488,12 @@ bool BoolVector::BoolRank::operator==(const bool value)const
 	return false;
 }
 
-bool BoolVector::BoolRank::operator!=(const bool value)const
-{
-	if (m_value != value)
-		return true;
-	return false;
-}
+//bool BoolVector::BoolRank::operator!=(const bool value)const
+//{
+//	if (m_value != value)
+//		return true;
+//	return false;
+//}
 
 bool BoolVector::BoolRank::operator>(const bool value)const
 {
@@ -529,11 +529,11 @@ BoolVector::BoolRank::operator int()const
 	return val;
 }
 
-BoolVector::BoolRank::operator bool()const
-{
-	bool val = m_value;
-	return val;
-}
+//BoolVector::BoolRank::operator bool()const
+//{
+//	bool val = m_value;
+//	return val;
+//}
 
 bool BoolVector::BoolRank::operator&(const int value)const
 {
@@ -588,3 +588,12 @@ BoolVector::BoolRank BoolVector::BoolRank::operator^=(const int value)
 		Set0();
 	return *this;
 }
+
+bool BoolVector::Full() const
+{
+	for (int i = 0; i < m_length; i++)
+		if (!(*this)[i])
+			return false;
+	return true;
+}
+

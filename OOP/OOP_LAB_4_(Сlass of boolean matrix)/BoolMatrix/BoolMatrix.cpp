@@ -234,3 +234,12 @@ std::istream& operator>>(std::istream& stream, BoolMatrix& bmatr)
 
 	return stream;
 }
+
+bool BoolMatrix::Empty() const
+{
+	for (int i = 0; i < m_rows; i++)
+		for (int j = 0; j < m_cols; j++)
+			if ( (*this)[i][j] != 0)
+				return false;
+	return true;
+}

@@ -24,6 +24,7 @@ public:
 	void Inverse(const UI i, const UI j, const UI count=0);
 	void Set1(const UI i, const UI j, const UI count=0);
 	void Set0(const UI i, const UI j, const UI count=0);
+	bool Empty() const;
 
 
 	BoolVector& operator[](const UI i);

@@ -31,6 +31,7 @@ public:
 	void Set0(const int pos, const int count);
 	void Set1();
 	void Set0();
+	bool Full() const;
 	BoolRank operator[](const int index);
 	const BoolRank operator[](const int index)const;
 	BoolVector& operator= (BoolVector&& other);
@@ -83,13 +84,13 @@ public:
 	BoolRank& operator= (const BoolRank& other);
 	BoolRank& operator= (const int value);
 	bool operator==(const bool value)const;
-	bool operator!=(const bool value)const;
+	//bool operator!=(const bool value)const;
 	bool operator>(const bool value)const;
 	bool operator<(const bool value)const;
 	bool operator>=(const bool value)const;
 	bool operator<=(const bool value)const;
 	operator int()const;
-	operator bool()const;
+	//operator bool()const;
 	bool operator&(const int value)const;
 	BoolRank operator&=(const int value);
 	bool operator|(const int value)const;
