@@ -43,13 +43,13 @@ public:
 	void Insert(const Iterator& it, const ItemType& value);
 	void InsertAfter(const ItemType& key, const ItemType& value);
 	void Remove(const int pos);
-	void Remove(Iterator& it);
-	void RemoveKey(const ItemType& key);
-	void RemoveRange(const int first, const int last);
-	ItemType Max() const;
-	ItemType Min() const;
+	Iterator Remove(Iterator it);
+	bool RemoveKey(const ItemType& key);
+	void RemoveRange(Iterator first, Iterator last);
+	ItemType Max();
+	ItemType Min();
 	Iterator Search(const ItemType& key);
-	ConstIterator  Search(const ItemType& key) const;
+	ConstIterator Search(const ItemType& key) const;
 	void Sort();
 
 	ItemType& operator[](const UI index);
@@ -101,15 +101,17 @@ class List<ItemType>::TemplateIterator
 {
 public:
 	friend class List;
-	TemplateIterator(LT* list = nullptr, Node* node = nullptr);
+	TemplateIterator(Node* node = nullptr);
 	IT& operator*();
 	TemplateIterator& operator++();
 	TemplateIterator& operator--();
+	TemplateIterator& operator+(const int& index);
+	TemplateIterator& operator-(const int& index);
+
 
 	bool operator == (const TemplateIterator& other) const;
 	bool operator != (const TemplateIterator& other) const;
 private:
-	LT* m_list;
 	Node* m_node = nullptr;
 };
 

@@ -56,13 +56,7 @@ List<ItemType>::List(const Array<ItemType>& arr)
 template <typename ItemType>
 List<ItemType>::~List()
 {
-    Node* cur = m_head->next;
-    while (cur != m_tail) 
-    {
-        Node* next = cur->next;
-        delete cur;
-        cur = next;
-    }
+    Clear();
     DelHeadTail();
 }
 
@@ -80,16 +74,20 @@ void List<ItemType> ::PushBack(const ItemType& value)
 template <typename ItemType>
 void List<ItemType> ::PopBack() 
 {
-    Node* delNode = m_tail->prev;
-    delNode->prev->next = m_tail;
-    m_tail->prev = delNode->prev;
-    m_size--;
-    delete delNode;
+    if (m_size != 0)
+    {
+        Node* delNode = m_tail->prev;
+        delNode->prev->next = m_tail;
+        m_tail->prev = delNode->prev;
+        m_size--;
+        delete delNode;
+    }
 }
 
 template <typename ItemType>
 void List<ItemType> ::PushFront(const ItemType& value)
 {
+
     Node* newNode = new Node(value);
     newNode->prev = m_head;
     newNode->next= m_head->next;
@@ -101,18 +99,24 @@ void List<ItemType> ::PushFront(const ItemType& value)
 template <typename ItemType>
 void List<ItemType> ::PopFront()
 {
-    Node* delNode = m_head->next;
-    delNode->next->prev = m_head;
-    m_head->next = delNode->next;
-    m_size--;
-    delete delNode;
+    if (m_size != 0)
+    {
+        Node* delNode = m_head->next;
+        delNode->next->prev = m_head;
+        m_head->next = delNode->next;
+        m_size--;
+        delete delNode;
+    }
 }
 
 template<typename ItemType>
 void List<ItemType>::Print() const
 {
-    if (m_head->next == m_tail)
+    if (isEmpty())
+    {
+        std::cout << "[ ]\n";
         return;
+    }
     Node* cur = m_head->next;
     std::cout << "[ ";
     while (cur != m_tail->prev) 
@@ -157,22 +161,12 @@ template<typename ItemType>
 void  List<ItemType>::Insert(const int pos, const ItemType& value)
 {
     assert(m_size >= pos && pos>=0);
-    Node* newNode = new Node(value);
-    Node* cur = m_head->next;
-    for (int i=0; i < pos; i++)
-        cur = cur->next;
-    newNode->prev = cur->prev;
-    newNode->next = cur;
-    cur->prev->next = newNode;
-    cur->prev = newNode;
-    m_size++;
+    Insert(begin() + pos, value);
 }
 
 template<typename ItemType>
 void  List<ItemType>::Insert(const Iterator& it, const ItemType& value)
 {
-    assert(it!=nullptr);
-
     Node* newNode = new Node(value);
     
     newNode->prev = it.m_node->prev;
@@ -193,72 +187,71 @@ template<typename ItemType>
 void  List<ItemType>::Remove(const int pos)
 {
     assert(m_size >= pos && pos >= 0);
-    Node* cur = m_head->next;
-    for (int i = 0; i < pos; i++)
-        cur = cur->next;
-    Node* delNode = cur;
-    cur = cur->next;
-    delNode->prev->next = cur;
-    cur->prev = delNode->prev;
-    m_size--;
-    delete delNode;
+    Remove(begin() + pos);
 
 }
 
-template<typename ItemType>
-void  List<ItemType>::Remove(Iterator& it)
+template<typename ItemType>typename
+List<ItemType>::Iterator List<ItemType>::Remove(Iterator it)
 {
-    assert(it != nullptr);
+    assert(it.m_node != m_head);
     Node* delNode = it.m_node;
     ++it;
     delNode->prev->next = it.m_node;
     it.m_node->prev = delNode->prev;
     m_size--;
     delete delNode;
+    return it;
 }
 
 template<typename ItemType>
-void  List<ItemType>::RemoveKey(const ItemType& key)
+bool  List<ItemType>::RemoveKey(const ItemType& key)
 {
     Iterator it = Search(key);
+    if (it == nullptr)
+        return false;
     Remove(it);
+    return true;
 }
 
 template<typename ItemType>
-void  List<ItemType>::RemoveRange(const int first, const int last)
+void  List<ItemType>::RemoveRange(Iterator first, Iterator last)
 {
-    Iterator it = pos(first);
-    Iterator itlast = pos(last);
     
-    while (it.m_node!= itlast.m_node)
-    {
-        Remove(it);
-    }
-    Remove(itlast);
+    while (first != last)
+       first= Remove(first);
+
+    Remove(last);
 }
 
 template<typename ItemType>
-ItemType  List<ItemType>::Max() const
+ItemType  List<ItemType>::Max() 
 {
     if (m_size <= 0)
         return ItemType();
-    ItemType max = (*this)[0];
-    for (int i = 1; i < m_size; i++)
-        if ((*this)[i] > max)
-            max = (*this)[i];
-    return max;
+    Iterator max = begin();
+    /*for (ConstIterator& item : *this) {
+        if (item > max)
+            max = item;*/
+    
+    for (Iterator i = begin(); i != end(); ++i)
+        if (i.m_node->data > max.m_node->data)
+            max = i;
+    return *max;
 }
 
 template<typename ItemType>
-ItemType  List<ItemType>::Min() const
+ItemType  List<ItemType>::Min() 
 {
     if (m_size <= 0)
         return ItemType();
-    ItemType min = (*this)[0];
-    for (int i = 1; i < m_size; i++)
-        if ((*this)[i] < min)
-            min = (*this)[i];
-    return min;
+    Iterator min = begin();
+    
+
+    for (Iterator i = begin(); i != end(); ++i)
+        if (i.m_node->data < min.m_node->data)
+            min = i;
+    return *min;
 }
 
 template<typename ItemType>typename
@@ -289,7 +282,7 @@ List<ItemType>::ConstIterator  List<ItemType>::Search(const ItemType& key) const
 }
 
 template <typename ItemType>
-void List<ItemType>::Sort()
+void List<ItemType>::Sort()//
 {
     for (int i = 1; i < m_size; i++)
     {
@@ -298,7 +291,6 @@ void List<ItemType>::Sort()
         for (j = i - 1; j >= 0 && key < (*this)[j]; j--)
         {
             (*this)[j + 1] = (*this)[j];
-            Print();
         }
         
         (*this)[j + 1] = key;
@@ -365,17 +357,22 @@ template<typename ItemType>
 List<ItemType>& List<ItemType>::operator=(const List& other)
 {
     if (*this == other) return *this;
-    if (m_size != other.m_size)
-    {
-        Clear();
-        for (int i = 0; i < other.m_size; i++)
-            PushBack(other[i]);
-    }
+
+    while (m_size > other.m_size)
+        PopBack();
+
+    auto iter = other.begin();
     Node* cur = m_head->next;
     for (int i = 0; i < m_size; i++)
     {
-        cur->data = other[i];
+        cur->data = *iter;
         cur = cur->next;
+        ++iter;
+    }
+
+    while (m_size < other.m_size) {
+        PushBack(*iter);
+        ++iter;
     }
 
     return *this;
@@ -385,24 +382,29 @@ template <typename ItemType>
 List<ItemType> List<ItemType>::operator+(const List& other) const
 {
     List tmp(*this);
-    for (int i = 0; i < other.m_size; i++)
-    {
-        tmp.PushBack(other[i]);
-    }
+    tmp += other;
     return tmp;
 }
 
 template <typename ItemType>
 List<ItemType>& List<ItemType>::operator+=(const List& other)
 {
-    List tmp(*this + other);
-    this->Swap(tmp);
+    for (int i = 0; i < other.m_size; i++)
+    {
+        PushBack(other[i]);//
+    }
     return *this;
 }
 
 template <typename ItemType>
 std::ostream& operator<<(std::ostream& stream, const List<ItemType>& list)
 {
+    if (list.isEmpty())
+    {
+        stream << "[ ]";
+        return stream;
+    }
+
     stream << "[ ";
     for (int i = 0; i < list.Size()-1; i++)
         stream << list[i] << ", ";
@@ -421,8 +423,8 @@ std::istream& operator >> (std::istream& stream, List<ItemType>& list)
 }
 template <typename ItemType>
 template <typename IT, typename LT>
-List<ItemType>::TemplateIterator<IT,LT>::TemplateIterator(LT* list, Node* node)
-    : m_list(list), m_node(node)
+List<ItemType>::TemplateIterator<IT,LT>::TemplateIterator(Node* node)
+    : m_node(node)
 {
 }
 
@@ -437,25 +439,25 @@ IT& List<ItemType>::TemplateIterator<IT, LT>::operator*()
 template <typename ItemType> typename
 List<ItemType>::Iterator List<ItemType>::begin()
 {
-    return Iterator(this, m_head->next);
+    return Iterator(m_head->next);
 }
 
 template <typename ItemType> typename
 List<ItemType>::Iterator List<ItemType>::end()
 {
-    return Iterator(this, m_tail);
+    return Iterator(m_tail);
 }
 
 template <typename ItemType> typename
 List<ItemType>::ConstIterator List<ItemType>::begin() const
 {
-    return ConstIterator(this, m_head->next);
+    return ConstIterator( m_head->next);
 }
 
 template <typename ItemType> typename
 List<ItemType>::ConstIterator List<ItemType>::end() const
 {
-    return ConstIterator(this, m_tail);
+    return ConstIterator( m_tail);
 }
 
 template <typename ItemType> typename
@@ -494,7 +496,7 @@ template <typename ItemType>
 template <typename IT, typename LT>
 bool List<ItemType>::TemplateIterator<IT, LT>::operator == (const TemplateIterator& other) const
 {
-    return (m_node == other.m_node) && (m_list == other.m_list);
+    return (m_node == other.m_node);
 }
 
 template <typename ItemType>
@@ -502,6 +504,25 @@ template <typename IT, typename LT>
 bool List<ItemType>::TemplateIterator<IT, LT>::operator != (const TemplateIterator& other) const
 {
     return !operator==(other);
+}
+
+template <typename ItemType>
+template <typename IT, typename LT>
+List<ItemType>::TemplateIterator<IT, LT>& List<ItemType>::TemplateIterator<IT, LT>::operator+(const int& index)
+{
+    for (int i = 0; i < index; ++i)
+        ++*this;
+    
+    return *this;
+}
+template <typename ItemType>
+template <typename IT, typename LT>
+List<ItemType>::TemplateIterator<IT, LT>& List<ItemType>::TemplateIterator<IT, LT>::operator-(const int& index)
+{
+    for (int i = 0; i < index; ++i)
+        --*this;
+
+    return *this;
 }
 
 
