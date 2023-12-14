@@ -46,8 +46,8 @@ public:
 	Iterator Remove(Iterator it);
 	bool RemoveKey(const ItemType& key);
 	void RemoveRange(Iterator first, Iterator last);
-	ItemType Max();
-	ItemType Min();
+	ItemType Max()const;
+	ItemType Min()const;
 	Iterator Search(const ItemType& key);
 	ConstIterator Search(const ItemType& key) const;
 	void Sort();
@@ -111,6 +111,10 @@ public:
 
 	bool operator == (const TemplateIterator& other) const;
 	bool operator != (const TemplateIterator& other) const;
+	/*bool operator < (const TemplateIterator& other) const;
+	bool operator > (const TemplateIterator& other) const;
+	bool operator >= (const TemplateIterator& other) const;
+	bool operator <= (const TemplateIterator& other) const;*/
 private:
 	Node* m_node = nullptr;
 };

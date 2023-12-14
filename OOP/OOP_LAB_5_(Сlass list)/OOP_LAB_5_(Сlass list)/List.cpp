@@ -225,31 +225,25 @@ void  List<ItemType>::RemoveRange(Iterator first, Iterator last)
 }
 
 template<typename ItemType>
-ItemType  List<ItemType>::Max() 
+ItemType  List<ItemType>::Max() const
 {
     if (m_size <= 0)
         return ItemType();
-    Iterator max = begin();
-    /*for (ConstIterator& item : *this) {
-        if (item > max)
-            max = item;*/
-    
-    for (Iterator i = begin(); i != end(); ++i)
-        if (i.m_node->data > max.m_node->data)
+    ConstIterator max = begin(); 
+    for (ConstIterator i = begin(); i != end(); ++i)
+        if (*i > *max)
             max = i;
     return *max;
 }
 
 template<typename ItemType>
-ItemType  List<ItemType>::Min() 
+ItemType  List<ItemType>::Min() const
 {
     if (m_size <= 0)
         return ItemType();
-    Iterator min = begin();
-    
-
-    for (Iterator i = begin(); i != end(); ++i)
-        if (i.m_node->data < min.m_node->data)
+    ConstIterator min = begin();
+    for (ConstIterator i = begin(); i != end(); ++i)
+        if (*i < *min)
             min = i;
     return *min;
 }
@@ -282,18 +276,15 @@ List<ItemType>::ConstIterator  List<ItemType>::Search(const ItemType& key) const
 }
 
 template <typename ItemType>
-void List<ItemType>::Sort()//
+void List<ItemType>::Sort()
 {
-    for (int i = 1; i < m_size; i++)
+    for (Iterator i = begin()+1; i !=end(); ++i)
     {
-        ItemType key = (*this)[i];
-        int j;
-        for (j = i - 1; j >= 0 && key < (*this)[j]; j--)
-        {
-            (*this)[j + 1] = (*this)[j];
-        }
-        
-        (*this)[j + 1] = key;
+        ItemType key = *i;
+        Iterator j = i-1;
+        for (; j.m_node !=m_head && key < *j; --j)
+            (j + 1).m_node->data = *j;
+       (j+1).m_node->data = key;
     }
 }
 
@@ -389,10 +380,12 @@ List<ItemType> List<ItemType>::operator+(const List& other) const
 template <typename ItemType>
 List<ItemType>& List<ItemType>::operator+=(const List& other)
 {
-    for (int i = 0; i < other.m_size; i++)
-    {
-        PushBack(other[i]);//
-    }
+    //for (int i = 0; i < other.m_size; i++)
+    //{
+    //    PushBack(other[i]);//
+    //}
+    for (const ItemType& item : other) 
+        PushBack(item);
     return *this;
 }
 
@@ -510,19 +503,21 @@ template <typename ItemType>
 template <typename IT, typename LT>
 List<ItemType>::TemplateIterator<IT, LT>& List<ItemType>::TemplateIterator<IT, LT>::operator+(const int& index)
 {
+    Iterator tmp(*this);
     for (int i = 0; i < index; ++i)
-        ++*this;
+        ++tmp;
     
-    return *this;
+    return tmp;
 }
 template <typename ItemType>
 template <typename IT, typename LT>
 List<ItemType>::TemplateIterator<IT, LT>& List<ItemType>::TemplateIterator<IT, LT>::operator-(const int& index)
 {
+    Iterator tmp(*this);
     for (int i = 0; i < index; ++i)
-        --*this;
+        --tmp;
 
-    return *this;
+    return tmp;
 }
 
 
