@@ -57,5 +57,8 @@ int main()
 	//list_3 += list_1;
 	List<int> list_4 = (list_3 + list_1);
 	list_4.Print();
+	List<int>::Iterator iy = list_4.end() - 1;
+	iy--;
+	std::cout<<" "<< *iy;
 	return 0;
 }

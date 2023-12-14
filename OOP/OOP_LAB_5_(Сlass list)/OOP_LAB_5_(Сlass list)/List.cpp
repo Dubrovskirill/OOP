@@ -380,10 +380,6 @@ List<ItemType> List<ItemType>::operator+(const List& other) const
 template <typename ItemType>
 List<ItemType>& List<ItemType>::operator+=(const List& other)
 {
-    //for (int i = 0; i < other.m_size; i++)
-    //{
-    //    PushBack(other[i]);//
-    //}
     for (const ItemType& item : other) 
         PushBack(item);
     return *this;
@@ -483,6 +479,24 @@ List<ItemType>::TemplateIterator<IT, LT>& List<ItemType>::TemplateIterator<IT, L
 {
     m_node = m_node->prev;
     return *this;
+}
+
+template <typename ItemType>
+template <typename IT, typename LT>
+List<ItemType>::TemplateIterator<IT, LT>& List<ItemType>::TemplateIterator<IT, LT>::operator++(int)
+{
+    Iterator old(*this);
+    m_node = m_node->next;
+    return old;
+}
+
+template <typename ItemType>
+template <typename IT, typename LT>
+List<ItemType>::TemplateIterator<IT, LT>& List<ItemType>::TemplateIterator<IT, LT>::operator--(int)
+{
+    Iterator old(*this);
+    m_node = m_node->prev;
+    return old;
 }
 
 template <typename ItemType>
