@@ -60,7 +60,7 @@ int main()
 	BoolMatrix bm0;
 	bm0.Print();
 	 cout <<  endl;
-	BoolMatrix bm1(5,15,1);
+	BoolMatrix bm1(20,20,1);
 	bm1.Print();
 	 cout <<  endl;
 	BoolMatrix bm2(bm1);

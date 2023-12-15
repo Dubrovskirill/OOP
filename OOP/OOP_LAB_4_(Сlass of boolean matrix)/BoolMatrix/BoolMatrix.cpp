@@ -3,7 +3,11 @@
 #include<stdint.h>
 #include<iostream>
 #include <assert.h>
+#include<vector>
+#include <stdlib.h>
+#include <string>
 #include "BoolMatrix.h"
+
 using UI = unsigned int;
 
 BoolMatrix::BoolMatrix()
@@ -40,6 +44,23 @@ BoolMatrix::BoolMatrix(char** matr, UI rows, UI cols)
 	for (int i = 0; i < m_rows; i++)
 	{
 		m_bm[i] = matr[i];
+	}
+}
+
+BoolMatrix::BoolMatrix(const std::string& st)
+{
+	m_rows = sqrt(st.size());
+	m_cols = m_rows;
+	m_bm = new BoolVector[m_rows];
+	int k = 0;
+	for (int i = 0; i < m_rows; ++i)
+	{
+		BoolVector vec(m_cols, 0);
+		for (int j = 0; j < m_cols; ++j)
+		{
+			vec[j] = st[k++] - '0';
+		}
+		m_bm[i] = vec;
 	}
 }
 

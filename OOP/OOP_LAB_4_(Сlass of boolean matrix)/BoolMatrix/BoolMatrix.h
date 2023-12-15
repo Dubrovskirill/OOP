@@ -2,6 +2,8 @@
 //#include"BoolVector.h"
 #include<stdint.h>
 #include<iostream>
+#include<vector>
+#include<iostream>
 #include "..\..\OOP_LAB_3_(Ñlass of boolean vector)\OOP_LAB_3_(Ñlass of boolean vector)\BoolVector.h"
 using UI = unsigned int;
 class BoolMatrix
@@ -12,6 +14,8 @@ public:
 	BoolMatrix(UI rows, UI cols, bool value);
 	BoolMatrix(const BoolMatrix& other);
 	BoolMatrix(char**matr, UI rows, UI cols);
+	//template<typename type>
+	BoolMatrix(const std::string& st);
 	~BoolMatrix();
 	void Print()const;
 	int Rows() const;
