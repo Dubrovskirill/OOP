@@ -59,6 +59,8 @@ int main()
 	list_4.Print();
 	List<int>::Iterator iy = list_4.end() - 1;
 	iy--;
-	std::cout<<" "<< *iy;
+	std::cout<<" "<< *iy<<"\n";
+	list_4.Sort();
+	list_4.Print();
 	return 0;
 }

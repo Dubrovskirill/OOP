@@ -18,10 +18,10 @@ class List
 public:
 	class Node;
 
-	template <typename IT, typename LT>
+	template <typename IT>
 	class TemplateIterator;
-	using Iterator = TemplateIterator<ItemType, List>;
-	using ConstIterator = TemplateIterator<const ItemType, const List>;
+	using Iterator = TemplateIterator<ItemType>;
+	using ConstIterator = TemplateIterator<const ItemType>;
 
 	void FormHeadTail();
 	void DelHeadTail();
@@ -69,7 +69,11 @@ public:
 	ConstIterator pos(const int index) const;
 
 private:
-	
+	void TakeNode(Iterator& it);
+	//ConstIterator TakeNode(ConstIterator& it) const;
+	void InsertNode(Iterator& current, Iterator& other);
+	void SwapNode(Iterator& current, Iterator& other);
+	int PosNode(Iterator& current);
 	UI m_size;
 	Node* m_head;
 	Node* m_tail;
@@ -96,13 +100,15 @@ private:
 
 
 template <typename ItemType>
-template <typename IT, typename LT>
+template <typename IT>
 class List<ItemType>::TemplateIterator
 {
 public:
 	friend class List;
 	TemplateIterator(Node* node = nullptr);
+	//TemplateIterator(const TemplateIterator& other);
 	IT& operator*();
+	const IT& operator*() const;
 	TemplateIterator& operator++();
 	TemplateIterator& operator--();
 	TemplateIterator& operator++(int);
@@ -113,10 +119,6 @@ public:
 
 	bool operator == (const TemplateIterator& other) const;
 	bool operator != (const TemplateIterator& other) const;
-	/*bool operator < (const TemplateIterator& other) const;
-	bool operator > (const TemplateIterator& other) const;
-	bool operator >= (const TemplateIterator& other) const;
-	bool operator <= (const TemplateIterator& other) const;*/
 private:
 	Node* m_node = nullptr;
 };
