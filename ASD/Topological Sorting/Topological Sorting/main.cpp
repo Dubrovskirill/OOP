@@ -31,6 +31,22 @@ BoolMatrix Form(std::string name)
 		std::cout << st[i];*/
 	return BoolMatrix(st);
 }
+
+void FormVector(std::vector<int>& vec, const int  n)
+{
+	int ed;
+	std::cin >> ed;
+	if (ed > n || ed == 0)
+	{
+		std::cout << "The entered value is incorrect: exceeding the number of verinches.\n Try again:";
+		FormVector(vec, n);
+		return;
+	}
+	if (ed < 0)
+		return;
+	vec.push_back(ed);
+	FormVector(vec, n);
+}
 bool Ñheck(const Array<int>& arr)
 {
 	for (int i = arr.Size()-1; i >= 0; --i)
@@ -40,6 +56,7 @@ bool Ñheck(const Array<int>& arr)
 	}
 	return true;
 }
+
 Array<int> TSortMatr(BoolMatrix matrix)
 {
 	int n = matrix.Rows();
@@ -81,20 +98,26 @@ Array<int> TSortMatr(BoolMatrix matrix)
 }
 int main()
 {
-	/*std::cout << "Enter the size of the matrix: ";
+	
+	std::cout << "Enter the number of vertices of the graph: ";
 	int n;
 	std::cin >> n;
 	BoolMatrix Test(n, n, 0);
-	std::cout << "Enter the matrix: " << std::endl;
-	for (int i = 0; i < n; i++)
-		for (int j = 0; j < n; j++)
-			std::cin >> Test[i][j];*/
+	std::cout << "Enter the edges of the graph: ";
+	std::vector<int> edges;
+	FormVector(edges, n);
 	
-	BoolMatrix Test(Form("../../../../matrix.txt"));
-	//BoolMatrix Test(18, 18, 1);
+	for (int k = 0; k < edges.size() - 2; k+=2)
+	{
+		Test[edges[k]-1][edges[k + 1]-1]=~Test[edges[k]][edges[k + 1]];
+	}
 	Test.Print();
+
+
+	/*BoolMatrix Test(Form("../../../../matrix.txt"));
+	Test.Print();
+	std::cout << "\n";*/
 	Array<int> answer(TSortMatr(Test));
-	
 	if (!Ñheck(answer))
 		std::cout << "!!!CYCLE!!!" << std::endl;
 	else 
@@ -104,21 +127,3 @@ int main()
 			std::cout << answer[i] << " ";
 	}
 }
-//0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 
-//0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0,
-//0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-//0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-//0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
-//0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-//0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
-//0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
