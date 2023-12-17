@@ -16,7 +16,6 @@ struct Leader
 	int del_st = 0;//число удаленых входящих дуг
 	bool flag = 0;
 	List<Leader::Trailer> trl;
-	//List<Leader::Trailer> arcs;
 };
 
 struct Leader::Trailer
@@ -34,13 +33,10 @@ public:
 	{
 		Array<int> arr(m_matrix.Cols(), 0);
 		answer = arr;
+		FormLead();
 	}
 
-	void FormLead();
 	void TSort();
-	void Sort(List<Leader>& LDnew);
-	void CreateLDnew(List<Leader>& LDnew);
-	void ReducingArcs(List<Leader>& LDnew);
 	Array<int> Answer();
 	
 private:
@@ -49,4 +45,9 @@ private:
 	Array<int> answer;
 	int a_size = 0;
 
+	void FormLead();
+	void Sort(List<Leader>& LDnew);
+	void CreateLDnew(List<Leader>& LDnew);
+	void ReducingArcs(List<Leader>& LDnew);
+	void Recovery();
 };

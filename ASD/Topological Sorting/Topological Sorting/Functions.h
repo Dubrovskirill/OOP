@@ -7,19 +7,6 @@
 #include "../../../OOP/OOP_LAB_5_(Сlass list)/OOP_LAB_5_(Сlass list)/List.h"
 #include "../../../OOP/OOP_LAB_2/OOP_LAB_2/Array.h"
 
-//struct Leader
-//{
-//	int key = 0;//номер вершины
-//	int real_st = 0;//число входящих дуг
-//	int del_st = 0;//число удаленых входящих дуг
-//	List<Trailer>::Iterator trl = nullptr;
-//};
-//
-//struct Trailer
-//{
-//	//List<Leader>::Node* lead = nullptr;
-//	List<Leader>::Iterator lead = nullptr;
-//};
 
 //void RandMatr(BoolMatrix& matrix)
 //{
@@ -81,7 +68,7 @@ int FormVectorFile(std::vector<int>& vec, std::string name)
 }
 void FormAdjacencyMatr(BoolMatrix& bm, std::vector<int>& vec)
 {
-	for (int k = 0; k < vec.size() - 2; k += 2)
+	for (int k = 0; k <= vec.size() - 2; k += 2)
 		bm[vec[k] - 1][vec[k + 1] - 1] = 1;
 }
 
@@ -136,39 +123,4 @@ Array<int> TSortMatr(BoolMatrix matrix)
 }
 
 
-//Array<int> TSortList(BoolMatrix matrix)
-//{
-//	List<Leader> Graph;
-//	Array<int> answer(matrix.Cols(), 0);
-//	for (int col = 0; col < matrix.Cols(); col++)
-//	{
-//		Leader node;
-//		node.key = col + 1;
-//		for (int row = 0; row < matrix.Rows(); row++)
-//		{
-//			if (matrix[row][col] == true)
-//				node.real_st += 1;
-//		}
-//		Graph.PushBack(node);
-//	}
-//
-//	for (int row = 0; row < matrix.Rows(); row++)
-//	{
-//		List<Trailer> arcs;
-//		List<Leader>::Iterator cur = Graph.begin();
-//		for (int col = 0; col < matrix.Cols(); col++)
-//		{
-//			Trailer node;
-//			if (matrix[row][col] == true)
-//			{
-//				node.lead = cur;
-//				arcs.PushBack(node);
-//			}
-//			++cur;
-//		}
-//		//List<Leader>::Iterator cgr = Graph.begin();
-//
-//	}
-//
-//	return answer;
-//}
+

@@ -9,7 +9,6 @@
 void Graph::FormLead()
 {
 
-	//Array<int> answer(m_matrix.Cols(), 0);
 	for (int col = 0; col < m_matrix.Cols(); col++)
 	{
 		Leader node;
@@ -23,7 +22,6 @@ void Graph::FormLead()
 	}
 	for (int row = 0; row < m_matrix.Rows(); row++)
 	{
-		//List< Leader::Trailer> arcs;
 		List<Leader>::Iterator cur = m_lead.begin();
 		List<Leader>::Iterator cgr = m_lead.begin() + row;
 		for (int col = 0; col < m_matrix.Cols(); col++)
@@ -36,12 +34,7 @@ void Graph::FormLead()
 			}
 			++cur;
 		}
-
-		//List<Leader>::Iterator cgr = m_lead.begin() + row;
-		//cgr.m_node->data.trl = arcs;
 	}
-
-	//return answer;
 }
 void Graph::CreateLDnew(List<Leader>& LDnew)
 {
@@ -74,25 +67,32 @@ void Graph::ReducingArcs(List<Leader>& LDnew)
 void Graph::Sort(List<Leader>& LDnew)
 {
 	ReducingArcs(LDnew);
-	answer.Print();
 	if (!(LDnew.isEmpty()))
 		Sort(LDnew);
 }
 void Graph::TSort()
 {
-	//Array<int> ans(m_matrix.Cols(), 0);
+	a_size = 0;
+	Array<int> arr(m_matrix.Cols(), 0);
+	answer = arr;
 	List<Leader> LDnew;
-	FormLead();
 	CreateLDnew(LDnew);
 	Sort(LDnew);
-	/*ReducingArcs(LDnew);
-	answer.Print();
-	if (!(LDnew.isEmpty()))
-		TSort();*/
-
+	Recovery();
 }
 
 Array<int> Graph::Answer()
 {
 	return answer;
+}
+
+void Graph::Recovery()
+{
+	List<Leader>::Iterator it = m_lead.begin();
+	while (it != m_lead.end())
+	{
+		it.m_node->data.del_st = 0;
+		it.m_node->data.flag = 0;
+		++it;
+	}
 }

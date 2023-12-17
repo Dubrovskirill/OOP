@@ -8,6 +8,17 @@
 #include"Functions.h"
 #include"Graph.h"
 
+void CheckandPrint(Array<int> & answer, int & size)
+{
+	if (!Ñheck(answer))
+		std::cout << "!!!CYCLE!!!" << std::endl;
+	else
+	{
+		std::cout << "Sorted vertices: ";
+		for (int i = 0; i < size; i++)
+			std::cout << answer[i] << " ";
+	}
+}
 
 int main()
 {
@@ -16,7 +27,34 @@ int main()
 	BoolMatrix Adj(n, n, 0);
 	FormAdjacencyMatr(Adj, edges);
 	Adj.Print();
-	Graph gr(Adj);
+
+	std::cout << "Would you like to use matrix sorting or use a list? (M/L)\n";
+	char ans;
+	std::cin >> ans;
+	if (ans == 'L')
+	{
+		Graph gr(Adj);
+		gr.TSort();
+		Array<int> answer(gr.Answer());
+		int size = Adj.Rows();
+		CheckandPrint(answer, size);
+		std::cout << "Sorted vertices: ";
+		for (int i = 0; i < size; i++)
+			std::cout << answer[i] << " ";
+	}
+	else if (ans == 'M')
+	{
+		Array<int> answer(TSortMatr(Adj));
+		int size = Adj.Rows();
+		CheckandPrint(answer, size);
+	}
+	else 
+		std::cout << "The value you entered is incorrect!";
+
+	
+	
+
+	/*Graph gr(Adj);
 	gr.TSort();
 	Array<int> answer(gr.Answer());
 	if (!Ñheck(answer))
@@ -26,32 +64,12 @@ int main()
 		std::cout << "Sorted vertices: ";
 		for (int i = 0; i < Adj.Rows(); i++)
 	 std::cout << answer[i] << " ";
-	}
+	}*/
 
+	
+	
 	//Array<int> answer(gr.TSortList(Adj));
 
-	//std::cout << "Would you like to use matrix sorting or use a list? (M/L)\n";
-	//char ans;
-	//std::cin >> ans;
-	//if (ans == 'L')
-	//{
-	//	std::cout << "ok";//sortlist;
-	//	Array<int> answer(TSortList(Adj));
-	//}
-	//if (ans == 'M')
-	//{
-	//	Array<int> answer(TSortMatr(Adj));
-	//    if (!Ñheck(answer))
-	//	std::cout << "!!!CYCLE!!!" << std::endl;
-	//    else 
-	//    {
-	//	   std::cout << "Sorted vertices: ";
-	//	   for (int i = 0; i < Adj.Rows(); i++)
-	//		   std::cout << answer[i] << " ";
-	//    }
-	//}
-	//if (ans != 'M' && ans !='L')
-	//	std::cout << "The value you entered is incorrect!";
 
 
 
