@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <assert.h>
 #include "../../OOP_LAB_2/OOP_LAB_2/Array.h"
-
+#include "../../../OOP/OOP_LAB_4_(Ñlass of boolean matrix)/BoolMatrix/BoolMatrix.h"
 
 
 
@@ -16,6 +16,7 @@ class List
 {
 	using UI = unsigned int;
 public:
+	friend class Graph;
 	class Node;
 
 	template <typename IT>
@@ -67,6 +68,7 @@ public:
 	ConstIterator end() const;
 	Iterator pos(const int index);
 	ConstIterator pos(const int index) const;
+	//friend Array<int> TSortList(BoolMatrix matrix);
 
 private:
 	void TakeNode(Iterator& it);
@@ -74,6 +76,7 @@ private:
 	void InsertNode(Iterator& current, Iterator& other);
 	void SwapNode(Iterator& current, Iterator& other);
 	int PosNode(Iterator& current);
+
 	UI m_size;
 	Node* m_head;
 	Node* m_tail;
@@ -88,6 +91,8 @@ class List<ItemType>::Node
 {
 public:
 	friend class List;
+	friend class Graph;
+	//friend Array<int> TSortList(BoolMatrix matrix);
 private:
 	Node(const ItemType& data)
 		:data(data)
@@ -105,6 +110,7 @@ class List<ItemType>::TemplateIterator
 {
 public:
 	friend class List;
+	friend class Graph;
 	TemplateIterator(Node* node = nullptr);
 	//TemplateIterator(const TemplateIterator& other);
 	IT& operator*();
@@ -119,6 +125,7 @@ public:
 
 	bool operator == (const TemplateIterator& other) const;
 	bool operator != (const TemplateIterator& other) const;
+	//friend Array<int> TSortList(BoolMatrix matrix);
 private:
 	Node* m_node = nullptr;
 };

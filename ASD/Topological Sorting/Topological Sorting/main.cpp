@@ -5,125 +5,59 @@
 #include "../../../OOP/OOP_LAB_4_(Ñlass of boolean matrix)/BoolMatrix/BoolMatrix.h"
 #include "../../../OOP/OOP_LAB_5_(Ñlass list)/OOP_LAB_5_(Ñlass list)/List.h"
 #include "../../../OOP/OOP_LAB_2/OOP_LAB_2/Array.h"
+#include"Functions.h"
+#include"Graph.h"
 
-void RandMatr(BoolMatrix& matrix)
-{
-	std::random_device rd;
-	std::mt19937 rng(rd());
-	std::uniform_int_distribution<int> dist(0, 1);
-	for (int i = 0; i < matrix.Rows(); i++) 
-		for (int j = 0; j < matrix.Cols(); j++) 
-			matrix[i][j] = dist(rng);
-}
-BoolMatrix Form(std::string name)
-{
-	std::ifstream inputFile(name);
-	std::string st;
-	if (inputFile.is_open())
-	{
-		char num;
-		while (inputFile >> num)
-			if (num != ',' && num != ' ')
-				st.push_back(num);
-	}
-	else std::cout << "File opening error!\n";
-	/*for (int i = 0; i < st.size(); i++)
-		std::cout << st[i];*/
-	return BoolMatrix(st);
-}
 
-void FormVector(std::vector<int>& vec, const int  n)
-{
-	int ed;
-	std::cin >> ed;
-	if (ed > n || ed == 0)
-	{
-		std::cout << "The entered value is incorrect: exceeding the number of verinches.\n Try again:";
-		FormVector(vec, n);
-		return;
-	}
-	if (ed < 0)
-		return;
-	vec.push_back(ed);
-	FormVector(vec, n);
-}
-bool Ñheck(const Array<int>& arr)
-{
-	for (int i = arr.Size()-1; i >= 0; --i)
-	{
-		if (!arr[i])
-			return false;
-	}
-	return true;
-}
-
-Array<int> TSortMatr(BoolMatrix matrix)
-{
-	int n = matrix.Rows();
-	Array<int> answer(n, 0);
-	BoolVector exp(n, 0);
-	int k = 0;
-	while (!exp.Full())
-	{
-		BoolVector mask(n, 0);
-		for (int i = 0; i < n; i++)
-		{
-			mask |= matrix[i];
-			if (exp[i])
-				mask[i] = exp[i];
-		}
-		if (mask.Full())
-		{
-			return answer;
-		}
-		mask = ~mask;
-		
-		for (int i = 0; i < n; i++)
-			if (mask[i])
-				exp[i] = mask[i];
-		BoolVector mask2(n, 1);
-
-		for (int i = 0; i < n; i++)
-			if ((mask[i] & mask2[i]) == 1)
-			{
-				answer[k++] = i + 1;
-				mask2 >>= 1;
-			}
-		for (int j = 0; j < n; j++)
-			for (int i = 0; i < k; i++)
-				matrix[answer[i] - 1][j] = 0;
-	}
-
-	return answer;
-}
 int main()
 {
-	
-	std::cout << "Enter the number of vertices of the graph: ";
-	int n;
-	std::cin >> n;
-	BoolMatrix Test(n, n, 0);
-	std::cout << "Enter the edges of the graph: ";
 	std::vector<int> edges;
-	FormVector(edges, n);
-	
-	for (int k = 0; k < edges.size() - 2; k+=2)
-	{
-		Test[edges[k]-1][edges[k + 1]-1]=~Test[edges[k]][edges[k + 1]];
-	}
-	Test.Print();
-
-
-	/*BoolMatrix Test(Form("../../../../matrix.txt"));
-	Test.Print();
-	std::cout << "\n";*/
-	Array<int> answer(TSortMatr(Test));
+	int n=FormVectorFile(edges, "../../../../matrix.txt");
+	BoolMatrix Adj(n, n, 0);
+	FormAdjacencyMatr(Adj, edges);
+	Adj.Print();
+	Graph gr(Adj);
+	gr.TSort();
+	Array<int> answer(gr.Answer());
 	if (!Ñheck(answer))
 		std::cout << "!!!CYCLE!!!" << std::endl;
 	else 
 	{
 		std::cout << "Sorted vertices: ";
-		for (int i = 0; i < Test.Rows(); i++)
-			std::cout << answer[i] << " ";
+		for (int i = 0; i < Adj.Rows(); i++)
+	 std::cout << answer[i] << " ";
 	}
+
+	//Array<int> answer(gr.TSortList(Adj));
+
+	//std::cout << "Would you like to use matrix sorting or use a list? (M/L)\n";
+	//char ans;
+	//std::cin >> ans;
+	//if (ans == 'L')
+	//{
+	//	std::cout << "ok";//sortlist;
+	//	Array<int> answer(TSortList(Adj));
+	//}
+	//if (ans == 'M')
+	//{
+	//	Array<int> answer(TSortMatr(Adj));
+	//    if (!Ñheck(answer))
+	//	std::cout << "!!!CYCLE!!!" << std::endl;
+	//    else 
+	//    {
+	//	   std::cout << "Sorted vertices: ";
+	//	   for (int i = 0; i < Adj.Rows(); i++)
+	//		   std::cout << answer[i] << " ";
+	//    }
+	//}
+	//if (ans != 'M' && ans !='L')
+	//	std::cout << "The value you entered is incorrect!";
+
+
+
+	
+
+
+
+
 }

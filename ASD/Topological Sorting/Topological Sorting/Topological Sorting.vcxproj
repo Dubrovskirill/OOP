@@ -130,6 +130,7 @@
     <ClCompile Include="..\..\..\OOP\OOP_LAB_3_(Сlass of boolean vector)\OOP_LAB_3_(Сlass of boolean vector)\BoolVector.cpp" />
     <ClCompile Include="..\..\..\OOP\OOP_LAB_4_(Сlass of boolean matrix)\BoolMatrix\BoolMatrix.cpp" />
     <ClCompile Include="..\..\..\OOP\OOP_LAB_5_(Сlass list)\OOP_LAB_5_(Сlass list)\List.cpp" />
+    <ClCompile Include="Graph.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +138,8 @@
     <ClInclude Include="..\..\..\OOP\OOP_LAB_3_(Сlass of boolean vector)\OOP_LAB_3_(Сlass of boolean vector)\BoolVector.h" />
     <ClInclude Include="..\..\..\OOP\OOP_LAB_4_(Сlass of boolean matrix)\BoolMatrix\BoolMatrix.h" />
     <ClInclude Include="..\..\..\OOP\OOP_LAB_5_(Сlass list)\OOP_LAB_5_(Сlass list)\List.h" />
+    <ClInclude Include="Functions.h" />
+    <ClInclude Include="Graph.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
