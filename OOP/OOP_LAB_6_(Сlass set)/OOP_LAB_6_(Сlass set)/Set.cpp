@@ -43,3 +43,20 @@ bool Set::isEmpty()
 	if (m_set == 0) return true;
 	return false;
 }
+int  Set::Weight()
+{
+	return m_set->Weight();
+}
+bool Set::isPresent(const char c)
+{
+	if (c >= offset && c <= offset + capacity)
+		return false;
+	int cell = ((int)c - offset) / m_cellSize;
+	int pos = ((int)c - offset) % m_cellSize;
+	uint8_t mask = 1;
+	mask = mask << 7-pos;
+	if (m_set->operator[]((int)c - offset) && mask)
+		return true;
+	return false;
+	
+}

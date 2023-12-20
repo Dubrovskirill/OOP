@@ -15,8 +15,11 @@ public:
 	{
 		delete m_set;
 	}
+
 	void Print();
 	bool isEmpty();
+	int Weight();
+	bool isPresent(const char c);
 private:
 	BoolVector* m_set = nullptr;
 	const int offset= 32;
