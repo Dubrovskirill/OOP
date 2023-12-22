@@ -72,53 +72,35 @@ void FormAdjacencyMatr(BoolMatrix& bm, std::vector<int>& vec)
 		bm[vec[k] - 1][vec[k + 1] - 1] = 1;
 }
 
-bool Ñheck(const Array<int>& arr)
+bool Ñheck(const Array<int>& arr, int& size)
 {
-	for (int i = arr.Size() - 1; i >= 0; --i)
-	{
-		if (!arr[i])
-			return false;
-	}
+	if(arr.Size()!=size)
+		return false;
 	return true;
 }
 
 Array<int> TSortMatr(BoolMatrix matrix)
 {
 	int n = matrix.Rows();
-	Array<int> answer(n, 0);
-	BoolVector exp(n, 0);
+	Array<int> answer(0);
+	BoolVector crossed(n, 0);
 	int k = 0;
-	while (!exp.Full())
+	while (!crossed.Full())
 	{
-		BoolVector mask(n, 0);
-		for (int i = 0; i < n; i++)
-		{
-			mask |= matrix[i];
-			if (exp[i])
-				mask[i] = exp[i];
-		}
+		BoolVector mask = matrix.RowÂisjunction() | crossed;
 		if (mask.Full())
-		{
 			return answer;
-		}
-		mask = ~mask;
 
+		mask = ~mask;
+		crossed |= mask;
 		for (int i = 0; i < n; i++)
 			if (mask[i])
-				exp[i] = mask[i];
-		BoolVector mask2(n, 1);
-
-		for (int i = 0; i < n; i++)
-			if ((mask[i] & mask2[i]) == 1)
 			{
-				answer[k++] = i + 1;
-				mask2 >>= 1;
+				answer.Insert(i+1,answer.end());
+				matrix[i].Set0();
 			}
-		for (int j = 0; j < n; j++)
-			for (int i = 0; i < k; i++)
-				matrix[answer[i] - 1][j] = 0;
 	}
-
+	
 	return answer;
 }
 

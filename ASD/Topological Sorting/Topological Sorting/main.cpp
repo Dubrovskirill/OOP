@@ -10,7 +10,7 @@
 
 void CheckandPrint(Array<int> & answer, int & size)
 {
-	if (!Ñheck(answer))
+	if (!Ñheck(answer,size))
 		std::cout << "!!!CYCLE!!!" << std::endl;
 	else
 	{
@@ -23,24 +23,31 @@ void CheckandPrint(Array<int> & answer, int & size)
 int main()
 {
 	std::vector<int> edges;
-	int n=FormVectorFile(edges, "../../../../matrix.txt");
+	int n = FormVectorFile(edges, "../../../../matrix.txt");
 	BoolMatrix Adj(n, n, 0);
 	FormAdjacencyMatr(Adj, edges);
 	Adj.Print();
 
-	std::cout << "Would you like to use matrix sorting or use a list? (M/L)\n";
+	Graph gr(Adj);
+	while (true)
+	{
+		gr.TSort();
+		Array<int> answer(gr.Ordered());
+		CheckandPrint(answer, n);
+		std::cout << "\n";
+	}
+
+	/*std::cout << "Would you like to use matrix sorting or use a list? (M/L)\n";
 	char ans;
 	std::cin >> ans;
 	if (ans == 'L')
 	{
 		Graph gr(Adj);
 		gr.TSort();
-		Array<int> answer(gr.Answer());
+		Array<int> answer(gr.Ordered());
+		
 		int size = Adj.Rows();
 		CheckandPrint(answer, size);
-		std::cout << "Sorted vertices: ";
-		for (int i = 0; i < size; i++)
-			std::cout << answer[i] << " ";
 	}
 	else if (ans == 'M')
 	{
@@ -48,34 +55,7 @@ int main()
 		int size = Adj.Rows();
 		CheckandPrint(answer, size);
 	}
-	else 
-		std::cout << "The value you entered is incorrect!";
-
-	
-	
-
-	/*Graph gr(Adj);
-	gr.TSort();
-	Array<int> answer(gr.Answer());
-	if (!Ñheck(answer))
-		std::cout << "!!!CYCLE!!!" << std::endl;
-	else 
-	{
-		std::cout << "Sorted vertices: ";
-		for (int i = 0; i < Adj.Rows(); i++)
-	 std::cout << answer[i] << " ";
-	}*/
-
-	
-	
-	//Array<int> answer(gr.TSortList(Adj));
-
-
-
-
-	
-
-
-
+	else
+		std::cout << "The value you entered is incorrect!";*/
 
 }
