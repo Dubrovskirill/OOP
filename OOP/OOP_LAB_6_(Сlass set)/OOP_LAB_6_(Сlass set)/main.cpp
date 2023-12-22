@@ -13,7 +13,15 @@ int main()
 	Set s_3;
 	std::cin >> s_3;
 	s_3.Print();
-	
-	std::cout << s_3.Max();
+	if (s_3 != s_2)
+	{
+		std::cout<<"Bimbim";
+	}
+	s_0 = s_3;
+	s_0.Print();
+	if (s_3 == s_0)
+	{
+		std::cout << "BamBam";
+	}
 	return 0;
 }

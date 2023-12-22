@@ -12,9 +12,9 @@ public:
 
 	Set(const char* str);
 	Set(const Set& other);
-	~Set()
-	{
-	}
+
+	static const int offset = 32;
+	static const int capacity = 94;
 
 	void Print() const;
 	bool isEmpty() const;
@@ -22,8 +22,9 @@ public:
 	bool isPresent(const char c) const;
 	char Max() const;
 	char Min() const;
-	static const int offset = 32;
-	static const int capacity = 94;
+	bool operator==(const Set& other) const;
+	bool operator!=(const Set& other) const;
+
 	friend std::ostream& operator << (std::ostream& stream, const Set& other);
 	friend std::istream& operator >> (std::istream& stream, Set& other);
 

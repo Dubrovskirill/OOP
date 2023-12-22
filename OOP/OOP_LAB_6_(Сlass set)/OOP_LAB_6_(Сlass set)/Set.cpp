@@ -100,6 +100,18 @@ char Set::Min() const
 	}
 	return char(0);
 }
+bool Set::operator==(const Set& other) const
+{
+	for (int i = 0; i < CellCount(); i++)
+		if (m_data[i] != other.m_data[i])
+			return false;
+	return true;
+}
+
+bool Set::operator!=(const Set& other) const
+{
+	return !operator==(other);
+}
 
 std::ostream& operator << (std::ostream& stream, const Set& other)
 {
