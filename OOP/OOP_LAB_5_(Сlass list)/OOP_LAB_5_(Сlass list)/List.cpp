@@ -567,7 +567,7 @@ void List<ItemType>::TakeNode(Iterator& it)
 }
 
 template<typename ItemType> typename
-void List<ItemType>::InsertNode(Iterator& current, Iterator& other)
+void List<ItemType>::InsertNode(Iterator& current, const Iterator& other)
 {
   
     current.m_node->prev = other.m_node->prev;

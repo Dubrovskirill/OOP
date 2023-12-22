@@ -52,7 +52,7 @@ public:
 	Iterator end();
 	ConstIterator begin() const;
 	ConstIterator end() const;
-	bool Insert(const ItemType& el, Iterator &it);
+	bool Insert(const ItemType& el, const Iterator &it);
 	bool Remove(const Iterator gap1, Iterator &gap2);
 	bool Remove(const Iterator it);
 
@@ -74,6 +74,8 @@ public:
 	TemplateIterator operator++(int);
 	TemplateIterator& operator--();
 	TemplateIterator operator--(int);
+	TemplateIterator operator+(const int& index);
+	TemplateIterator operator-(const int& index);
 
 	bool hasNext() const;
 	int Pos() const;
@@ -295,6 +297,8 @@ Array<ItemType> Array<ItemType>::operator+=(const ItemType& item)
 template <typename ItemType>
 std::ostream& operator<<(std::ostream& stream, const Array<ItemType>& arr)
 {
+	if (arr.Size() == 0)
+		return stream << "[]";
 	stream << "[";
 	for (int i = 0; i < arr.Size() - 1; i++)
 		stream << arr[i] << ",";
@@ -535,15 +539,9 @@ Array<ItemType>::ConstIterator Array<ItemType>::end() const
 
 
 template <typename ItemType> typename
-bool Array<ItemType>::Insert(const ItemType& el, Iterator& it)
+bool Array<ItemType>::Insert(const ItemType& el, const Iterator& it)
 {
-	Array::Iterator i = end();
-	if (it.Pos()<0 || it.Pos()>i.Pos()) assert("false");
 	return Insert(el, it.Pos());
-	/*Resize(m_size + 1);
-	for (; i != it; i--)
-		*++i = *--i;
-	*i = el;*/
 }
 
 template <typename ItemType> typename
@@ -570,6 +568,29 @@ bool Array<ItemType>::Remove(const Iterator it)
 	return Remove(it, it2);
 }
 
+template <typename ItemType>
+template <typename IT, typename AT>
+Array<ItemType>::TemplateIterator<IT, AT> Array<ItemType>::TemplateIterator<IT, AT>::operator+(const int& index)
+{
+
+	Array<ItemType>::TemplateIterator<IT, AT> tmp(*this);
+	for (int i = 0; i < index; ++i)
+		++tmp;
+
+	return tmp;
+}
+
+template <typename ItemType>
+template <typename IT, typename AT>
+Array<ItemType>::TemplateIterator<IT, AT> Array<ItemType>::TemplateIterator<IT, AT>::operator-(const int& index)
+{
+
+	Array<ItemType>::TemplateIterator<IT, AT> tmp(*this);
+	for (int i = 0; i < index; ++i)
+		--tmp;
+
+	return tmp;
+}
 #endif 
 
 

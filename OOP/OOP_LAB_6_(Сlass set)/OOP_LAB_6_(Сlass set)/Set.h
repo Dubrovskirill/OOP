@@ -7,25 +7,24 @@ class Set:  public BoolVector
 {
 public:
 	Set()
-		:m_set(new BoolVector(capacity))
+		: BoolVector(capacity)
 	{}
+
 	Set(const char* str);
 	Set(const Set& other);
 	~Set()
 	{
-		delete m_set;
 	}
 
-	void Print();
-	bool isEmpty();
-	int Weight();
-	bool isPresent(const char c);
-private:
-	BoolVector* m_set = nullptr;
-	const int offset= 32;
-	const int capacity=94;
+	void Print() const;
+	bool isEmpty() const;
+	int Weight()const;
+	bool isPresent(const char c) const;
+	static const int offset = 32;
+	static const int capacity = 94;
 	
-
 };
 
+std::ostream& operator << (std::ostream& stream, const Set& other);
 
+//std::istream& operator >> (std::istream& stream, Set& other);

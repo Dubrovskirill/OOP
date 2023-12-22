@@ -73,7 +73,7 @@ public:
 private:
 	void TakeNode(Iterator& it);
 	//ConstIterator TakeNode(ConstIterator& it) const;
-	void InsertNode(Iterator& current, Iterator& other);
+	void InsertNode(Iterator& current, const Iterator& other);
 	void SwapNode(Iterator& current, Iterator& other);
 	int PosNode(Iterator& current);
 

@@ -26,7 +26,7 @@ public:
 	void Swap(BoolVector& other);
 	void Inverse();
 	void Inverse(const int i);
-	int Weight();
+	int Weight() const;
 	void Set1(const int pos, const int count);
 	void Set0(const int pos, const int count);
 	void Set1();

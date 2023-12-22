@@ -142,7 +142,7 @@ void BoolVector::Inverse(const int i)
 			Set1(i);
 }
 
-int BoolVector::Weight()
+int BoolVector::Weight() const
 {
 	int w = 0;
 	for (int i = 0; i < m_cellcount; i++)
