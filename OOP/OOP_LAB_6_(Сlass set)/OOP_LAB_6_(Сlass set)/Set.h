@@ -24,6 +24,14 @@ public:
 	char Min() const;
 	bool operator==(const Set& other) const;
 	bool operator!=(const Set& other) const;
+	Set operator|(const Set& other) const;
+	Set operator|=(const Set& other);
+	Set operator&(const Set& other) const;
+	Set operator&=(const Set& other);
+	Set operator/(const Set& other) const;
+	Set operator/=(const Set& other);
+	Set operator~() const;
+
 
 	friend std::ostream& operator << (std::ostream& stream, const Set& other);
 	friend std::istream& operator >> (std::istream& stream, Set& other);

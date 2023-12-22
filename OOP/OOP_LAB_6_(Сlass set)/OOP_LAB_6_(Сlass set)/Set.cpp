@@ -66,7 +66,6 @@ char Set::Max() const
 	for (int i = CellCount()-1; i >= 0; i--)
 	{
 		uint8_t mask = 1;
-		//mask <<= 7;
 		for (int j = m_cellSize-1; j >= 0; j--)
 		{
 			if (m_data[i] & mask)
@@ -113,6 +112,55 @@ bool Set::operator!=(const Set& other) const
 	return !operator==(other);
 }
 
+Set Set::operator|(const Set& other) const
+{
+	Set tmp;
+	for (int i = 0; i < CellCount(); i++)
+		tmp.m_data[i] = m_data[i] | other.m_data[i];
+	return tmp;
+}
+
+Set Set::operator|=(const Set& other)
+{
+	*this = operator|(other);
+	return *this;
+}
+
+Set Set::operator&(const Set& other) const
+{
+	Set tmp;
+	for (int i = 0; i < CellCount(); i++)
+		tmp.m_data[i] = m_data[i] & other.m_data[i];
+	return tmp;
+}
+
+Set Set::operator&=(const Set& other)
+{
+	*this = operator&(other);
+	return *this;
+}
+
+Set Set::operator/(const Set& other) const
+{
+	Set tmp;
+	for (int i = 0; i < CellCount(); i++)
+		tmp.m_data[i] = m_data[i] & ~other.m_data[i];
+	return tmp;
+}
+
+Set Set::operator/=(const Set& other)
+{
+	*this = operator/(other);
+	return *this;
+}
+
+Set Set::operator~() const
+{
+	Set set(*this);
+	set.Inverse();
+	return set;
+	
+}
 std::ostream& operator << (std::ostream& stream, const Set& other)
 {
 	stream << "{ ";
