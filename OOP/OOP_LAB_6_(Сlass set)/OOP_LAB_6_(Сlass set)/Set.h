@@ -26,5 +26,4 @@ public:
 };
 
 std::ostream& operator << (std::ostream& stream, const Set& other);
-
-//std::istream& operator >> (std::istream& stream, Set& other);
+std::istream& operator >> (std::istream& stream, Set& other);

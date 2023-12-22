@@ -59,41 +59,25 @@ int Set::Weight() const
 
 std::ostream& operator << (std::ostream& stream, const Set& other)
 {
-	if (other.isEmpty())
-	{
-		std::cout << "[ ]";
-		return stream;
-	}
+	stream << "{ ";
 
-	std::cout << "[ ";
+	if (!other.isEmpty())
+		for (char i = other.offset; i <= other.Lenght() + other.offset; i++)
+			if (other.operator[](i - other.offset))
+				stream << i << " ";
 
-	for (char i = other.offset; i <= other.Lenght() + other. offset; i++)
-	{
-		if (other.operator[](i - other.offset))
-			std::cout << i << " ";
-	}
-	/*for (char i = offset; i <= m_set->Lenght() + offset; i++)
-	{
-		if (m_set->operator[](i - offset))
-			std::cout << i << " ";
-	}*/
-	std::cout << "]";
-	std::cout << std::endl;
+	stream << "}" << std::endl;
 	return stream;
-
 }
-//std::istream& operator >> (std::istream& stream, Set& other)
-//{
-//
-//
-//	/*char s;
-//	for (int i = 0; i < bvec.Lenght(); i++)
-//	{
-//		stream >> s;
-//		if (s == '0')
-//			bvec.Set0(i);
-//		else
-//			bvec.Set1(i);
-//	}*/
-//	return stream;
-//}
+std::istream& operator >> (std::istream& stream, Set& other)
+{
+	char s=0;
+	//stream >> s;
+	while(stream.get(s) && s != '\n')
+	{
+		
+		if (s >= other.offset && s <= other.offset + other.capacity && !other[s - other.offset])
+			other.Set1((int)s - other.offset);
+	}
+	return stream;
+}
