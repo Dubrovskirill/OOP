@@ -22,6 +22,8 @@ public:
 	bool isPresent(const char c) const;
 	char Max() const;
 	char Min() const;
+	Set& operator= (Set&& other);
+	Set& operator= (const Set& other);
 	bool operator==(const Set& other) const;
 	bool operator!=(const Set& other) const;
 	Set operator|(const Set& other) const;
@@ -31,7 +33,10 @@ public:
 	Set operator/(const Set& other) const;
 	Set operator/=(const Set& other);
 	Set operator~() const;
-
+	Set operator+(const char& str) const;
+	Set operator+=(const char& str);
+	Set operator-(const char& str) const;
+	Set operator-=(const char& str);
 
 	friend std::ostream& operator << (std::ostream& stream, const Set& other);
 	friend std::istream& operator >> (std::istream& stream, Set& other);

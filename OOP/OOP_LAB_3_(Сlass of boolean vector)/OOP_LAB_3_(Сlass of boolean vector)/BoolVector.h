@@ -81,18 +81,15 @@ public:
 	void Set1();
 	void Set0();
 	bool Value() const;
-	//void Swap(BoolRank& other);
 
 	BoolRank& operator= (const BoolRank& other);
 	BoolRank& operator= (const int value);
 	bool operator==(const bool value)const;
-	//bool operator!=(const bool value)const;
 	bool operator>(const bool value)const;
 	bool operator<(const bool value)const;
 	bool operator>=(const bool value)const;
 	bool operator<=(const bool value)const;
 	operator int()const;
-	//operator bool()const;
 	bool operator&(const int value)const;
 	BoolRank operator&=(const int value);
 	bool operator|(const int value)const;

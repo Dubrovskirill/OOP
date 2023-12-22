@@ -99,6 +99,21 @@ char Set::Min() const
 	}
 	return char(0);
 }
+
+Set& Set::operator= (Set&& other)
+{
+	Swap(other);
+	return *this;
+}
+
+Set& Set::operator= (const Set& other)
+{
+	if (this == &other) return *this;
+	for (int i = 0; i < CellCount(); i++)
+		if (m_data[i] != other.m_data[i])
+			m_data[i] = other.m_data[i];
+}
+
 bool Set::operator==(const Set& other) const
 {
 	for (int i = 0; i < CellCount(); i++)
@@ -160,6 +175,36 @@ Set Set::operator~() const
 	set.Inverse();
 	return set;
 	
+}
+
+Set Set::operator+(const char& str) const
+{
+	Set tmp (*this);
+	if (str >= offset && str <= offset + capacity && !operator[](str - offset))
+		tmp.Set1((int)str - offset);
+
+	return tmp;
+}
+
+Set Set::operator+=(const char& str)
+{
+	*this = operator+(str);
+	return *this;
+}
+
+Set Set::operator-(const char& str) const
+{
+	Set tmp(*this);
+	if (str >= offset && str <= offset + capacity && operator[](str - offset))
+		tmp.Set0((int)str - offset);
+
+	return tmp;
+}
+
+Set Set::operator-=(const char& str)
+{
+	*this = operator-(str);
+	return *this;
 }
 std::ostream& operator << (std::ostream& stream, const Set& other)
 {
