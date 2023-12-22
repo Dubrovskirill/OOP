@@ -14,5 +14,6 @@ int main()
 	std::cin >> s_3;
 	s_3.Print();
 	
+	std::cout << s_3.Max();
 	return 0;
 }

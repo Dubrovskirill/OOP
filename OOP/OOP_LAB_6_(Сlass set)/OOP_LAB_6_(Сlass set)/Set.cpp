@@ -43,19 +43,63 @@ int Set::Weight() const
 	return BoolVector::Weight();
 }
 
-//bool Set::isPresent(const char c) const
-//{
-//	if (c >= offset && c <= offset + capacity)
-//		return false;
-//	int cell = ((int)c - offset) / m_cellSize;
-//	int pos = ((int)c - offset) % m_cellSize;
-//	uint8_t mask = 1;
-//	mask = mask << 7-pos;
-//	if (m_set->operator[]((int)c - offset) && mask)
-//		return true;
-//	return false;
-//	
-//}
+bool Set::isPresent(const char c) const
+{
+	if (!(c >= offset && c <= offset + capacity))
+		return false;
+
+	int cell = ((int)c - offset) / m_cellSize;
+	int pos = ((int)c - offset) % m_cellSize;
+	uint8_t mask = 1;
+	mask = mask << 7-pos;
+	if (operator[]((int)c - offset) && mask)
+		return true;
+	return false;
+	
+}
+
+char Set::Max() const
+{
+	if (isEmpty())
+		return char(0);
+
+	for (int i = CellCount()-1; i >= 0; i--)
+	{
+		uint8_t mask = 1;
+		//mask <<= 7;
+		for (int j = m_cellSize-1; j >= 0; j--)
+		{
+			if (m_data[i] & mask)
+			{
+				return char(i * m_cellSize + j + offset);
+			}
+			mask <<= 1;
+		}
+	}
+	return char(0);
+
+}
+
+char Set::Min() const
+{
+	if(isEmpty())
+		return char(0);
+	
+	for (int i = 0; i < CellCount(); i++)
+	{
+		uint8_t mask = 1;
+		mask <<= 7;
+		for (int j = 0; j < m_cellSize; j++)
+		{
+			if (m_data[i] & mask)
+			{
+				return char(i * m_cellSize + j+offset);
+			}
+			mask >>= 1;
+		}
+	}
+	return char(0);
+}
 
 std::ostream& operator << (std::ostream& stream, const Set& other)
 {
@@ -69,10 +113,10 @@ std::ostream& operator << (std::ostream& stream, const Set& other)
 	stream << "}" << std::endl;
 	return stream;
 }
+
 std::istream& operator >> (std::istream& stream, Set& other)
 {
 	char s=0;
-	//stream >> s;
 	while(stream.get(s) && s != '\n')
 	{
 		

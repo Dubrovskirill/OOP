@@ -3,7 +3,7 @@
 #include<iostream>
 #include "..\..\..\OOP\OOP_LAB_3_(Ñlass of boolean vector)\OOP_LAB_3_(Ñlass of boolean vector)\BoolVector.h"
 #include "..\..\..\OOP\OOP_LAB_4_(Ñlass of boolean matrix)\BoolMatrix\BoolMatrix.h"
-class Set:  public BoolVector
+class Set:  protected BoolVector
 {
 public:
 	Set()
@@ -20,10 +20,12 @@ public:
 	bool isEmpty() const;
 	int Weight()const;
 	bool isPresent(const char c) const;
+	char Max() const;
+	char Min() const;
 	static const int offset = 32;
 	static const int capacity = 94;
-	
+	friend std::ostream& operator << (std::ostream& stream, const Set& other);
+	friend std::istream& operator >> (std::istream& stream, Set& other);
+
 };
 
-std::ostream& operator << (std::ostream& stream, const Set& other);
-std::istream& operator >> (std::istream& stream, Set& other);

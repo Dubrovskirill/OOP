@@ -50,12 +50,14 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& stream, const BoolRank& rank);
 	friend std::istream& operator>>(std::istream& stream, BoolRank rank);
-	
+protected:
+UC* m_data = nullptr;
+
 private:
 	UI m_length=0;
 	UI m_cellcount = 0;
 	uint8_t m_insignificantpart = 0;
-	UC *m_data = nullptr;
+	//UC *m_data = nullptr;
 	void Shift();
 };
 std::ostream& operator<<(std::ostream& stream, const BoolVector& bvec);
