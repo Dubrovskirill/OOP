@@ -8,47 +8,6 @@
 #include "../../../OOP/OOP_LAB_2/OOP_LAB_2/Array.h"
 
 
-//void RandMatr(BoolMatrix& matrix)
-//{
-//	std::random_device rd;
-//	std::mt19937 rng(rd());
-//	std::uniform_int_distribution<int> dist(0, 1);
-//	for (int i = 0; i < matrix.Rows(); i++)
-//		for (int j = 0; j < matrix.Cols(); j++)
-//			matrix[i][j] = dist(rng);
-//}
-//
-//BoolMatrix Form(std::string name)
-//{
-//	std::ifstream inputFile(name);
-//	std::string st;
-//	if (inputFile.is_open())
-//	{
-//		char num;
-//		while (inputFile >> num)
-//			if (num != ',' && num != ' ')
-//				st.push_back(num);
-//	}
-//	else std::cout << "File opening error!\n";
-//	return BoolMatrix(st);
-//}
-
-//void FormVector(std::vector<int>& vec, const int  n)
-//{
-//	int ed;
-//	std::cin >> ed;
-//	if (ed > n || ed == 0)
-//	{
-//		std::cout << "The entered value is incorrect: exceeding the number of verinches.\n Try again:";
-//		FormVector(vec, n);
-//		return;
-//	}
-//	if (ed < 0)
-//		return;
-//	vec.push_back(ed);
-//	FormVector(vec, n);
-//}
-
 int FormVectorFile(std::vector<int>& vec, std::string name)
 {
 	std::ifstream inputFile(name);
