@@ -45,14 +45,11 @@ int Set::Weight() const
 
 bool Set::isPresent(const char c) const
 {
+	const int charCode = static_cast<int>(c);
 	if (!(c >= offset && c <= offset + capacity))
 		return false;
 
-	int cell = ((int)c - offset) / m_cellSize;
-	int pos = ((int)c - offset) % m_cellSize;
-	uint8_t mask = 1;
-	mask = mask << 7-pos;
-	if (operator[]((int)c - offset) && mask)
+	if (operator[]((int)c - offset))
 		return true;
 	return false;
 	
@@ -127,7 +124,7 @@ bool Set::operator!=(const Set& other) const
 	return !operator==(other);
 }
 
-Set Set::operator|(const Set& other) const
+Set& Set::operator|(const Set& other) const
 {
 	Set tmp;
 	for (int i = 0; i < CellCount(); i++)
@@ -135,27 +132,27 @@ Set Set::operator|(const Set& other) const
 	return tmp;
 }
 
-Set Set::operator|=(const Set& other)
+Set& Set::operator|=(const Set& other)
 {
 	*this = operator|(other);
 	return *this;
 }
 
-Set Set::operator&(const Set& other) const
-{
+Set& Set::operator&(const Set& other) const
+{   
 	Set tmp;
 	for (int i = 0; i < CellCount(); i++)
 		tmp.m_data[i] = m_data[i] & other.m_data[i];
 	return tmp;
 }
 
-Set Set::operator&=(const Set& other)
+Set& Set::operator&=(const Set& other)
 {
 	*this = operator&(other);
 	return *this;
 }
 
-Set Set::operator/(const Set& other) const
+Set& Set::operator/(const Set& other) const
 {
 	Set tmp;
 	for (int i = 0; i < CellCount(); i++)
@@ -163,13 +160,13 @@ Set Set::operator/(const Set& other) const
 	return tmp;
 }
 
-Set Set::operator/=(const Set& other)
+Set& Set::operator/=(const Set& other)
 {
 	*this = operator/(other);
 	return *this;
 }
 
-Set Set::operator~() const
+Set& Set::operator~() const
 {
 	Set set(*this);
 	set.Inverse();
@@ -177,7 +174,7 @@ Set Set::operator~() const
 	
 }
 
-Set Set::operator+(const char& str) const
+Set& Set::operator+(const char& str) const
 {
 	Set tmp (*this);
 	if (str >= offset && str <= offset + capacity && !operator[](str - offset))
@@ -186,13 +183,13 @@ Set Set::operator+(const char& str) const
 	return tmp;
 }
 
-Set Set::operator+=(const char& str)
+Set& Set::operator+=(const char& str)
 {
 	*this = operator+(str);
 	return *this;
 }
 
-Set Set::operator-(const char& str) const
+Set& Set::operator-(const char& str) const
 {
 	Set tmp(*this);
 	if (str >= offset && str <= offset + capacity && operator[](str - offset))
@@ -201,7 +198,7 @@ Set Set::operator-(const char& str) const
 	return tmp;
 }
 
-Set Set::operator-=(const char& str)
+Set& Set::operator-=(const char& str)
 {
 	*this = operator-(str);
 	return *this;
@@ -211,8 +208,8 @@ std::ostream& operator << (std::ostream& stream, const Set& other)
 	stream << "{ ";
 
 	if (!other.isEmpty())
-		for (char i = other.offset; i <= other.Lenght() + other.offset; i++)
-			if (other.operator[](i - other.offset))
+		for (char i = Set::offset; i <= Set::capacity + Set::offset; i++)
+			if (other[i - other.offset])
 				stream << i << " ";
 
 	stream << "}" << std::endl;
@@ -226,7 +223,7 @@ std::istream& operator >> (std::istream& stream, Set& other)
 	{
 		
 		if (s >= other.offset && s <= other.offset + other.capacity && !other[s - other.offset])
-			other.Set1((int)s - other.offset);
+			other[(int)s - other.offset] = 1;
 	}
 	return stream;
 }

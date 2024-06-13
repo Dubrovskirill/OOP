@@ -54,7 +54,12 @@ int main()
 	list_2.Sort();
 	list_2.Print();
 	List<int> list_3(4, 7);
-	//list_3 += list_1;
+	list_3.Print();
+	list_1.Print();
+	list_3 += list_3;
+	std::cout << "OK" << std::endl;
+	list_3.Print();
+	std::cout << "OK" << std::endl;
 	List<int> list_4 = (list_3 + list_1);
 	list_4.Print();
 	List<int>::Iterator iy = list_4.end() - 1;

@@ -26,20 +26,22 @@ public:
 	Set& operator= (const Set& other);
 	bool operator==(const Set& other) const;
 	bool operator!=(const Set& other) const;
-	Set operator|(const Set& other) const;
-	Set operator|=(const Set& other);
-	Set operator&(const Set& other) const;
-	Set operator&=(const Set& other);
-	Set operator/(const Set& other) const;
-	Set operator/=(const Set& other);
-	Set operator~() const;
-	Set operator+(const char& str) const;
-	Set operator+=(const char& str);
-	Set operator-(const char& str) const;
-	Set operator-=(const char& str);
+	Set& operator|(const Set& other) const;
+	Set& operator|=(const Set& other);
+	Set& operator&(const Set& other) const;
+	Set& operator&=(const Set& other);
+	Set& operator/(const Set& other) const;
+	Set& operator/=(const Set& other);
+	Set& operator~() const;
+	Set& operator+(const char& str) const;
+	Set& operator+=(const char& str);
+	Set& operator-(const char& str) const;
+	Set& operator-=(const char& str);
 
-	friend std::ostream& operator << (std::ostream& stream, const Set& other);
-	friend std::istream& operator >> (std::istream& stream, Set& other);
+	using BoolVector::operator[];
+	
 
 };
 
+std::ostream& operator << (std::ostream& stream, const Set& other);
+std::istream& operator >> (std::istream& stream, Set& other);

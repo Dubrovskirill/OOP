@@ -206,7 +206,7 @@ BoolVector& BoolVector::operator= (BoolVector&& other)
 	return *this;
 }
 
-BoolVector& BoolVector::operator= (const BoolVector& other)
+BoolVector& BoolVector::operator= (const BoolVector& other) 
 {
 	if (this == &other) return *this;
 
@@ -220,6 +220,34 @@ BoolVector& BoolVector::operator= (const BoolVector& other)
 	}
 	for (int i = 0; i < m_cellcount; i++)
 		m_data[i] = other.m_data[i];
+	return *this;
+}
+
+BoolVector& BoolVector::operator += (const char value) {
+	UC* old = new UC[m_cellcount];
+	for (int i = 0; i < m_cellcount; ++i) {
+		old[i] = m_data[i];
+	}
+
+	delete [] m_data;
+
+	++m_cellcount;
+	m_data = new UC[m_cellcount];
+	for (auto i = 0; i < m_cellcount - 1; ++i) {
+		m_data[i] == old[i];
+	}
+
+	if (m_insignificantpart) {
+		char firstPart = value << (8 - (8 - m_insignificantpart));
+		m_insignificantpart = 8 - m_insignificantpart;
+		UC secondPart = value << m_insignificantpart;
+		m_data[m_cellcount - 2] |= firstPart;
+		m_data[m_cellcount - 1] = secondPart;
+	}
+	else {
+		m_data[m_cellcount - 1] = value;
+	}
+
 	return *this;
 }
 
@@ -597,3 +625,43 @@ bool BoolVector::Full() const
 	return true;
 }
 
+
+bool BoolVector::operator==(const BoolVector& other) const
+{
+	for (int i = 0; i < m_cellcount; ++i) {
+		if (m_data[i] != other.m_data[i])
+			return false;
+	}
+
+	return true;
+}
+bool BoolVector::operator!=(const BoolVector& other)const
+{
+	return !operator==(other);
+}
+bool BoolVector::operator==(BoolVector&& other)
+{
+	for (int i = 0; i < m_cellcount; ++i) {
+		if (m_data[i] != other.m_data[i])
+			return false;
+	}
+
+	return true;
+}
+bool BoolVector::operator!=(BoolVector&& other)
+{
+	return !operator==(other);
+}
+
+int BoolVector::findfirstset() const {
+	for (int i = 0; i < m_cellcount; ++i) {
+		if (m_data[i] != 0) {
+			for (int j = 0; j < m_cellSize; ++j) {
+				if (m_data[i] & (1 << j)) {
+					return i * m_cellSize + j;
+				}
+			}
+		}
+	}
+	return -1; // Ни один бит не установлен
+}

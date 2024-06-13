@@ -1,7 +1,7 @@
 #pragma once
 #include<stdint.h>
 #include<iostream>
-
+#include <assert.h>
 
 class BoolVector
 {
@@ -32,10 +32,18 @@ public:
 	void Set1();
 	void Set0();
 	bool Full() const;
+	UC* Data() const {
+		return m_data;
+	}
+	void addSymbol(const UC symbol, int index) {
+		assert(index < m_cellcount);
+		m_data[index] = symbol;
+	}
 	BoolRank operator[](const int index);
 	const BoolRank operator[](const int index)const;
 	BoolVector& operator= (BoolVector&& other);
 	BoolVector& operator= (const BoolVector& other);
+	BoolVector& operator += (const char value);
 	BoolVector operator&(const BoolVector& other) const;
 	BoolVector& operator&=(const BoolVector& other);
 	BoolVector operator|(const BoolVector& other) const;
@@ -47,6 +55,14 @@ public:
 	BoolVector& operator<<=(const int count);
 	BoolVector operator>>(int count) const;
 	BoolVector& operator>>=(const int count);
+	bool operator==(const BoolVector& other) const; 
+	bool operator!=(const BoolVector& other)const;
+	bool operator==(BoolVector&& other);
+	bool operator!=(BoolVector&& other);
+
+	int findfirstset() const;
+
+	
 
 	friend std::ostream& operator<<(std::ostream& stream, const BoolRank& rank);
 	friend std::istream& operator>>(std::istream& stream, BoolRank rank);
@@ -98,3 +114,4 @@ public:
 	bool operator^(const int value)const;
 	BoolRank operator^=(const int value);
 };
+

@@ -47,6 +47,7 @@ public:
 	bool DelElementAll(const ItemType& el);
 	int IMax();
 	int IMin();
+	void move(Iterator element, Iterator before);
 
 	Iterator begin();
 	Iterator end();
@@ -101,6 +102,12 @@ Array<ItemType>::Array(const int size, const ItemType& value)
 
 	for (int i = 0; i < m_size; i++)
 		m_array[i] = value;
+}
+ template <typename ItemType>
+void Array<ItemType>::move(Iterator element, Iterator before)
+{
+	Insert(before.m_array[before.m_pos], before.m_pos);
+	element.m_array.DelbyIndex(element.m_pos);
 }
 
 template <typename ItemType>

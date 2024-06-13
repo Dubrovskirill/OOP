@@ -5,7 +5,7 @@ int main()
 {
 	Set s_0;
 	s_0.Print();
-	char c[6] = { ' ','~',' 7', 'f', 'o' };
+	char c[6] = { ' ','~', '7', 'f', 'o' };
 	Set s_1(c);
 	Set s_2(s_1);
 	s_2.Print();
@@ -18,6 +18,14 @@ int main()
 	s_0 -= 'B';
 	s_0 -= 'a';
 	s_0.Print();
+
+	Set foo;
+	for (int i =0; i < Set::capacity; ++i) {
+		std::cout << char(i + Set::offset) << ": " << foo.isPresent(i + Set::offset) << '\n';
+		foo[i] = 1;
+		std::cout << char(i + Set::offset) << ": " << foo.isPresent(i + Set::offset) << '\n';
+
+	}
 	
 	return 0;
 }
